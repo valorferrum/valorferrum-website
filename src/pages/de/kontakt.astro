@@ -1,0 +1,162 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Kontakt | Valorferrum – Projekt anfragen für SEO, SEA & Webentwicklung"
+  description="Hast du ein Projekt? Kontaktiere mich für SEO, SEA, Webentwicklung oder Tracking-Setups. Unverbindlich, ehrlich, Antwort innerhalb 24 Stunden."
+  lang="de"
+>
+  <section class="pt-32 pb-24 px-4">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-12 reveal">
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-text-primary mb-6">Lass uns reden</h1>
+        <p class="text-text-secondary text-lg">Hast du ein Projekt? Schreib mir. Unverbindlich und ehrlich. Antwort innerhalb 24 Stunden.</p>
+      </div>
+
+      <div class="reveal p-8 rounded-xl bg-surface border border-border mb-8">
+        <form id="contact-form" class="space-y-6" novalidate>
+          <!-- Honeypot -->
+          <div class="hidden" aria-hidden="true">
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div>
+            <label for="name" class="block text-sm font-medium text-text-secondary mb-2">Name *</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full px-4 py-3 rounded-lg bg-bg border border-border text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+              placeholder="Dein Name"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-text-secondary mb-2">E-Mail *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 rounded-lg bg-bg border border-border text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+              placeholder="deine@email.de"
+            />
+          </div>
+
+          <div>
+            <label for="service" class="block text-sm font-medium text-text-secondary mb-2">Leistung</label>
+            <select
+              id="service"
+              name="service"
+              class="w-full px-4 py-3 rounded-lg bg-bg border border-border text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+            >
+              <option value="">Bitte wählen</option>
+              <option value="seo">SEO</option>
+              <option value="sea">SEA & PPC</option>
+              <option value="webdev">Webentwicklung</option>
+              <option value="tracking">Tracking & Analytics</option>
+              <option value="beratung">Beratung / Workshop</option>
+              <option value="sonstiges">Sonstiges</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="message" class="block text-sm font-medium text-text-secondary mb-2">Nachricht *</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              class="w-full px-4 py-3 rounded-lg bg-bg border border-border text-text-primary focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+              placeholder="Beschreibe dein Projekt..."
+            ></textarea>
+          </div>
+
+          <div id="form-status" class="hidden"></div>
+
+          <button
+            type="submit"
+            id="submit-btn"
+            class="w-full py-4 rounded-lg bg-gradient-to-r from-primary to-spectrum-pink text-white font-bold text-lg hover:brightness-110 transition-all shadow-lg shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Nachricht senden
+          </button>
+
+          <p class="text-text-muted text-xs text-center">
+            Mit dem Absenden erklärst du dich mit der Verarbeitung deiner Daten gemäß der
+            <a href="/de/datenschutz/" class="text-primary hover:underline">Datenschutzerklärung</a> einverstanden.
+          </p>
+        </form>
+      </div>
+
+      <div class="reveal text-center space-y-2">
+        <p class="text-text-muted text-sm">Oder schreib mir direkt:</p>
+        <a href="mailto:hello@valorferrum.de" class="text-primary hover:text-primary-light transition-colors font-medium">hello@valorferrum.de</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const statusDiv = document.getElementById('form-status') as HTMLDivElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  if (!form || !statusDiv || !submitBtn) {
+    console.error('Formular-Elemente nicht gefunden');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Honeypot-Check
+    const honeypot = (form.querySelector('#website') as HTMLInputElement)?.value;
+    if (honeypot) {
+      console.warn('Honeypot ausgelöst – wahrscheinlich Bot.');
+      return;
+    }
+
+    // Native Validierung
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wird gesendet...';
+    statusDiv.className = 'hidden';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.value,
+          email: form.email.value,
+          service: form.service.value,
+          message: form.message.value
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        statusDiv.className = 'p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm';
+        statusDiv.textContent = 'Nachricht gesendet! Ich melde mich innerhalb von 24 Stunden.';
+        form.reset();
+      } else {
+        statusDiv.className = 'p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm';
+        statusDiv.textContent = result.error || 'Etwas ist schiefgelaufen. Bitte versuche es erneut.';
+      }
+    } catch (err) {
+      console.error('Fetch-Fehler:', err);
+      statusDiv.className = 'p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm';
+      statusDiv.textContent = 'Verbindungsfehler. Bitte prüfe deine Internetverbindung.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Nachricht senden';
+    }
+  });
+</script>

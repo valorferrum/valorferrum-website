@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+}
+
+const { 
+  title, 
+  description = 'Freelancer für Performance Marketing, Martech & datengetriebene Digitalstrategie.',
+  lang = 'de'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-bg text-text-primary font-body antialiased selection:bg-primary/30 selection:text-text-primary">
+    <Navigation />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Scroll Reveal (global)
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>

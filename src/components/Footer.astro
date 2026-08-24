@@ -1,0 +1,95 @@
+---
+const currentLocale = Astro.currentLocale || 'de';
+const isDE = currentLocale === 'de';
+
+const t = {
+  de: {
+    rights: 'Alle Rechte vorbehalten.',
+    imprint: 'Impressum',
+    privacy: 'Datenschutz',
+    tagline: 'Digitale Sichtbarkeit, die bleibt.',
+    slogan: 'Performance, die besteht.',
+    navTitle: 'Navigation',
+    legalTitle: 'Rechtliches',
+    services: 'Leistungen',
+    pricing: 'Preise',
+    blog: 'Blog',
+    about: 'Über mich',
+    contact: 'Kontakt',
+    status: 'Selbsttragend & werthaltig'
+  },
+  en: {
+    rights: 'All rights reserved.',
+    imprint: 'Imprint',
+    privacy: 'Privacy',
+    tagline: 'Digital visibility that lasts.',
+    slogan: 'Performance that endures.',
+    navTitle: 'Navigation',
+    legalTitle: 'Legal',
+    services: 'Services',
+    pricing: 'Pricing',
+    blog: 'Blog',
+    about: 'About',
+    contact: 'Contact',
+    status: 'Self-sustaining & value-driven'
+  }
+}[isDE ? 'de' : 'en'];
+
+// Sprachspezifische Slugs
+const slugs = isDE ? {
+  services: 'leistungen',
+  pricing: 'preise',
+  about: 'ueber-mich',
+  contact: 'kontakt',
+  imprint: 'impressum',
+  privacy: 'datenschutz'
+} : {
+  services: 'services',
+  pricing: 'pricing',
+  about: 'about',
+  contact: 'contact',
+  imprint: 'imprint',
+  privacy: 'privacy'
+};
+---
+
+<footer class="border-t border-border bg-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      <div>
+        <div class="font-display text-2xl font-bold text-text-primary mb-4">Valor<span class="text-primary">ferrum</span></div>
+        <p class="text-text-secondary mb-2">{t.tagline}</p>
+        <p class="text-text-muted text-sm">{t.slogan}</p>
+      </div>
+
+      <div>
+        <p class="font-display font-semibold text-text-primary mb-4">{t.navTitle}</p>
+        <ul class="space-y-2">
+          <li><a href={`/${currentLocale}/${slugs.services}/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.services}</a></li>
+          <li><a href={`/${currentLocale}/${slugs.pricing}/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.pricing}</a></li>
+          <li><a href={`/${currentLocale}/blog/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.blog}</a></li>
+          <li><a href={`/${currentLocale}/${slugs.about}/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.about}</a></li>
+          <li><a href={`/${currentLocale}/${slugs.contact}/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.contact}</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="font-display font-semibold text-text-primary mb-4">{t.legalTitle}</p>
+        <ul class="space-y-2">
+          <li><a href={`/${currentLocale}/${slugs.imprint}/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.imprint}</a></li>
+          <li><a href={`/${currentLocale}/${slugs.privacy}/`} class="text-text-secondary hover:text-primary transition-colors text-sm">{t.privacy}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-text-muted text-sm">
+        &copy; {new Date().getFullYear()} Valorferrum. {t.rights}
+      </div>
+      <div class="flex items-center gap-2 text-text-muted text-sm">
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        <span>{t.status}</span>
+      </div>
+    </div>
+  </div>
+</footer>

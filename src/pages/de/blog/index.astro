@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+
+const posts = await getCollection('blog', (post) => post.data.lang === 'de');
+posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Blog - Wissen zu Performance Marketing & Martech - Valorferrum" description="Praxisnahe Artikel zu SEO, SEA, Webentwicklung & Tracking. Tutorials, Case Studies & strategische Einblicke.">
+  <section class="pt-32 pb-24 px-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-text-primary mb-6">Wissen & Erfahrungen</h1>
+        <p class="text-text-secondary text-lg">Praxisnahe Artikel zu SEO, SEA, Webentwicklung & Tracking.</p>
+      </div>
+
+      <div class="space-y-8">
+        {posts.map((post, i) => (
+          <article class="reveal p-6 md:p-8 rounded-xl bg-surface border border-border hover:border-primary/30 transition-all card" style={`transition-delay: ${i * 100}ms`}>
+            <a href={`/de/blog/${post.slug}/`} class="block group">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <div class="flex flex-wrap gap-2">
+                  {post.data.tags.map(tag => (
+                    <span class="px-2 py-1 rounded-md bg-primary/10 text-primary text-xs font-medium">{tag}</span>
+                  ))}
+                </div>
+                <time class="text-sm text-text-muted" datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </time>
+              </div>
+              <h2 class="font-display text-2xl font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">{post.data.title}</h2>
+              <p class="text-text-secondary">{post.data.description}</p>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

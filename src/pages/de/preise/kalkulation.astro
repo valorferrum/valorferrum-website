@@ -1,0 +1,150 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Kostenaufstellung & Preiskalkulation | Valorferrum"
+  description="Nachvollziehbare Preiskalkulation für Freelancer-Leistungen. Transparente Kostenstruktur ohne versteckte Aufschläge."
+  lang="de"
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/8 rounded-full blur-[120px] pulse-anim"></div>
+
+    <div class="max-w-4xl mx-auto text-center relative">
+      <div class="reveal mb-4">
+        <a href="/de/preise/" class="text-sm text-text-muted hover:text-primary transition-colors inline-flex items-center gap-1 group">
+          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Zurück zu den Preisen
+        </a>
+      </div>
+
+      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight" style="transition-delay: 100ms;">
+        Wie der Stundensatz entsteht
+      </h1>
+      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
+        110 €/h sind nicht ausgedacht. Sie basieren auf einer dezidierten Kalkulation
+        aus realen Kosten und einem Qualitäts- & Risikopuffer.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== AUFschlÜSSelung ==================== -->
+  <section class="pb-24 px-6" aria-labelledby="aufschlüsselung-heading">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border text-center">
+          <div class="text-5xl font-display font-bold text-primary mb-3">92 €</div>
+          <h3 class="text-text-primary font-semibold mb-2 text-lg">Kostendeckung</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Reale Kosten und Steuern. Alles, was nötig ist, um nachhaltig zu arbeiten
+            – ohne Übergewinn, ohne aufgeblähte Struktur.
+          </p>
+        </div>
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border text-center" style="transition-delay: 100ms;">
+          <div class="text-5xl font-display font-bold text-primary mb-3">18 €</div>
+          <h3 class="text-text-primary font-semibold mb-2 text-lg">Qualitäts- & Risikopuffer</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            All-in-One-Kompetenz ohne Juniors. Du zahlst für Erfahrung, die direkt
+            einsetzbar ist – und für die Sicherheit, dass Festpreise Festpreise bleiben.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal p-8 rounded-2xl bg-surface border border-border">
+        <h3 class="font-display text-xl font-bold text-text-primary mb-6">Kostenstruktur im Detail</h3>
+        <div class="grid md:grid-cols-2 gap-8 text-sm">
+          <div>
+            <h4 class="text-text-primary font-semibold mb-3">Persönliche Kosten (3.250 €/Monat)</h4>
+            <ul class="text-text-secondary space-y-2">
+              <li class="flex justify-between"><span>Lebenshaltung</span><span>2.300 €</span></li>
+              <li class="flex justify-between"><span>Altersvorsorge</span><span>650 €</span></li>
+              <li class="flex justify-between"><span>Puffer / Notgroschen</span><span>200 €</span></li>
+              <li class="flex justify-between"><span>Weiterbildung</span><span>100 €</span></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-text-primary font-semibold mb-3">Geschäftliche Fixkosten (2.095 €/Monat)</h4>
+            <ul class="text-text-secondary space-y-2">
+              <li class="flex justify-between"><span>GKV (freiwillig)</span><span>1.050 €</span></li>
+              <li class="flex justify-between"><span>Rentenversicherung</span><span>600 €</span></li>
+              <li class="flex justify-between"><span>Software & Tools</span><span>200 €</span></li>
+              <li class="flex justify-between"><span>Berufsunfähigkeit, Haftpflicht, etc.</span><span>245 €</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-border">
+          <div class="flex justify-between items-center text-text-primary font-semibold">
+            <span>Gesamtkosten pro Jahr</span>
+            <span>64.140 €</span>
+          </div>
+          <p class="text-text-muted text-sm mt-2">
+            Bei 1.014 abrechenbaren Stunden/Jahr (35h/Woche, 46 Wochen, 70% Auslastung)
+            ergibt sich ein Kostendeckungssatz von 92 €/h.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ARBEITSKAPAZITÄT ==================== -->
+  <section class="py-24 px-6 bg-surface" aria-labelledby="kapazität-heading">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 id="kapazität-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
+          Arbeitskapazität & Kalkulationsgrundlage
+        </h2>
+        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
+          Der Stundensatz setzt sich nicht nur aus den Kosten zusammen, sondern auch aus
+          der realistisch erreichbaren Arbeitszeit.
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div class="reveal p-6 rounded-xl bg-bg border border-border text-center">
+          <div class="text-3xl font-display font-bold text-primary mb-2">1.610 h</div>
+          <div class="text-text-secondary text-sm">Theoretische Jahreskapazität<br>(35h × 46 Wochen)</div>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-bg border border-border text-center" style="transition-delay: 50ms;">
+          <div class="text-3xl font-display font-bold text-primary mb-2">1.449 h</div>
+          <div class="text-text-secondary text-sm">– 10 % nicht-verrechenbar<br>(Admin, Akquise)</div>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-bg border border-border text-center" style="transition-delay: 100ms;">
+          <div class="text-3xl font-display font-bold text-primary mb-2">1.014 h</div>
+          <div class="text-text-secondary text-sm">× 70 % realistische Auslastung<br>= abrechenbare Stunden</div>
+        </div>
+        <div class="reveal p-6 rounded-xl bg-bg border border-border text-center" style="transition-delay: 150ms;">
+          <div class="text-3xl font-display font-bold text-primary mb-2">92 €/h</div>
+          <div class="text-text-secondary text-sm">Kostendeckungssatz<br>(64.140 € ÷ 1.014 h)</div>
+        </div>
+      </div>
+
+      <div class="reveal p-6 rounded-xl bg-bg border border-border">
+        <p class="text-text-secondary text-sm leading-relaxed">
+          <strong class="text-text-primary">Warum 70 % Auslastung?</strong> Als Freelancer ohne Vertriebsteam
+          und mit direkter Kundenbetreuung ist eine 100%ige Auslastung über das Jahr nicht realistisch.
+          Die 70 % berücksichtigen Krankheit, Urlaub, Akquise, Administration und strategische Weiterentwicklung.
+          Wer Dir 100 % verspricht, lügt – oder outsourct heimlich.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="py-24 px-6 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/15 via-spectrum-pink/10 to-spectrum-blue/15"></div>
+    <div class="max-w-3xl mx-auto text-center relative">
+      <p class="reveal text-lg text-text-secondary mb-8 leading-relaxed">
+        Noch Fragen zur Kalkulation? Ich erkläre jeden Posten gerne im Erstgespräch.
+      </p>
+      <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay: 100ms;">
+        <a href="/de/kontakt/" class="px-8 py-4 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0">
+          Kostenloses Erstgespräch
+        </a>
+        <a href="/de/preise/" class="px-8 py-4 border border-primary/30 hover:border-primary text-primary hover:text-primary-light rounded-lg transition-all duration-300 hover:bg-primary/5">
+          Zurück zu den Paketen
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

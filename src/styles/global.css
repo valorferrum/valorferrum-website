@@ -1,0 +1,511 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme {
+  --color-primary: #A65CF6;
+  --color-primary-light: #C49AFF;
+  --color-primary-dark: #7C3AED;
+  --color-spectrum-purple: #8B5CF6;
+  --color-spectrum-pink: #EC4899;
+  --color-spectrum-blue: #3B82F6;
+  --color-spectrum-yellow: #FBBF24;
+  --color-bg: #0A0A0F;
+  --color-surface: #14141B;
+  --color-surface-elevated: #1E1E2A;
+  --color-border: #2A2A3A;
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --font-display: 'Geist', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(166, 92, 246, 0.3);
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   DESKTOP STAGE (GRÖSSER)
+   ============================================================ */
+.desktop-stage {
+  position: relative;
+  width: min(96vw, 1200px);
+  height: min(78vh, 740px);
+  margin: 0 auto;
+  transform: scale(0.5);
+  opacity: 0;
+  animation: desktopAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.desktop-frame {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #1a1a2e, #14141B);
+  border-radius: 20px;
+  border: 2px solid var(--color-border);
+  padding: 12px;
+  box-shadow:
+    0 0 0 1px rgba(166, 92, 246, 0.1),
+    0 30px 80px rgba(0,0,0,0.6),
+    0 0 100px rgba(166, 92, 246, 0.08);
+  position: relative;
+  z-index: 5;
+}
+
+.desktop-frame::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+.desktop-screen {
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+}
+
+.desktop-stand {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: linear-gradient(180deg, #1a1a2e, #14141B);
+  border-radius: 0 0 8px 8px;
+  border: 1px solid var(--color-border);
+  border-top: none;
+}
+
+.desktop-base {
+  position: absolute;
+  bottom: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 10px;
+  background: var(--color-border);
+  border-radius: 5px;
+}
+
+.desktop-camera {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 50%;
+}
+
+@keyframes desktopAppear {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================
+   LINEAR PLACE ANIMATIONS (geradlinig, auf Desktop)
+   ============================================================ */
+.linear-top,
+.linear-bottom,
+.linear-left,
+.linear-right,
+.linear-scale {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: both;
+  opacity: 0;
+}
+
+.linear-top    { animation-name: linearFromTop; }
+.linear-bottom { animation-name: linearFromBottom; }
+.linear-left   { animation-name: linearFromLeft; }
+.linear-right  { animation-name: linearFromRight; }
+.linear-scale  { animation-name: linearFromScale; }
+
+.stagger-1 { animation-delay: 0.8s; }
+.stagger-2 { animation-delay: 1.2s; }
+.stagger-3 { animation-delay: 1.6s; }
+.stagger-4 { animation-delay: 2.0s; }
+.stagger-5 { animation-delay: 2.4s; }
+.stagger-6 { animation-delay: 2.8s; }
+
+@keyframes linearFromTop {
+  from { opacity: 0; transform: translateY(-80px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes linearFromBottom {
+  from { opacity: 0; transform: translateY(80px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes linearFromLeft {
+  from { opacity: 0; transform: translateX(-120px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes linearFromRight {
+  from { opacity: 0; transform: translateX(120px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes linearFromScale {
+  from { opacity: 0; transform: scale(0.4); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================
+   DRAG-FRAME & CURSOR (auf Desktop-Elementen)
+   ============================================================ */
+.drag-frame {
+  position: relative;
+}
+
+.drag-frame::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 20;
+  animation: dragAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.drag-frame.snapped::before {
+  animation: dragSnap 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.drag-cursor {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 21;
+  filter: drop-shadow(0 2px 4px rgba(166,92,246,0.4));
+  animation: cursorAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.drag-cursor.snapped {
+  animation: cursorDisappear 0.3s ease-out forwards;
+}
+
+@keyframes dragAppear {
+  from { opacity: 0; transform: scale(1.1); }
+  to   { opacity: 0.9; transform: scale(1); }
+}
+
+@keyframes dragSnap {
+  0%   { opacity: 0.9; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.95); border-color: transparent; }
+}
+
+@keyframes cursorAppear {
+  from { opacity: 0; transform: translate(-6px, 6px) scale(0.8); }
+  to   { opacity: 1; transform: translate(0, 0) scale(1); }
+}
+
+@keyframes cursorDisappear {
+  from { opacity: 1; transform: translate(0, 0); }
+  to   { opacity: 0; transform: translate(4px, -4px); }
+}
+
+/* ============================================================
+   ZOOM TRANSITION (Desktop → Hero, KEINE ÜBERLAPPUNG)
+   ============================================================ */
+.desktop-stage.zooming {
+  animation: desktopZoomOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes desktopZoomOut {
+  0%   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  60%  { opacity: 0.05; transform: scale(2.2) translateY(-20%); filter: blur(10px); }
+  100% { opacity: 0; transform: scale(2.8) translateY(-35%); filter: blur(16px); }
+}
+
+/* Finale Hero-Section (erscheint erst, wenn Desktop weg ist) */
+.hero-final {
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 0.7s ease-out 0.5s, transform 0.7s ease-out 0.5s;
+  pointer-events: none;
+}
+
+.hero-final.is-visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   GLITZER-SCHLEIER (HINTER dem Desktop)
+   ============================================================ */
+.glitter-veil-behind {
+  position: absolute;
+  inset: -15%;
+  width: 130%;
+  height: 130%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.glitter-beam {
+  position: absolute;
+  width: 150%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(166,92,246,0.4) 20%, rgba(236,72,153,0.6) 50%, rgba(59,130,246,0.4) 80%, transparent 100%);
+  top: -10%;
+  left: -25%;
+  transform: rotate(-35deg);
+  box-shadow: 0 0 30px rgba(166,92,246,0.4), 0 0 60px rgba(236,72,153,0.3);
+  animation: beamSweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.glitter-particles {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image:
+    radial-gradient(circle, rgba(166,92,246,0.9) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(236,72,153,0.9) 1px, transparent 1px),
+    radial-gradient(circle, rgba(59,130,246,0.9) 1.5px, transparent 1.5px),
+    radial-gradient(circle, rgba(196,154,255,0.7) 0.8px, transparent 0.8px);
+  background-size: 50px 50px, 70px 70px, 90px 90px, 35px 35px;
+  background-position: 0 0, 25px 25px, 50px 10px, 15px 40px;
+  transform: rotate(-35deg);
+  opacity: 0;
+  mask-image: linear-gradient(90deg, transparent 30%, black 45%, black 55%, transparent 70%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, black 45%, black 55%, transparent 70%);
+  animation: particlesSweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes beamSweep {
+  0%   { transform: rotate(-35deg) translateY(-120%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: rotate(-35deg) translateY(220%); opacity: 0; }
+}
+
+@keyframes particlesSweep {
+  0%   { opacity: 0; transform: rotate(-35deg) translateY(-120%); }
+  20%  { opacity: 0.7; }
+  80%  { opacity: 0.4; }
+  100% { opacity: 0; transform: rotate(-35deg) translateY(220%); }
+}
+
+/* ============================================================
+   ORBS & DEKORATION
+   ============================================================ */
+.pulse-anim {
+  animation: pulseOrb 6s ease-in-out infinite;
+}
+
+.float-anim {
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+@keyframes pulseOrb {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.15); }
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33%      { transform: translateY(-20px) translateX(10px); }
+  66%      { transform: translateY(10px) translateX(-10px); }
+}
+
+/* ============================================================
+   SCROLL-REVEAL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   CARDS & HOVER
+   ============================================================ */
+.card {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(166, 92, 246, 0.12), 0 20px 40px rgba(0,0,0,0.3);
+  border-color: rgba(166, 92, 246, 0.3);
+}
+
+/* ============================================================
+   PROSE (Blog)
+   ============================================================ */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-display);
+  color: var(--color-text-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.prose h1 { font-size: 2.25rem; }
+.prose h2 { font-size: 1.75rem; }
+.prose h3 { font-size: 1.375rem; }
+
+.prose p {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.25rem;
+  line-height: 1.75;
+}
+
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--color-primary-light);
+}
+
+.prose ul, .prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  background: var(--color-surface);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--color-primary-light);
+}
+
+.prose pre {
+  background: var(--color-surface);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-border);
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--color-text-secondary);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+/* ============================================================
+   EN-PAGE UTILITY CLASSES (Legacy-Support)
+   ============================================================ */
+
+.section {
+  /* Padding wird via Tailwind-Utilities (pt-32 etc.) gesteuert */
+}
+
+.container-main {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-spectrum-purple), var(--color-spectrum-pink), var(--color-spectrum-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-spectrum-pink));
+  color: white;
+  box-shadow: 0 10px 25px rgba(166, 92, 246, 0.25);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.prose-invert {
+  /* Dark-Theme ist global aktiv, kein extra Invert nötig */
+}
