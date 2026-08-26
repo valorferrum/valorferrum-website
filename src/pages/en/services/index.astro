@@ -4,45 +4,143 @@ import Layout from '../../../layouts/Layout.astro';
 
 <Layout
   title="Services | SEO, SEA, Web Development & Tracking | Valorferrum"
-  description="Performance marketing from a single source: SEO, SEA, web development and tracking. Value-driven, fair and measurable for SMEs, startups & NGOs."
+  description="Performance Marketing from a single source: SEO, SEA, Web Development and Tracking. Sustainable, fair and measurable for SMEs, startups & NGOs."
   lang="en"
 >
-  <section class="pt-32 pb-24 px-4">
+  <!-- ==================== HERO ==================== -->
+  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-purple/8 rounded-full blur-[120px] pulse-anim"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-pink/6 rounded-full blur-[100px] float-anim"></div>
+
+    <div class="max-w-5xl mx-auto text-center relative">
+      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6">
+        Services
+      </h1>
+      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto" style="transition-delay: 100ms;">
+        Technical, strategic and data-driven. No pressure, no hidden agenda.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== ALL-IN-ONE BENEFIT ==================== -->
+  <section class="py-20 px-6 bg-surface relative overflow-hidden" aria-labelledby="allinone-heading">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/5 to-transparent rounded-full blur-3xl"></div>
+
+    <div class="max-w-4xl mx-auto text-center relative">
+      <h2 id="allinone-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-6">
+        Four Disciplines. One Strategy.
+      </h2>
+      <p class="reveal text-text-secondary leading-relaxed max-w-2xl mx-auto mb-12" style="transition-delay: 100ms;">
+        SEO and SEA share keyword data. Tracking provides the foundation for both.
+        Web development sets the technical prerequisites. When handled separately,
+        knowledge is lost. With me, it all comes together.
+      </p>
+
+      <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4" style="transition-delay: 200ms;">
+        <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
+          <div class="text-primary font-display font-bold text-xl mb-1">SEO</div>
+          <div class="text-text-secondary text-xs">Build visibility</div>
+        </div>
+        <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
+          <div class="text-spectrum-pink font-display font-bold text-xl mb-1">SEA</div>
+          <div class="text-text-secondary text-xs">Buy visibility</div>
+        </div>
+        <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
+          <div class="text-spectrum-blue font-display font-bold text-xl mb-1">Dev</div>
+          <div class="text-text-secondary text-xs">Technical foundation</div>
+        </div>
+        <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
+          <div class="text-spectrum-yellow font-display font-bold text-xl mb-1">Data</div>
+          <div class="text-text-secondary text-xs">Measure decisions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICE-CARDS ==================== -->
+  <section class="pb-24 px-6" aria-labelledby="services-heading">
     <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-16 reveal">
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-text-primary mb-6">Services</h1>
-        <p class="text-text-secondary text-lg max-w-2xl mx-auto">Technical, strategic and data-driven. No sales pressure, no hidden agenda.</p>
+      <h2 id="services-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-8 text-center">
+        Our Services
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        <!-- SEO -->
+        <a href="/en/services/seo/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-500">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-purple/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">SEO & Search Engine Optimization</h3>
+            <p class="text-text-secondary text-sm leading-relaxed mb-4">
+              Keyword research, content optimization and technical SEO. I bring your website to the front of search engines – sustainably and data-driven.
+            </p>
+            <span class="text-primary text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">More about SEO →</span>
+          </div>
+        </a>
+
+        <!-- SEA -->
+        <a href="/en/services/sea/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all duration-500" style="transition-delay: 100ms;">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-pink/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-pink transition-colors">SEA, PPC & Google Ads</h3>
+            <p class="text-text-secondary text-sm leading-relaxed mb-4">
+              Paid advertising on Google, Microsoft Ads and Meta. Campaign setup, keyword strategy and ongoing optimization for maximum efficiency.
+            </p>
+            <span class="text-spectrum-pink text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">More about SEA →</span>
+          </div>
+        </a>
+
+        <!-- Web Development -->
+        <a href="/en/services/web-development/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-blue/30 transition-all duration-500" style="transition-delay: 200ms;">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-blue transition-colors">Web Development</h3>
+            <p class="text-text-secondary text-sm leading-relaxed mb-4">
+              Fast, accessible websites with Astro, WordPress or TYPO3. Technically clean and search-engine-optimized.
+            </p>
+            <span class="text-spectrum-blue text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">More about Web Development →</span>
+          </div>
+        </a>
+
+        <!-- Tracking -->
+        <a href="/en/services/tracking/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-yellow/30 transition-all duration-500" style="transition-delay: 300ms;">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-yellow/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative">
+            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-yellow transition-colors">Tracking & Analytics</h3>
+            <p class="text-text-secondary text-sm leading-relaxed mb-4">
+              Google Tag Manager, conversion tracking and privacy-compliant web analytics. The infrastructure for data-driven decisions.
+            </p>
+            <span class="text-spectrum-yellow text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">More about Tracking →</span>
+          </div>
+        </a>
       </div>
 
-      <!-- Service Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        <a href="/en/services/seo/" class="block reveal p-8 rounded-xl bg-surface border border-border hover:border-primary/30 transition-all group">
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">SEO</h3>
-          <p class="text-text-secondary text-sm mb-4">Technical optimization, content strategy & sustainable rankings. Onpage, offpage, local & e-commerce SEO.</p>
-          <span class="text-primary text-sm font-medium group-hover:underline">Learn more →</span>
-        </a>
-        <a href="/en/services/sea/" class="block reveal p-8 rounded-xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all group" style="transition-delay:100ms">
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-pink transition-colors">SEA & PPC</h3>
-          <p class="text-text-secondary text-sm mb-4">Google Ads, Microsoft Ads, Meta, LinkedIn & more. Data-driven campaign optimization.</p>
-          <span class="text-spectrum-pink text-sm font-medium group-hover:underline">Learn more →</span>
-        </a>
-        <a href="/en/services/web-development/" class="block reveal p-8 rounded-xl bg-surface border border-border hover:border-spectrum-blue/30 transition-all group" style="transition-delay:200ms">
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-blue transition-colors">Web Development</h3>
-          <p class="text-text-secondary text-sm mb-4">Astro, WordPress, TYPO3. Performance-optimized websites that load and convert.</p>
-          <span class="text-spectrum-blue text-sm font-medium group-hover:underline">Learn more →</span>
-        </a>
-        <a href="/en/services/tracking/" class="block reveal p-8 rounded-xl bg-surface border border-border hover:border-spectrum-yellow/30 transition-all group" style="transition-delay:300ms">
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-yellow transition-colors">Tracking & Analytics</h3>
-          <p class="text-text-secondary text-sm mb-4">GA4, GTM, server-side tracking, BigQuery & Looker Studio. Privacy-compliant data strategy.</p>
-          <span class="text-spectrum-yellow text-sm font-medium group-hover:underline">Learn more →</span>
-        </a>
-      </div>
-
-      <!-- CTA -->
-      <div class="reveal p-8 rounded-xl bg-gradient-to-br from-primary/10 to-spectrum-pink/10 border border-primary/20 text-center">
-        <h3 class="font-display text-2xl font-bold text-text-primary mb-4">Pricing & Process</h3>
-        <p class="text-text-secondary mb-6">Fixed price or hourly rate – you decide. No hidden costs, no surprises.</p>
-        <a href="/en/pricing/" class="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-primary text-white font-semibold hover:brightness-110 transition-all">View pricing</a>
+      <!-- ==================== CTA ==================== -->
+      <div class="reveal p-8 md:p-10 rounded-2xl bg-gradient-to-br from-spectrum-purple/15 via-spectrum-pink/10 to-spectrum-blue/15 border border-primary/20 text-center relative overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="relative">
+          <h3 class="font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">Pricing & Process</h3>
+          <p class="text-text-secondary max-w-xl mx-auto mb-8">Fixed price or hourly rate – you decide. No hidden costs, no surprises.</p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/en/pricing/" class="px-8 py-4 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0">
+              View Pricing
+            </a>
+            <a href="/en/contact/" class="px-8 py-4 border border-primary/30 hover:border-primary text-primary hover:text-primary-light rounded-lg transition-all duration-300 hover:bg-primary/5">
+              Request Free Consultation
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>

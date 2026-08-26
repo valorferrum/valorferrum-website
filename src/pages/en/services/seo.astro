@@ -2,45 +2,347 @@
 import Layout from '../../../layouts/Layout.astro';
 ---
 
-<Layout
-  title="SEO | Technical Optimization, Content & Strategy | Valorferrum"
-  description="SEO freelancer for technical optimization, content strategy & sustainable rankings. For SMEs, startups & NGOs."
+<Layout 
+  title="SEO & Search Engine Optimization – Sustainable Rankings | Valorferrum"
+  description="SEO freelancer for technical optimization, content strategy & sustainable rankings. Onpage, offpage, local SEO & e-commerce. For SMEs, startups & NGOs."
   lang="en"
 >
-  <section class="pt-32 pb-24 px-4">
-    <div class="max-w-4xl mx-auto">
-      <div class="mb-12 reveal">
-        <a href="/en/services/" class="text-sm text-text-muted hover:text-primary transition-colors mb-4 inline-flex items-center gap-1">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  <!-- ==================== HERO ==================== -->
+  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-purple/8 rounded-full blur-[120px] pulse-anim"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-blue/6 rounded-full blur-[100px] float-anim"></div>
+
+    <div class="max-w-4xl mx-auto text-center relative">
+      <div class="reveal mb-4">
+        <a href="/en/services/" class="text-sm text-text-muted hover:text-primary transition-colors inline-flex items-center gap-1 group">
+          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           All Services
         </a>
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-text-primary mb-6">SEO</h1>
-        <p class="text-text-secondary text-lg">Technical, content-based & strategic. No quick-fix marketing, just solid work that lasts.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-        <div class="reveal p-6 rounded-xl bg-surface border border-border">
+      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight" style="transition-delay: 100ms;">
+        SEO & Search Engine Optimization
+      </h1>
+      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
+        Technical, content-driven and strategic. No quick-fix marketing,
+        but solid work that sticks with Google.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== THE FOUR PILLARS ==================== -->
+  <section class="pb-24 px-6" aria-labelledby="pillars-heading">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 id="pillars-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
+          Technical SEO, Content & Onpage Optimization
+        </h2>
+        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
+          Search engine optimization is not a single measure, but an interplay.
+          I work on all pillars that sustainably improve your ranking.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Technical SEO -->
+        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-500">
+          <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          </div>
           <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Technical SEO</h3>
-          <p class="text-text-secondary text-sm">Core Web Vitals, crawl budget, indexing, Schema.org, canonicals, hreflang. Clean foundation for everything else.</p>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            The foundation decides. Without clean technology, content cannot work.
+            I optimize everything Google sees – before users see it.
+          </p>
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-primary mt-0.5">→</span>Core Web Vitals & load time optimization</li>
+            <li class="flex items-start gap-2"><span class="text-primary mt-0.5">→</span>Crawl budget, indexing & canonicals</li>
+            <li class="flex items-start gap-2"><span class="text-primary mt-0.5">→</span>Schema.org, hreflang & mobile-first</li>
+          </ul>
         </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay:100ms">
+
+        <!-- Content Strategy -->
+        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all duration-500" style="transition-delay: 100ms;">
+          <div class="w-12 h-12 rounded-lg bg-spectrum-pink/10 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-spectrum-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+          </div>
           <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Content Strategy</h3>
-          <p class="text-text-secondary text-sm">Keyword research, topic clusters, content gaps, E-E-A-T. Content that doesn't just rank, but convinces.</p>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            Content that not only ranks, but convinces. I find the questions
+            your target audience really has – and answer them better than the competition.
+          </p>
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-spectrum-pink mt-0.5">→</span>Keyword research & topic clusters</li>
+            <li class="flex items-start gap-2"><span class="text-spectrum-pink mt-0.5">→</span>Content gaps & competitive analysis</li>
+            <li class="flex items-start gap-2"><span class="text-spectrum-pink mt-0.5">→</span>E-E-A-T: Expertise, Authority, Trust</li>
+          </ul>
         </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay:200ms">
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Onpage & Offpage</h3>
-          <p class="text-text-secondary text-sm">Meta data, internal linking, backlink analysis, digital PR. Sustainable, not manipulative.</p>
+
+        <!-- Onpage Optimization -->
+        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-blue/30 transition-all duration-500" style="transition-delay: 200ms;">
+          <div class="w-12 h-12 rounded-lg bg-spectrum-blue/10 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-spectrum-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Onpage Optimization</h3>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            Every element on your page sends signals to Google.
+            I make sure these signals are clear, consistent and keyword-relevant.
+          </p>
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-spectrum-blue mt-0.5">→</span>Meta titles, descriptions & header hierarchy</li>
+            <li class="flex items-start gap-2"><span class="text-spectrum-blue mt-0.5">→</span>Internal linking & keyword density</li>
+            <li class="flex items-start gap-2"><span class="text-spectrum-blue mt-0.5">→</span>Image SEO, ALT tags & structured data</li>
+          </ul>
         </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay:300ms">
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Local & E-Commerce</h3>
-          <p class="text-text-secondary text-sm">Google Business Profile, local pack, product SEO, category optimization. For local visibility and shops.</p>
+
+        <!-- Offpage SEO -->
+        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-yellow/30 transition-all duration-500" style="transition-delay: 300ms;">
+          <div class="w-12 h-12 rounded-lg bg-spectrum-yellow/10 flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-spectrum-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Offpage SEO</h3>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">
+            Google trusts pages that other trustworthy pages link to.
+            I build authority – sustainably, not manipulatively.
+          </p>
+          <ul class="text-text-secondary text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-spectrum-yellow mt-0.5">→</span>Link building & backlink analysis</li>
+            <li class="flex items-start gap-2"><span class="text-spectrum-yellow mt-0.5">→</span>Digital PR & brand mentions</li>
+            <li class="flex items-start gap-2"><span class="text-spectrum-yellow mt-0.5">→</span>Social signals & online reputation</li>
+          </ul>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="reveal p-8 rounded-xl bg-gradient-to-br from-primary/10 to-spectrum-pink/10 border border-primary/20 text-center">
-        <h3 class="font-display text-2xl font-bold text-text-primary mb-4">Pricing & Process</h3>
-        <p class="text-text-secondary mb-6">SEO audit from 890€. Monthly support on hourly basis or fixed price. No bloated packages.</p>
-        <a href="/en/contact/" class="inline-flex items-center justify-center px-8 py-3 rounded-lg bg-primary text-white font-semibold hover:brightness-110 transition-all">Request Project</a>
+  <!-- ==================== CONCRETE MEASURES ==================== -->
+  <section class="py-24 px-6 bg-surface relative overflow-hidden" aria-labelledby="measures-heading">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/5 to-transparent rounded-full blur-3xl"></div>
+
+    <div class="max-w-5xl mx-auto relative">
+      <div class="text-center mb-16">
+        <h2 id="measures-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
+          Concrete SEO Measures for Sustainable Rankings
+        </h2>
+        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
+          No black hat, no tricks. I implement proven methods that work long-term –
+          and stick to Google's guidelines.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- E-E-A-T -->
+        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50">
+          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-text-primary text-center mb-3">E-E-A-T</h3>
+          <p class="text-text-secondary text-sm text-center leading-relaxed">
+            Expertise, Experience, Authority and Trust. I optimize your content and your profile so that Google and users see you as a credible source – not as generic filler content.
+          </p>
+        </div>
+
+        <!-- Meta Data & Headers -->
+        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 100ms;">
+          <div class="w-14 h-14 rounded-xl bg-spectrum-pink/10 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-spectrum-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-text-primary text-center mb-3">Meta Data & Headers</h3>
+          <p class="text-text-secondary text-sm text-center leading-relaxed">
+            Every page needs a clear hierarchy. I write titles and descriptions that both Google and users understand – concise, relevant and click-worthy.
+          </p>
+        </div>
+
+        <!-- Keyword Density & Relevance -->
+        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 200ms;">
+          <div class="w-14 h-14 rounded-xl bg-spectrum-blue/10 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-spectrum-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-text-primary text-center mb-3">Keyword Density & Relevance</h3>
+          <p class="text-text-secondary text-sm text-center leading-relaxed">
+            Not too little, not too much. I balance keywords naturally in texts and headings – so that content reads well for humans and ranks well for Google.
+          </p>
+        </div>
+
+        <!-- Link Building -->
+        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50">
+          <div class="w-14 h-14 rounded-xl bg-spectrum-yellow/10 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-spectrum-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-text-primary text-center mb-3">Link Building</h3>
+          <p class="text-text-secondary text-sm text-center leading-relaxed">
+            Quality over quantity. I identify relevant sources, build relationships and generate backlinks that actually strengthen your domain – not just inflate a number.
+          </p>
+        </div>
+
+        <!-- Technical Foundation -->
+        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 100ms;">
+          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-text-primary text-center mb-3">Technical Foundation</h3>
+          <p class="text-text-secondary text-sm text-center leading-relaxed">
+            Fix crawl errors, reduce load times, implement schema markup. The invisible work that makes the difference between ranking and being ignored.
+          </p>
+        </div>
+
+        <!-- Local SEO -->
+        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 200ms;">
+          <div class="w-14 h-14 rounded-xl bg-spectrum-pink/10 flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-spectrum-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          </div>
+          <h3 class="font-display text-lg font-semibold text-text-primary text-center mb-3">Local SEO</h3>
+          <p class="text-text-secondary text-sm text-center leading-relaxed">
+            Optimize Google Business Profile, ensure NAP consistency, improve local pack visibility. For businesses that want to be found in their region.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SEO KPIs ==================== -->
+  <section class="py-24 px-6" aria-labelledby="kpis-heading">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 id="kpis-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
+          SEO KPIs & Performance Measurement
+        </h2>
+        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
+          SEO is not a black box. I measure transparently which measures have which effect – and adjust the strategy based on data, not gut feeling.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Organic Traffic -->
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-500">
+          <div class="text-4xl font-display font-bold text-primary mb-3">01</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-3">Organic Traffic</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            The most important metric: How many users find you via Google & Co. – and how does that develop over time? Not snapshots, but trends.
+          </p>
+        </div>
+
+        <!-- Keyword Rankings -->
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all duration-500" style="transition-delay: 100ms;">
+          <div class="text-4xl font-display font-bold text-spectrum-pink mb-3">02</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-3">Keyword Rankings</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Where do you stand for your target keywords? I track not just position 1, but the development of the entire keyword set – including longtail opportunities.
+          </p>
+        </div>
+
+        <!-- Core Web Vitals -->
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-blue/30 transition-all duration-500" style="transition-delay: 200ms;">
+          <div class="text-4xl font-display font-bold text-spectrum-blue mb-3">03</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-3">Core Web Vitals</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Load time, interactivity and visual stability. Google's official ranking factor – and decisive for whether visitors stay or bounce.
+          </p>
+        </div>
+
+        <!-- Conversion Rate -->
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-yellow/30 transition-all duration-500">
+          <div class="text-4xl font-display font-bold text-spectrum-yellow mb-3">04</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-3">Conversion Rate</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Traffic is just the beginning. I measure how many visitors become customers, leads or inquiries – and optimize the entire funnel, not just the entry page.
+          </p>
+        </div>
+
+        <!-- Click-Through Rate -->
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-500" style="transition-delay: 100ms;">
+          <div class="text-4xl font-display font-bold text-primary mb-3">05</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-3">Click-Through Rate</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            How often is clicked when your page appears in search results? An indicator of the relevance and attractiveness of your snippets – optimizable through meta data.
+          </p>
+        </div>
+
+        <!-- Backlink Profile -->
+        <div class="reveal p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all duration-500" style="transition-delay: 200ms;">
+          <div class="text-4xl font-display font-bold text-spectrum-pink mb-3">06</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-3">Backlink Profile</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">
+            Quality and quantity of referring domains. A stronger link profile means more trust and better rankings – but only if the links come from relevant sources.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SEO PROCESS ==================== -->
+  <section class="py-24 px-6 bg-surface relative overflow-hidden" aria-labelledby="process-heading">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-primary/5 to-transparent rounded-full blur-3xl"></div>
+
+    <div class="max-w-4xl mx-auto relative">
+      <div class="text-center mb-16">
+        <h2 id="process-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
+          SEO Process: From Analysis to Ranking
+        </h2>
+        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
+          Sustainable SEO takes time – but no time without a plan. Every step is comprehensible and measurable.
+        </p>
+      </div>
+
+      <div class="space-y-8">
+        <!-- Step 1 -->
+        <div class="reveal flex gap-6 items-start">
+          <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+            <span class="font-display text-xl font-bold text-primary">1</span>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-2">SEO Audit & Status Quo</h3>
+            <p class="text-text-secondary leading-relaxed">
+              Technical analysis, competitive research and keyword potential. Where do you stand – and where are the biggest quick wins? I look at your site the way Google does: without assumptions, with data.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="reveal flex gap-6 items-start" style="transition-delay: 100ms;">
+          <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-spectrum-pink/10 flex items-center justify-center">
+            <span class="font-display text-xl font-bold text-spectrum-pink">2</span>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-2">Strategy & Roadmap</h3>
+            <p class="text-text-secondary leading-relaxed">
+              Prioritization of measures, content planning and technical roadmap. No quick shot, but a plan that works – prioritized by effort and impact.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="reveal flex gap-6 items-start" style="transition-delay: 200ms;">
+          <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-spectrum-blue/10 flex items-center justify-center">
+            <span class="font-display text-xl font-bold text-spectrum-blue">3</span>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-semibold text-text-primary mb-2">Implementation, Monitoring & Iteration</h3>
+            <p class="text-text-secondary leading-relaxed">
+              I implement, measure results and adjust the strategy. Regular reporting shows which measures work – and where we need to pivot. SEO is not a one-off project, but continuous optimization.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="reveal font-display text-3xl md:text-4xl font-bold text-text-primary mb-6">
+        Better Rankings Start with an Audit
+      </h2>
+      <p class="reveal text-text-secondary text-lg max-w-2xl mx-auto mb-10" style="transition-delay: 100ms;">
+        Whether technical audit, content strategy or complete SEO management: Let's talk in a free initial consultation about where your biggest leverage lies.
+      </p>
+      <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay: 200ms;">
+        <a href="/en/contact/" class="px-8 py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-0.5">
+          Free Initial Consultation
+        </a>
+        <a href="/en/pricing/" class="px-8 py-4 bg-surface border border-border text-text-primary font-semibold rounded-xl hover:border-primary/50 transition-all duration-300">
+          Prices & Packages
+        </a>
       </div>
     </div>
   </section>
