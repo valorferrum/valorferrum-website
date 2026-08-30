@@ -7,13 +7,111 @@ interface Props {
   title: string;
   description?: string;
   lang?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
 
 const { 
   title, 
   description = 'Freelancer für Performance Marketing, Martech & datengetriebene Digitalstrategie.',
-  lang = 'de'
+  lang = 'de',
+  ogImage = '/og-image.jpg',
+  noindex = false
 } = Astro.props;
+
+const siteUrl = 'https://valorferrum.de';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage, siteUrl).href;
+
+// Hreflang Mapping DE <-> EN
+const pathMap: Record<string, { de: string; en: string }> = {
+  '/de/': { de: '/de/', en: '/en/' },
+  '/de/leistungen/': { de: '/de/leistungen/', en: '/en/services/' },
+  '/de/leistungen/seo/': { de: '/de/leistungen/seo/', en: '/en/services/seo/' },
+  '/de/leistungen/sea/': { de: '/de/leistungen/sea/', en: '/en/services/sea/' },
+  '/de/leistungen/webentwicklung/': { de: '/de/leistungen/webentwicklung/', en: '/en/services/web-development/' },
+  '/de/leistungen/tracking/': { de: '/de/leistungen/tracking/', en: '/en/services/tracking/' },
+  '/de/preise/': { de: '/de/preise/', en: '/en/pricing/' },
+  '/de/preise/kalkulation/': { de: '/de/preise/kalkulation/', en: '/en/pricing/calculation/' },
+  '/de/blog/': { de: '/de/blog/', en: '/en/blog/' },
+  '/de/ueber-mich/': { de: '/de/ueber-mich/', en: '/en/about/' },
+  '/de/kontakt/': { de: '/de/kontakt/', en: '/en/contact/' },
+  '/de/impressum/': { de: '/de/impressum/', en: '/en/imprint/' },
+  '/de/datenschutz/': { de: '/de/datenschutz/', en: '/en/privacy/' },
+  '/en/': { de: '/de/', en: '/en/' },
+  '/en/services/': { de: '/de/leistungen/', en: '/en/services/' },
+  '/en/services/seo/': { de: '/de/leistungen/seo/', en: '/en/services/seo/' },
+  '/en/services/sea/': { de: '/de/leistungen/sea/', en: '/en/services/sea/' },
+  '/en/services/web-development/': { de: '/de/leistungen/webentwicklung/', en: '/en/services/web-development/' },
+  '/en/services/tracking/': { de: '/de/leistungen/tracking/', en: '/en/services/tracking/' },
+  '/en/pricing/': { de: '/de/preise/', en: '/en/pricing/' },
+  '/en/pricing/calculation/': { de: '/de/preise/kalkulation/', en: '/en/pricing/calculation/' },
+  '/en/blog/': { de: '/de/blog/', en: '/en/blog/' },
+  '/en/about/': { de: '/de/ueber-mich/', en: '/en/about/' },
+  '/en/contact/': { de: '/de/kontakt/', en: '/en/contact/' },
+  '/en/imprint/': { de: '/de/impressum/', en: '/en/imprint/' },
+  '/en/privacy/': { de: '/de/datenschutz/', en: '/en/privacy/' },
+};
+
+const mapped = pathMap[Astro.url.pathname];
+let dePath = mapped?.de;
+let enPath = mapped?.en;
+
+// Fallback für nicht-gemappte Pfade (Blog-Posts etc.)
+if (!mapped) {
+  if (lang === 'de') {
+    dePath = Astro.url.pathname;
+    enPath = Astro.url.pathname.replace(/^\/de\//, '/en/');
+  } else {
+    enPath = Astro.url.pathname;
+    dePath = Astro.url.pathname.replace(/^\/en\//, '/de/');
+  }
+}
+
+const deCanonical = new URL(dePath || '/de/', siteUrl).href;
+const enCanonical = new URL(enPath || '/en/', siteUrl).href;
+
+// JSON-LD Structured Data
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'Valorferrum',
+      url: siteUrl,
+      logo: `${siteUrl}/og-image.jpg`,
+      description: lang === 'de' 
+        ? 'Performance Marketing Freelancer – SEO, SEA, Webentwicklung & Tracking.' 
+        : 'Performance Marketing Freelancer – SEO, SEA, Web Development & Tracking.'
+    },
+    {
+      '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
+      name: 'Valorferrum',
+      jobTitle: 'Performance Marketing Freelancer',
+      url: siteUrl,
+      worksFor: { '@id': `${siteUrl}/#organization` }
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'Valorferrum',
+      inLanguage: lang === 'de' ? 'de-DE' : 'en-US',
+      publisher: { '@id': `${siteUrl}/#organization` }
+    },
+    {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+      url: canonicalUrl,
+      name: title,
+      description: description,
+      inLanguage: lang === 'de' ? 'de-DE' : 'en-US',
+      isPartOf: { '@id': `${siteUrl}/#website` }
+    }
+  ]
+};
 ---
 
 <!DOCTYPE html>
@@ -23,7 +121,38 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="de" href={deCanonical} />
+    <link rel="alternate" hreflang="en" href={enCanonical} />
+    <link rel="alternate" hreflang="x-default" href={deCanonical} />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content="Valorferrum" />
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    
+    <!-- Fonts (vorerst CDN – wird später lokal ersetzt) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
