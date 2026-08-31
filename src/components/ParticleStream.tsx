@@ -1,18 +1,17 @@
-// src/components/ParticleStream.tsx
 import { useEffect, useRef } from 'react';
 
-// Deine Spectrum-Farben + Ember
-const COLORS = ['#22D3EE', '#EC4899', '#FBBF24', '#8B5CF6', '#F97316'];
+const TAU = Math.PI * 2;
 
-type Particle = {
-  x: number;
-  y: number;
-  r: number;
-  c: string;
-  v: number; // velocity
-  ph: number; // phase for sine wave
-  a: number; // alpha/opacity
-};
+// Drei Wellen-Bänder wie im Mockup (Cyan / Pink / Amber)
+const WAVES = [
+  { color: '#22D3EE', y: 0.70, amp: 26, freq: 0.011, speed: 1.0, size: 1.6, n: 110 },
+  { color: '#EC4899', y: 0.81, amp: 34, freq: 0.008, speed: 0.7, size: 1.8, n: 110 },
+  { color: '#FBBF24', y: 0.92, amp: 22, freq: 0.013, speed: 1.3, size: 1.5, n: 90 },
+];
+const DUST_COLORS = ['#8B5CF6', '#EC4899', '#22D3EE', '#FBBF24'];
+
+type WaveP = { x: number; j: number; r: number; a: number; ph: number; w: number };
+type DustP = { x: number; y: number; r: number; c: string; v: number; ph: number; a: number };
 
 export default function ParticleStream() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,120 +19,113 @@ export default function ParticleStream() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap DPR at 2 for performance
-    
-    let width = 0;
-    let height = 0;
-    let animationFrameId = 0;
-    let isVisible = false;
-    let particles: Particle[] = [];
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    // Draw a single frame (used for reduced motion or initial paint)
-    const draw = (time: number) => {
-      ctx.clearRect(0, 0, width, height);
-      
-      for (const p of particles) {
-        // Gentle vertical floating effect
-        const yOffset = Math.sin(time / 4000 + p.ph) * 10;
-        
-        // Pulsing opacity
-        ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(time / 1400 + p.ph));
-        ctx.fillStyle = p.c;
-        
+    let w = 0, h = 0, raf = 0, visible = false;
+    let wavePs: WaveP[] = [];
+    let dustPs: DustP[] = [];
+
+    const draw = (t: number) => {
+      ctx.clearRect(0, 0, w, h);
+
+      // Partikel-Wellen
+      for (const p of wavePs) {
+        const wv = WAVES[p.w];
+        const y = h * wv.y + Math.sin(p.x * wv.freq + t * 0.0006 * wv.speed + p.ph) * wv.amp + p.j;
+        ctx.globalAlpha = p.a * (0.55 + 0.45 * Math.sin(t / 900 + p.ph));
+        ctx.fillStyle = wv.color;
         ctx.beginPath();
-        ctx.arc(p.x, p.y + yOffset, p.r, 0, Math.PI * 2);
+        ctx.arc(p.x, y, p.r, 0, TAU);
         ctx.fill();
       }
-      ctx.globalAlpha = 1; // Reset
-    };
 
-    // Animation loop
-    const loop = (time: number) => {
-      for (const p of particles) {
-        p.x += p.v; // Move right
-        if (p.x > width + 10) p.x = -10; // Wrap around
+      // Schwebender Staub darüber
+      for (const p of dustPs) {
+        const y = p.y + Math.sin(t / 4000 + p.ph) * 10;
+        ctx.globalAlpha = p.a * (0.6 + 0.4 * Math.sin(t / 1400 + p.ph));
+        ctx.fillStyle = p.c;
+        ctx.beginPath();
+        ctx.arc(p.x, y, p.r, 0, TAU);
+        ctx.fill();
       }
-      draw(time);
-      animationFrameId = requestAnimationFrame(loop);
+      ctx.globalAlpha = 1;
     };
 
-    const stop = () => {
-      cancelAnimationFrame(animationFrameId);
-      animationFrameId = 0;
-    };
-
-    const start = () => {
-      if (!prefersReducedMotion && isVisible && !animationFrameId) {
-        animationFrameId = requestAnimationFrame(loop);
+    const loop = (t: number) => {
+      for (const p of dustPs) {
+        p.x += p.v;
+        if (p.x > w + 10) p.x = -10;
       }
+      draw(t);
+      raf = requestAnimationFrame(loop);
     };
 
-    // Setup canvas dimensions and generate particles
+    const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+    const start = () => { if (!reduced && visible && !raf) raf = requestAnimationFrame(loop); };
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
+      w = rect.width;
+      h = rect.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Fewer particles on mobile for performance
-      const particleCount = width < 768 ? 50 : 120;
-      
-      particles = Array.from({ length: particleCount }, () => ({
-        x: Math.random() * width,
-        y: height * (0.4 + Math.random() * 0.6), // Concentrate mostly in lower 60%
-        r: 0.5 + Math.random() * 1.5,
-        c: COLORS[Math.floor(Math.random() * COLORS.length)],
-        v: 0.05 + Math.random() * 0.2, // Slow drift
-        ph: Math.random() * Math.PI * 2,
-        a: 0.2 + Math.random() * 0.5,
+      const mobile = w < 768 ? 0.45 : 1;
+
+      wavePs = [];
+      WAVES.forEach((wv, wi) => {
+        const n = Math.round(wv.n * mobile);
+        for (let i = 0; i < n; i++) {
+          wavePs.push({
+            x: Math.random() * w,
+            j: (Math.random() - 0.5) * 8,
+            r: wv.size * (0.6 + Math.random() * 0.8),
+            a: 0.25 + Math.random() * 0.55,
+            ph: Math.random() * TAU,
+            w: wi,
+          });
+        }
+      });
+
+      dustPs = Array.from({ length: Math.round(40 * mobile) }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h * 0.6,
+        r: 0.5 + Math.random() * 1.3,
+        c: DUST_COLORS[Math.floor(Math.random() * DUST_COLORS.length)],
+        v: 0.05 + Math.random() * 0.2,
+        ph: Math.random() * TAU,
+        a: 0.15 + Math.random() * 0.4,
       }));
 
-      if (prefersReducedMotion) {
-        draw(0); // Draw once statically
-      }
+      if (reduced) draw(1200); // statisches Bild bei reduced motion
     };
 
-    // Intersection Observer to pause when scrolled out of view
     const observer = new IntersectionObserver(
       ([entry]) => {
-        isVisible = entry.isIntersecting;
-        isVisible ? start() : stop();
+        visible = entry.isIntersecting;
+        if (visible) start(); else stop();
       },
       { threshold: 0.1 }
     );
+    const onVis = () => { if (document.hidden) stop(); else start(); };
 
-    const handleVisibilityChange = () => {
-      document.hidden ? stop() : start();
-    };
-
-    // Initialize
     resize();
     observer.observe(canvas);
     window.addEventListener('resize', resize);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    document.addEventListener('visibilitychange', onVis);
 
-    // Cleanup
     return () => {
       stop();
       observer.disconnect();
       window.removeEventListener('resize', resize);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="particle-stream"
-      aria-hidden="true"
-    />
-  );
+  return <canvas ref={canvasRef} className="particle-stream" aria-hidden="true" />;
 }

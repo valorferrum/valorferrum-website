@@ -70,43 +70,91 @@ body {
 }
 
 /* ============================================================
-   4. VISUAL IDENTITY 2.0 – SIGNATURE ELEMENTS
+   4. VISUAL IDENTITY 2.0 – SIGNATURE ELEMENTS (V2)
    ============================================================ */
 
-/* --- 4.1 Brush Accent (Akzent-Wörter in H1/H2) --- */
+/* --- 4.1 Brush Accent (dicker Pinselstrich, Flame-Gradient) --- */
 .brush-accent {
   font-family: var(--font-brush);
   font-weight: 400;
-  background-image: linear-gradient(92deg, #EC4899 0%, #F97316 55%, #FBBF24 100%);
+  display: inline-block;
+  font-size: 1.12em;
+  line-height: 1.15;
+  transform: rotate(-2deg);
+  background-image: linear-gradient(92deg, #EC4899 0%, #F97316 45%, #FBBF24 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  padding-right: 0.15em; /* Verhindert das Abschneiden von Unterlängen */
+  padding-right: 0.18em;
+  filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.35));
 }
 
-/* --- 4.2 Flame Button (Cursor-Follow CTA) --- */
+/* --- 4.2 Slogan (eigene Bühne, Gradient-Dashes) --- */
+.vf-slogan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: rgba(248, 250, 252, 0.8);
+}
+.vf-slogan::before,
+.vf-slogan::after {
+  content: '';
+  height: 2px;
+  width: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #EC4899, #F97316, #FBBF24);
+  opacity: 0.7;
+}
+@media (max-width: 640px) {
+  .vf-slogan::before, .vf-slogan::after { display: none; }
+}
+
+/* --- 4.3 Flame Button V2 (brennender Rahmen + Embers + Cursor-Glow) --- */
 .flame-btn {
   position: relative;
   display: inline-flex;
   border-radius: 9999px;
-  padding: 2px;
+  padding: 3px;
   isolation: isolate;
-  overflow: hidden;
   text-decoration: none;
   cursor: pointer;
 }
 
-/* Statische Basis-Border */
-.flame-btn::before {
-  content: '';
+/* Der "brennende" Rahmen */
+.flame-btn__fire {
   position: absolute;
-  inset: 0;
+  inset: -2px;
   border-radius: inherit;
   z-index: -1;
-  background: linear-gradient(90deg, rgba(236, 72, 153, 0.45), rgba(249, 115, 22, 0.45), rgba(251, 191, 36, 0.45));
+  background: linear-gradient(90deg, #EC4899, #F97316 30%, #FBBF24 50%, #F97316 70%, #EC4899);
+  filter: blur(1.5px) saturate(1.35); /* Fallback ohne SVG-Turbulence */
+  animation: flameFlicker 2.2s ease-in-out infinite;
+  box-shadow:
+    0 0 22px rgba(249, 115, 22, 0.5),
+    0 0 55px rgba(236, 72, 153, 0.28);
 }
 
-/* Der Glow, der der Maus folgt */
+/* Aufsteigende Funken */
+.flame-btn__embers { position: absolute; inset: 0; pointer-events: none; }
+.flame-btn__embers i {
+  position: absolute;
+  bottom: 55%;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  opacity: 0;
+  animation: emberRise 1.9s linear infinite;
+}
+.flame-btn__embers i:nth-child(1) { left: 10%; background: #FBBF24; animation-delay: 0.1s; }
+.flame-btn__embers i:nth-child(2) { left: 26%; background: #F97316; animation-delay: 0.7s; animation-duration: 2.3s; }
+.flame-btn__embers i:nth-child(3) { left: 44%; background: #EC4899; animation-delay: 1.2s; }
+.flame-btn__embers i:nth-child(4) { left: 60%; background: #FBBF24; animation-delay: 0.4s; animation-duration: 2.1s; }
+.flame-btn__embers i:nth-child(5) { left: 76%; background: #F97316; animation-delay: 1.5s; }
+.flame-btn__embers i:nth-child(6) { left: 90%; background: #FBBF24; animation-delay: 0.9s; animation-duration: 2.4s; }
+
+/* Cursor-Follow Glow (innen) */
 .flame-btn__glow {
   position: absolute;
   inset: 0;
@@ -114,14 +162,11 @@ body {
   z-index: -1;
   opacity: 0;
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), 
+  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%),
               #FBBF24 0%, #F97316 35%, #EC4899 65%, transparent 100%);
 }
-
 .flame-btn:hover .flame-btn__glow,
-.flame-btn:focus-visible .flame-btn__glow {
-  opacity: 1;
-}
+.flame-btn:focus-visible .flame-btn__glow { opacity: 1; }
 
 .flame-btn__inner {
   position: relative;
@@ -132,12 +177,9 @@ body {
   color: var(--color-text-primary);
   transition: background-color 0.3s ease;
 }
+.flame-btn:hover .flame-btn__inner { background: var(--color-surface-elevated); }
 
-.flame-btn:hover .flame-btn__inner {
-  background: var(--color-surface-elevated);
-}
-
-/* --- 4.3 Particle Stream Canvas --- */
+/* --- 4.4 Particle Stream & Laser Beams --- */
 .particle-stream {
   position: absolute;
   inset: 0;
@@ -145,6 +187,34 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 0;
+}
+.laser-beams {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+.laser-beam { animation: beamBreathe 7s ease-in-out infinite; }
+.laser-beam--2 { animation-delay: 1.4s; }
+.laser-beam--3 { animation-delay: 2.8s; }
+.laser-beam--4 { animation-delay: 4.2s; }
+
+@keyframes flameFlicker {
+  0%, 100% { opacity: 0.88; transform: scale(1, 1); }
+  30%      { opacity: 1;    transform: scale(1.01, 1.04); }
+  55%      { opacity: 0.92; transform: scale(1.005, 0.985); }
+  78%      { opacity: 1;    transform: scale(1.012, 1.02); }
+}
+@keyframes emberRise {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
+  12%  { opacity: 0.95; }
+  100% { transform: translate(4px, -30px) scale(0.3); opacity: 0; }
+}
+@keyframes beamBreathe {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 0.9; }
 }
 
 /* ============================================================
@@ -245,7 +315,7 @@ body {
 @keyframes floatOrb {
   0%, 100% { transform: translateY(0) translateX(0); }
   33%      { transform: translateY(-20px) translateX(10px); }
-  66%      { transform: translateY(10px) translateX(-10px);
+  66%      { transform: translateY(10px) translateX(-10px); }
 }
 
 /* ============================================================
@@ -338,6 +408,10 @@ body {
   .pulse-anim, .float-anim {
     animation: none !important;
   }
+
+  .flame-btn__fire { animation: none; }
+  .flame-btn__embers { display: none; }
+  .laser-beam { animation: none; }
 
   .flame-btn__glow {
     /* Bei reduced motion zeigen wir den Glow statisch in der Mitte statt Cursor-Follow */

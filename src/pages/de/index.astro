@@ -4,6 +4,7 @@ import ParticleStream from '../../components/ParticleStream.tsx';
 import FlameButton from '../../components/FlameButton.tsx';
 import BrushAccent from '../../components/BrushAccent.astro';
 import { getCollection } from 'astro:content';
+import LaserBeams from '../../components/LaserBeams.astro';
 
 const lang = 'de';
 const allPosts = await getCollection('blog');
@@ -22,8 +23,8 @@ const meta = {
 // Vor dem Löschen von HeroAssembler.tsx bitte 1:1 gegen das dortige STRINGS-Objekt (lang='de') abgleichen.
 // Nur die Werte anpassen – Struktur & Styling bleiben wie unten.
 const hero = {
-  h1Start: 'Freelancer für digitale',
-  h1Accent: 'Sichtbarkeit',
+  brand: 'Valorferrum',
+  h1Line: 'Freelancer für digitale Sichtbarkeit',
   subline: 'Dein Erfolg. Mein Maßstab.',
   intro: 'Als Freelancer verbinde ich SEO, SEA, Webentwicklung und Tracking – aus einer Hand, ohne Agentur-Overhead. Für KMU, Startups und NGOs.',
   slogan: 'Digitale Sichtbarkeit, die bleibt. Performance, die besteht.',
@@ -34,30 +35,27 @@ const hero = {
 };
 ---
 
-<Layout title={meta.title} description={meta.description} lang={lang}>
+<!-- ==================== HERO (VI 2.0 V2) ==================== -->
+<section class="relative overflow-hidden" aria-label="Hero">
+  <ParticleStream client:visible />
+  <LaserBeams />
 
-  <!-- ==================== HERO (VI 2.0: ParticleStream + BrushAccent + FlameButton) ==================== -->
-  <section class="relative overflow-hidden" aria-label="Hero">
-    <ParticleStream client:visible />
-
-    <!-- Ruhiger Focal-Glow hinter der Headline (statisch) -->
-    <div class="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-spectrum-purple/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
-
-    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-28 md:pt-36 pb-28 md:pb-36 text-center">
-      <h1 class="text-4xl md:text-6xl font-display font-extrabold tracking-tight text-text-primary mb-6">
-        {hero.h1Start} <BrushAccent text={hero.h1Accent} />
-      </h1>
-      <p class="text-xl md:text-2xl font-display font-semibold text-text-primary mb-4">{hero.subline}</p>
-      <p class="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed mb-4">{hero.intro}</p>
-      <p class="font-mono text-sm text-text-muted mb-10">{hero.slogan}</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <FlameButton client:visible href={hero.ctaPrimaryHref}>{hero.ctaPrimaryLabel}</FlameButton>
-        <a href={hero.ctaSecondaryHref} class="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-border hover:border-primary/50 text-text-primary hover:text-primary-light font-medium transition-all duration-300">
-          {hero.ctaSecondaryLabel}
-        </a>
-      </div>
+  <div class="relative z-10 max-w-5xl mx-auto px-6 pt-24 md:pt-32 pb-32 md:pb-40 text-center">
+    <h1 class="font-display font-extrabold tracking-tight text-text-primary">
+      <BrushAccent text={hero.brand} class="text-5xl md:text-7xl" />
+      <span class="block mt-4 text-3xl md:text-5xl">{hero.h1Line}</span>
+    </h1>
+    <p class="mt-6 text-xl md:text-2xl font-display font-semibold text-text-primary">{hero.subline}</p>
+    <p class="mt-4 text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">{hero.intro}</p>
+    <p class="vf-slogan mt-8 font-mono text-sm md:text-base">{hero.slogan}</p>
+    <div class="mt-10 flex flex-col sm:flex-row gap-5 justify-center">
+      <FlameButton client:visible href={hero.ctaPrimaryHref}>{hero.ctaPrimaryLabel}</FlameButton>
+      <a href={hero.ctaSecondaryHref} class="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-border hover:border-primary/50 text-text-primary hover:text-primary-light font-medium transition-all duration-300">
+        {hero.ctaSecondaryLabel}
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Divider -->
   <hr class="max-w-6xl mx-auto h-px border-0 bg-gradient-to-r from-transparent via-spectrum-purple/25 to-transparent" />
