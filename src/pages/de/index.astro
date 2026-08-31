@@ -19,22 +19,8 @@ const meta = {
 <Layout title={meta.title} description={meta.description} lang={lang}>
   
   <!-- ==================== HERO MIT ANIMATION ==================== -->
-  <section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20" aria-label="Hero">
-    
-    <!-- Dekorative Orbs (Hintergrund) -->
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-purple/10 rounded-full blur-[120px] pulse-anim"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-pink/8 rounded-full blur-[100px] float-anim"></div>
-
-    <!-- Hier kommt die React-Animation hin -->
-    <div class="relative z-10 w-full max-w-5xl mx-auto px-6">
-      <HeroAssembler client:load />
-    </div>
-
-    <!-- Scroll-Indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-muted animate-bounce">
-      <span class="text-xs uppercase tracking-widest">Scroll</span>
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-    </div>
+  <section class="relative" aria-label="Hero">
+    <HeroAssembler client:visible lang="de" />
   </section>
 
   <!-- ==================== LEISTUNGEN ==================== -->

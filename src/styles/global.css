@@ -538,8 +538,12 @@ body {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 .animate-float {
@@ -551,4 +555,59 @@ body {
   background-image: linear-gradient(to right, #2A2A3A 1px, transparent 1px),
                     linear-gradient(to bottom, #2A2A3A 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+/* ===== Hero Puzzle-Assembler ===== */
+@keyframes lockGlow {
+  0%, 100% { filter: drop-shadow(0 0 0 var(--glow)); }
+  45%      { filter: drop-shadow(0 0 26px var(--glow)); }
+}
+@keyframes puzzlePulse {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
+  50%      { filter: drop-shadow(0 0 34px rgba(166,92,246,0.55)); }
+}
+.puzzle-pulse { animation: puzzlePulse 0.8s ease-in-out 1 both; }
+
+@keyframes zoomAway {
+  0%   { transform: scale(1);   opacity: 1; filter: blur(0); }
+  100% { transform: scale(1.9); opacity: 0; filter: blur(12px); }
+}
+.zoom-away { animation: zoomAway 0.85s cubic-bezier(0.55,0,0.55,0.2) forwards; pointer-events: none; }
+
+@keyframes heroIn {
+  0%   { opacity: 0; transform: scale(0.94) translateY(14px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.hero-in { animation: heroIn 0.9s ease-out 0.15s both; }
+
+/* ===== Hero Puzzle – Glow & Puls (Brand-Lila #A65CF6) ===== */
+@keyframes lockGlow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
+  45%      { filter: drop-shadow(0 0 26px rgba(166,92,246,0.9)); }
+}
+@keyframes puzzlePulse {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
+  50%      { filter: drop-shadow(0 0 34px rgba(166,92,246,0.6)); }
+}
+.puzzle-pulse { animation: puzzlePulse 0.7s ease-in-out 1 both; }
+
+/* ===== Hero: Einrast-Impuls + Glow ===== */
+@keyframes einrast {
+  0%   { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
+  50%  { transform: scale(0.988); filter: drop-shadow(0 0 16px rgba(166,92,246,0.6)); }
+  100% { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
+}
+
+/* ===== SEO-Seite: Positionszähler-Glow ===== */
+@keyframes rankGlow {
+  0%   { box-shadow: 0 0 0 rgba(166,92,246,0); }
+  50%  { box-shadow: 0 0 24px rgba(166,92,246,0.35); }
+  100% { box-shadow: 0 0 0 rgba(166,92,246,0); }
+}
+
+/* ===== SEO: Nummern-Badge-Puls beim Rangwechsel ===== */
+@keyframes rankTick {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.22); }
+  100% { transform: scale(1); }
 }
