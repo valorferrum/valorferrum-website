@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* ============================================================
+   1. FONTS
+   ============================================================ */
 @font-face {
   font-family: 'Geist';
   src: url('/fonts/Geist-Variable.woff2') format('woff2');
@@ -7,28 +10,47 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Permanent Marker';
+  src: url('/fonts/PermanentMarker-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ============================================================
+   2. DESIGN TOKENS (@theme)
+   ============================================================ */
 @theme {
+  /* Brand & Spectrum Colors */
   --color-primary: #A65CF6;
   --color-primary-light: #C49AFF;
   --color-primary-dark: #7C3AED;
+  
   --color-spectrum-purple: #8B5CF6;
   --color-spectrum-pink: #EC4899;
   --color-spectrum-blue: #3B82F6;
   --color-spectrum-yellow: #FBBF24;
+  --color-ember: #F97316; /* VI 2.0: Brücke Pink -> Gelb */
+
+  /* Surfaces & Text */
   --color-bg: #0A0A0F;
   --color-surface: #14141B;
   --color-surface-elevated: #1E1E2A;
   --color-border: #2A2A3A;
+  
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
   --color-text-muted: #64748B;
+
+  /* Typography */
   --font-display: 'Geist', 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --font-brush: 'Permanent Marker', cursive; /* VI 2.0: Akzent-Schrift */
 }
 
 /* ============================================================
-   BASE
+   3. BASE STYLES
    ============================================================ */
 html {
   scroll-behavior: smooth;
@@ -48,301 +70,165 @@ body {
 }
 
 /* ============================================================
-   DESKTOP STAGE (GRÖSSER)
+   4. VISUAL IDENTITY 2.0 – SIGNATURE ELEMENTS
    ============================================================ */
-.desktop-stage {
-  position: relative;
-  width: min(96vw, 1200px);
-  height: min(78vh, 740px);
-  margin: 0 auto;
-  transform: scale(0.5);
-  opacity: 0;
-  animation: desktopAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+/* --- 4.1 Brush Accent (Akzent-Wörter in H1/H2) --- */
+.brush-accent {
+  font-family: var(--font-brush);
+  font-weight: 400;
+  background-image: linear-gradient(92deg, #EC4899 0%, #F97316 55%, #FBBF24 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.15em; /* Verhindert das Abschneiden von Unterlängen */
 }
 
-.desktop-frame {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(145deg, #1a1a2e, #14141B);
-  border-radius: 20px;
-  border: 2px solid var(--color-border);
-  padding: 12px;
-  box-shadow:
-    0 0 0 1px rgba(166, 92, 246, 0.1),
-    0 30px 80px rgba(0,0,0,0.6),
-    0 0 100px rgba(166, 92, 246, 0.08);
+/* --- 4.2 Flame Button (Cursor-Follow CTA) --- */
+.flame-btn {
   position: relative;
-  z-index: 5;
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 2px;
+  isolation: isolate;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.desktop-frame::before {
+/* Statische Basis-Border */
+.flame-btn::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: 20%;
-  right: 20%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-  border-radius: 3px;
-  opacity: 0.6;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(236, 72, 153, 0.45), rgba(249, 115, 22, 0.45), rgba(251, 191, 36, 0.45));
 }
 
-.desktop-screen {
+/* Der Glow, der der Maus folgt */
+.flame-btn__glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%), 
+              #FBBF24 0%, #F97316 35%, #EC4899 65%, transparent 100%);
+}
+
+.flame-btn:hover .flame-btn__glow,
+.flame-btn:focus-visible .flame-btn__glow {
+  opacity: 1;
+}
+
+.flame-btn__inner {
+  position: relative;
+  border-radius: inherit;
+  background: var(--color-surface);
+  padding: 0.85rem 1.7rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease;
+}
+
+.flame-btn:hover .flame-btn__inner {
+  background: var(--color-surface-elevated);
+}
+
+/* --- 4.3 Particle Stream Canvas --- */
+.particle-stream {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: var(--color-bg);
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   5. UI COMPONENTS & UTILITIES
+   ============================================================ */
+
+/* --- Cards & Hover --- */
+.card {
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px rgba(166, 92, 246, 0.12), 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(166, 92, 246, 0.3);
+}
+
+/* --- Buttons (Legacy / Secondary) --- */
+.btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 2rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.desktop-stand {
-  position: absolute;
-  bottom: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 28px;
-  background: linear-gradient(180deg, #1a1a2e, #14141B);
-  border-radius: 0 0 8px 8px;
-  border: 1px solid var(--color-border);
-  border-top: none;
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-spectrum-pink));
+  color: white;
+  box-shadow: 0 10px 25px rgba(166, 92, 246, 0.25);
 }
 
-.desktop-base {
-  position: absolute;
-  bottom: -36px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 10px;
-  background: var(--color-border);
-  border-radius: 5px;
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-.desktop-camera {
-  position: absolute;
-  top: 3px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
-  background: var(--color-border);
-  border-radius: 50%;
+/* --- Gradient Text Utility --- */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-spectrum-purple), var(--color-spectrum-pink), var(--color-spectrum-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-@keyframes desktopAppear {
-  from { opacity: 0; transform: scale(0.5); }
-  to   { opacity: 1; transform: scale(1); }
+/* --- Container Utility --- */
+.container-main {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-/* ============================================================
-   LINEAR PLACE ANIMATIONS (geradlinig, auf Desktop)
-   ============================================================ */
-.linear-top,
-.linear-bottom,
-.linear-left,
-.linear-right,
-.linear-scale {
-  animation-duration: 0.6s;
-  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  animation-fill-mode: both;
-  opacity: 0;
-}
-
-.linear-top    { animation-name: linearFromTop; }
-.linear-bottom { animation-name: linearFromBottom; }
-.linear-left   { animation-name: linearFromLeft; }
-.linear-right  { animation-name: linearFromRight; }
-.linear-scale  { animation-name: linearFromScale; }
-
-.stagger-1 { animation-delay: 0.8s; }
-.stagger-2 { animation-delay: 1.2s; }
-.stagger-3 { animation-delay: 1.6s; }
-.stagger-4 { animation-delay: 2.0s; }
-.stagger-5 { animation-delay: 2.4s; }
-.stagger-6 { animation-delay: 2.8s; }
-
-@keyframes linearFromTop {
-  from { opacity: 0; transform: translateY(-80px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes linearFromBottom {
-  from { opacity: 0; transform: translateY(80px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes linearFromLeft {
-  from { opacity: 0; transform: translateX(-120px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes linearFromRight {
-  from { opacity: 0; transform: translateX(120px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes linearFromScale {
-  from { opacity: 0; transform: scale(0.4); }
-  to   { opacity: 1; transform: scale(1); }
+/* --- Background Grid Pattern --- */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, #2A2A3A 1px, transparent 1px),
+    linear-gradient(to bottom, #2A2A3A 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 /* ============================================================
-   DRAG-FRAME & CURSOR (auf Desktop-Elementen)
+   6. ANIMATIONS & SCROLL REVEAL
    ============================================================ */
-.drag-frame {
-  position: relative;
-}
 
-.drag-frame::before {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border: 2px solid var(--color-primary);
-  border-radius: 12px;
+/* --- Scroll Reveal --- */
+.reveal {
   opacity: 0;
-  pointer-events: none;
-  z-index: 20;
-  animation: dragAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  transform: translateY(1.5rem);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.drag-frame.snapped::before {
-  animation: dragSnap 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.drag-cursor {
-  position: absolute;
-  top: -12px;
-  right: -12px;
-  width: 24px;
-  height: 24px;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 21;
-  filter: drop-shadow(0 2px 4px rgba(166,92,246,0.4));
-  animation: cursorAppear 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-.drag-cursor.snapped {
-  animation: cursorDisappear 0.3s ease-out forwards;
-}
-
-@keyframes dragAppear {
-  from { opacity: 0; transform: scale(1.1); }
-  to   { opacity: 0.9; transform: scale(1); }
-}
-
-@keyframes dragSnap {
-  0%   { opacity: 0.9; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.95); border-color: transparent; }
-}
-
-@keyframes cursorAppear {
-  from { opacity: 0; transform: translate(-6px, 6px) scale(0.8); }
-  to   { opacity: 1; transform: translate(0, 0) scale(1); }
-}
-
-@keyframes cursorDisappear {
-  from { opacity: 1; transform: translate(0, 0); }
-  to   { opacity: 0; transform: translate(4px, -4px); }
-}
-
-/* ============================================================
-   ZOOM TRANSITION (Desktop → Hero, KEINE ÜBERLAPPUNG)
-   ============================================================ */
-.desktop-stage.zooming {
-  animation: desktopZoomOut 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  pointer-events: none;
-}
-
-@keyframes desktopZoomOut {
-  0%   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-  60%  { opacity: 0.05; transform: scale(2.2) translateY(-20%); filter: blur(10px); }
-  100% { opacity: 0; transform: scale(2.8) translateY(-35%); filter: blur(16px); }
-}
-
-/* Finale Hero-Section (erscheint erst, wenn Desktop weg ist) */
-.hero-final {
-  opacity: 0;
-  transform: scale(0.88);
-  transition: opacity 0.7s ease-out 0.5s, transform 0.7s ease-out 0.5s;
-  pointer-events: none;
-}
-
-.hero-final.is-visible {
+.reveal.revealed {
   opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
+  transform: translateY(0);
 }
 
-/* ============================================================
-   GLITZER-SCHLEIER (HINTER dem Desktop)
-   ============================================================ */
-.glitter-veil-behind {
-  position: absolute;
-  inset: -15%;
-  width: 130%;
-  height: 130%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 4;
-}
-
-.glitter-beam {
-  position: absolute;
-  width: 150%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(166,92,246,0.4) 20%, rgba(236,72,153,0.6) 50%, rgba(59,130,246,0.4) 80%, transparent 100%);
-  top: -10%;
-  left: -25%;
-  transform: rotate(-35deg);
-  box-shadow: 0 0 30px rgba(166,92,246,0.4), 0 0 60px rgba(236,72,153,0.3);
-  animation: beamSweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.glitter-particles {
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background-image:
-    radial-gradient(circle, rgba(166,92,246,0.9) 1.2px, transparent 1.2px),
-    radial-gradient(circle, rgba(236,72,153,0.9) 1px, transparent 1px),
-    radial-gradient(circle, rgba(59,130,246,0.9) 1.5px, transparent 1.5px),
-    radial-gradient(circle, rgba(196,154,255,0.7) 0.8px, transparent 0.8px);
-  background-size: 50px 50px, 70px 70px, 90px 90px, 35px 35px;
-  background-position: 0 0, 25px 25px, 50px 10px, 15px 40px;
-  transform: rotate(-35deg);
-  opacity: 0;
-  mask-image: linear-gradient(90deg, transparent 30%, black 45%, black 55%, transparent 70%);
-  -webkit-mask-image: linear-gradient(90deg, transparent 30%, black 45%, black 55%, transparent 70%);
-  animation: particlesSweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes beamSweep {
-  0%   { transform: rotate(-35deg) translateY(-120%); opacity: 0; }
-  15%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: rotate(-35deg) translateY(220%); opacity: 0; }
-}
-
-@keyframes particlesSweep {
-  0%   { opacity: 0; transform: rotate(-35deg) translateY(-120%); }
-  20%  { opacity: 0.7; }
-  80%  { opacity: 0.4; }
-  100% { opacity: 0; transform: rotate(-35deg) translateY(220%); }
-}
-
-/* ============================================================
-   ORBS & DEKORATION
-   ============================================================ */
+/* --- Ambient Orbs (Background Decoration) --- */
 .pulse-anim {
   animation: pulseOrb 6s ease-in-out infinite;
 }
@@ -359,38 +245,11 @@ body {
 @keyframes floatOrb {
   0%, 100% { transform: translateY(0) translateX(0); }
   33%      { transform: translateY(-20px) translateX(10px); }
-  66%      { transform: translateY(10px) translateX(-10px); }
+  66%      { transform: translateY(10px) translateX(-10px);
 }
 
 /* ============================================================
-   SCROLL-REVEAL
-   ============================================================ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ============================================================
-   CARDS & HOVER
-   ============================================================ */
-.card {
-  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 40px rgba(166, 92, 246, 0.12), 0 20px 40px rgba(0,0,0,0.3);
-  border-color: rgba(166, 92, 246, 0.3);
-}
-
-/* ============================================================
-   PROSE (Blog)
+   7. PROSE (Blog Typography)
    ============================================================ */
 .prose h1, .prose h2, .prose h3, .prose h4 {
   font-family: var(--font-display);
@@ -461,271 +320,33 @@ body {
   color: var(--color-text-muted);
   font-style: italic;
 }
+
 /* ============================================================
-   EN-PAGE UTILITY CLASSES (Legacy-Support)
+   8. ACCESSIBILITY & FALLBACKS
    ============================================================ */
 
-.section {
-  /* Padding wird via Tailwind-Utilities (pt-32 etc.) gesteuert */
-}
-
-.container-main {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-spectrum-purple), var(--color-spectrum-pink), var(--color-spectrum-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.2s ease-out;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-spectrum-pink));
-  color: white;
-  box-shadow: 0 10px 25px rgba(166, 92, 246, 0.25);
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.prose-invert {
-  /* Dark-Theme ist global aktiv, kein extra Invert nötig */
-}
-
-/* Scroll Reveal Fallback - verhindert unsichtbare Elemente */
-.reveal {
-  opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* WICHTIG: Fallback wenn JS deaktiviert ist oder Observer versagt */
+/* Respektiert Nutzer-Einstellungen für reduzierte Bewegung */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  
   .reveal {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }
+  
+  .pulse-anim, .float-anim {
+    animation: none !important;
+  }
+
+  .flame-btn__glow {
+    /* Bei reduced motion zeigen wir den Glow statisch in der Mitte statt Cursor-Follow */
+    background: radial-gradient(160px circle at 50% 50%, #FBBF24 0%, #F97316 35%, #EC4899 65%, transparent 100%);
+  }
 }
 
-/* Noscript-Fallback */
+/* Fallback, wenn JavaScript deaktiviert ist */
 .no-js .reveal {
   opacity: 1 !important;
   transform: none !important;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-/* Das Grid-Pattern für den Hintergrund */
-.bg-grid-pattern {
-  background-image: linear-gradient(to right, #2A2A3A 1px, transparent 1px),
-                    linear-gradient(to bottom, #2A2A3A 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* ===== Hero Puzzle-Assembler ===== */
-@keyframes lockGlow {
-  0%, 100% { filter: drop-shadow(0 0 0 var(--glow)); }
-  45%      { filter: drop-shadow(0 0 26px var(--glow)); }
-}
-@keyframes puzzlePulse {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
-  50%      { filter: drop-shadow(0 0 34px rgba(166,92,246,0.55)); }
-}
-.puzzle-pulse { animation: puzzlePulse 0.8s ease-in-out 1 both; }
-
-@keyframes zoomAway {
-  0%   { transform: scale(1);   opacity: 1; filter: blur(0); }
-  100% { transform: scale(1.9); opacity: 0; filter: blur(12px); }
-}
-.zoom-away { animation: zoomAway 0.85s cubic-bezier(0.55,0,0.55,0.2) forwards; pointer-events: none; }
-
-@keyframes heroIn {
-  0%   { opacity: 0; transform: scale(0.94) translateY(14px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-.hero-in { animation: heroIn 0.9s ease-out 0.15s both; }
-
-/* ===== Hero Puzzle – Glow & Puls (Brand-Lila #A65CF6) ===== */
-@keyframes lockGlow {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
-  45%      { filter: drop-shadow(0 0 26px rgba(166,92,246,0.9)); }
-}
-@keyframes puzzlePulse {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
-  50%      { filter: drop-shadow(0 0 34px rgba(166,92,246,0.6)); }
-}
-.puzzle-pulse { animation: puzzlePulse 0.7s ease-in-out 1 both; }
-
-/* ===== Hero: Einrast-Impuls + Glow ===== */
-@keyframes einrast {
-  0%   { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
-  50%  { transform: scale(0.988); filter: drop-shadow(0 0 16px rgba(166,92,246,0.6)); }
-  100% { transform: scale(1);     filter: drop-shadow(0 0 0 rgba(166,92,246,0)); }
-}
-
-/* ===== SEO-Seite: Positionszähler-Glow ===== */
-@keyframes rankGlow {
-  0%   { box-shadow: 0 0 0 rgba(166,92,246,0); }
-  50%  { box-shadow: 0 0 24px rgba(166,92,246,0.35); }
-  100% { box-shadow: 0 0 0 rgba(166,92,246,0); }
-}
-
-/* ===== SEO: Nummern-Badge-Puls beim Rangwechsel ===== */
-@keyframes rankTick {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.22); }
-  100% { transform: scale(1); }
-}
-
-/* ===== Tracking: Klick-Ripple & +1 Chip ===== */
-@keyframes clickRipple {
-  0%   { transform: scale(0.4); opacity: 0.8; }
-  100% { transform: scale(1.8); opacity: 0; }
-}
-@keyframes chipDrift {
-  0%   { transform: translate(0, 8px);  opacity: 0; }
-  30%  { transform: translate(0, 0);    opacity: 1; }
-  100% { transform: translate(10px, -8px); opacity: 1; }
-}
-
-/* ============================================================
-   CHROMATIC FRAME – irideszente, mausreaktive Rahmen
-   Palette aus Brand + Spectrum: #C49AFF / #A65CF6 / #22D3EE / #EC4899
-   ============================================================ */
-
-.vf-glow {
-  --mx: 50%;
-  --my: 50%;
-  position: relative;
-}
-
-/* --- 1) Button-Frame: leuchtender Rand, folgt dem Cursor --- */
-.vf-btn-frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px; /* Rahmenstärke */
-  background: radial-gradient(
-    240px circle at var(--mx) var(--my),
-    rgba(248, 250, 252, 0.95),          /* silberner Hotspot */
-    rgba(196, 154, 255, 0.9) 25%,       /* helles Violett */
-    rgba(166, 92, 246, 0.8) 45%,        /* Brand-Lila */
-    rgba(34, 211, 238, 0.6) 65%,        /* eisiges Cyan */
-    transparent 90%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-/* --- Innere Kristall-Schliere (Glas-Reflexion über dem Button) --- */
-.vf-btn-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    200px circle at var(--mx) var(--my),
-    rgba(196, 154, 255, 0.25),
-    rgba(34, 211, 238, 0.08) 50%,
-    transparent 80%
-  );
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-.vf-btn-frame:hover::before,
-.vf-btn-frame:focus-visible::before,
-.vf-btn-frame:hover::after,
-.vf-btn-frame:focus-visible::after {
-  opacity: 1;
-}
-
-/* --- 2) Card-Glow: subtiler Chrom-Ring für Panels/Cards --- */
-.vf-card-glow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(
-    320px circle at var(--mx) var(--my),
-    rgba(196, 154, 255, 0.5),
-    rgba(166, 92, 246, 0.35) 35%,
-    rgba(34, 211, 238, 0.25) 60%,
-    transparent 85%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.vf-card-glow:hover::before { opacity: 0.8; }
-
-/* --- 3) Irideszente Akzente (sparsam einsetzen!) --- */
-.vf-iridescent {
-  background: linear-gradient(100deg, #C49AFF, #A65CF6 30%, #22D3EE 55%, #EC4899 80%, #C49AFF);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: vf-sheen 7s linear infinite;
-}
-@keyframes vf-sheen {
-  to { background-position: 200% center; }
-}
-
-.vf-divider {
-  height: 1px;
-  border: 0;
-  background: linear-gradient(90deg, transparent, #A65CF6 20%, #22D3EE 45%, #C49AFF 65%, #EC4899 85%, transparent);
-  opacity: 0.45;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vf-iridescent { animation: none; }
 }
