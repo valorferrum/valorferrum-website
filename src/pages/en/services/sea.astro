@@ -1,33 +1,16 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import SeaAdGlow from '../../../components/SeaAdGlow.tsx';
+
+const meta = {
+  title: "SEA Freelancer – Google Ads & PPC | Valorferrum",
+  description: "Google Ads, Microsoft Ads & PPC campaigns with measurable return. Data-driven, transparent, without agency overhead – for SMEs, startups and NGOs.",
+};
 ---
 
-<Layout 
-  title="SEA, Google Ads & PPC – Paid Advertising That Pays Off | Valorferrum"
-  description="SEA freelancer for Google Ads, Microsoft Ads & PPC. Data-driven campaign optimization from setup to reporting. For SMEs, startups and NGOs."
-  lang="en"
->
-  <!-- ==================== HERO ==================== -->
-  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-    <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-spectrum-pink/8 rounded-full blur-[120px] pulse-anim"></div>
-    <div class="absolute bottom-1/4 left-1/4 w-80 h-80 bg-spectrum-purple/6 rounded-full blur-[100px] float-anim"></div>
-
-    <div class="max-w-4xl mx-auto text-center relative">
-      <div class="reveal mb-4">
-        <a href="/en/services/" class="text-sm text-text-muted hover:text-primary transition-colors inline-flex items-center gap-1 group">
-          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          All Services
-        </a>
-      </div>
-
-      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight" style="transition-delay: 100ms;">
-        SEA, Google Ads & PPC
-      </h1>
-      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
-        Paid advertising that pays off. No budget burning, no gut-feeling strategies.
-        I build campaigns that deliver measurable results.
-      </p>
-    </div>
+<Layout title={meta.title} description={meta.description} lang="en">
+  <section class="relative" aria-label="SEA Hero">
+    <SeaAdGlow client:visible lang="en" />
   </section>
 
   <!-- ==================== PLATFORMS ==================== -->

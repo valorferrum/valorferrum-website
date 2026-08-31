@@ -611,3 +611,121 @@ body {
   40%  { transform: scale(1.22); }
   100% { transform: scale(1); }
 }
+
+/* ===== Tracking: Klick-Ripple & +1 Chip ===== */
+@keyframes clickRipple {
+  0%   { transform: scale(0.4); opacity: 0.8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+@keyframes chipDrift {
+  0%   { transform: translate(0, 8px);  opacity: 0; }
+  30%  { transform: translate(0, 0);    opacity: 1; }
+  100% { transform: translate(10px, -8px); opacity: 1; }
+}
+
+/* ============================================================
+   CHROMATIC FRAME – irideszente, mausreaktive Rahmen
+   Palette aus Brand + Spectrum: #C49AFF / #A65CF6 / #22D3EE / #EC4899
+   ============================================================ */
+
+.vf-glow {
+  --mx: 50%;
+  --my: 50%;
+  position: relative;
+}
+
+/* --- 1) Button-Frame: leuchtender Rand, folgt dem Cursor --- */
+.vf-btn-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px; /* Rahmenstärke */
+  background: radial-gradient(
+    240px circle at var(--mx) var(--my),
+    rgba(248, 250, 252, 0.95),          /* silberner Hotspot */
+    rgba(196, 154, 255, 0.9) 25%,       /* helles Violett */
+    rgba(166, 92, 246, 0.8) 45%,        /* Brand-Lila */
+    rgba(34, 211, 238, 0.6) 65%,        /* eisiges Cyan */
+    transparent 90%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+/* --- Innere Kristall-Schliere (Glas-Reflexion über dem Button) --- */
+.vf-btn-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    200px circle at var(--mx) var(--my),
+    rgba(196, 154, 255, 0.25),
+    rgba(34, 211, 238, 0.08) 50%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.vf-btn-frame:hover::before,
+.vf-btn-frame:focus-visible::before,
+.vf-btn-frame:hover::after,
+.vf-btn-frame:focus-visible::after {
+  opacity: 1;
+}
+
+/* --- 2) Card-Glow: subtiler Chrom-Ring für Panels/Cards --- */
+.vf-card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    320px circle at var(--mx) var(--my),
+    rgba(196, 154, 255, 0.5),
+    rgba(166, 92, 246, 0.35) 35%,
+    rgba(34, 211, 238, 0.25) 60%,
+    transparent 85%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.vf-card-glow:hover::before { opacity: 0.8; }
+
+/* --- 3) Irideszente Akzente (sparsam einsetzen!) --- */
+.vf-iridescent {
+  background: linear-gradient(100deg, #C49AFF, #A65CF6 30%, #22D3EE 55%, #EC4899 80%, #C49AFF);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: vf-sheen 7s linear infinite;
+}
+@keyframes vf-sheen {
+  to { background-position: 200% center; }
+}
+
+.vf-divider {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, #A65CF6 20%, #22D3EE 45%, #C49AFF 65%, #EC4899 85%, transparent);
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vf-iridescent { animation: none; }
+}

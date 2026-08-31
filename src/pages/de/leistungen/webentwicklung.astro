@@ -1,33 +1,16 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import WebDevCodeMorph from '../../../components/WebDevCodeMorph.tsx';
+
+const meta = {
+  title: "Website erstellen lassen | Webentwicklung | Valorferrum",
+  description: "Website erstellen lassen: Astro, WordPress & TYPO3 – performance-first, barrierefrei & mit SEO-Basis-Setup. Für KMU, Startups und NGOs.",
+};
 ---
 
-<Layout 
-  title="Webentwicklung & Website erstellen lassen | Valorferrum"
-  description="Webentwicklung mit Astro, WordPress und TYPO3. Performance-optimierte, barrierefreie Websites mit SEO-Basis. Für KMU, Startups und NGOs."
-  lang="de"
->
-  <!-- ==================== HERO ==================== -->
-  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-blue/8 rounded-full blur-[120px] pulse-anim"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-purple/6 rounded-full blur-[100px] float-anim"></div>
-
-    <div class="max-w-4xl mx-auto text-center relative">
-      <div class="reveal mb-4">
-        <a href="/de/leistungen/" class="text-sm text-text-muted hover:text-primary transition-colors inline-flex items-center gap-1 group">
-          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Alle Leistungen
-        </a>
-      </div>
-
-      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight" style="transition-delay: 100ms;">
-        Webentwicklung
-      </h1>
-      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
-        Websites, die schnell laden, bei Google gefunden werden und auf allen Geräten funktionieren. 
-        Astro ist mein Werkzeug der Wahl – für alles andere finden wir die passende Lösung.
-      </p>
-    </div>
+<Layout title={meta.title} description={meta.description} lang="de">
+  <section class="relative" aria-label="Webentwicklungs Hero">
+    <WebDevCodeMorph client:visible lang="de" />
   </section>
 
   <!-- ==================== TECH-STACK ==================== -->

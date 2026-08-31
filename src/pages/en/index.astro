@@ -1,70 +1,24 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import HeroAssembler from '../../components/HeroAssembler.tsx';
 import { getCollection } from 'astro:content';
 
 const lang = 'en';
 const allPosts = await getCollection('blog');
 const posts = allPosts
-  .filter(p => p.slug.startsWith('en/'))
+  .filter(p => p.data.lang === 'en')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2);
 
 const meta = {
-  title: "Valorferrum – Freelancer for Digital Visibility | SEO, SEA & Web Development",
-  description: "Your success. My benchmark. As a freelancer, I combine SEO, SEA, web development and tracking – from one source, without agency overhead. For SMEs, startups and NGOs.",
+  title: "Valorferrum – Freelancer for Digital Visibility | SEO, SEA & Web Dev",
+  description: "Your success. My standard. As a freelancer, I combine SEO, SEA, web development and tracking – from one source, without agency overhead.",
 };
 ---
 
-<Layout title={meta.title} description={meta.description} lang={lang}>
-  <!-- ==================== HERO ==================== -->
-  <section class="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-20" aria-label="Hero">
-    <!-- Dekorative Orbs -->
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-purple/10 rounded-full blur-[120px] pulse-anim"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-pink/8 rounded-full blur-[100px] float-anim"></div>
-    <div class="absolute top-1/2 right-1/3 w-64 h-64 bg-spectrum-blue/8 rounded-full blur-[80px] pulse-anim" style="animation-delay: 2s;"></div>
-
-    <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-20 max-w-5xl mx-auto">
-      <!-- H1: Brand + USP -->
-      <h1 class="reveal text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-text-primary leading-[1.05] mb-6">
-        <span class="block">Valorferrum</span>
-        <span class="block text-xl sm:text-2xl md:text-3xl lg:text-4xl text-text-secondary font-normal mt-3 md:mt-4">
-          Freelancer for digital visibility
-        </span>
-      </h1>
-
-      <!-- H2: Slogan -->
-      <h2 class="reveal text-lg md:text-xl lg:text-2xl text-primary font-display font-medium max-w-2xl mb-8 md:mb-10" style="transition-delay: 100ms;">
-        Digital visibility that lasts. Performance that delivers.
-      </h2>
-
-      <!-- Intro-Text -->
-      <p class="reveal text-base md:text-lg text-text-secondary max-w-2xl mb-10 leading-relaxed" style="transition-delay: 200ms;">
-        SEO, SEA, web development and tracking – from one source and without agency overhead.
-        For SMEs, startups and NGOs that want to be found on Google.
-      </p>
-
-      <!-- CTA-Buttons -->
-      <div class="reveal flex flex-col sm:flex-row gap-4" style="transition-delay: 300ms;">
-        <a
-          href="/en/contact"
-          class="px-8 py-4 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0"
-        >
-          Get in touch
-        </a>
-        <a
-          href="/en/services"
-          class="px-8 py-4 border border-primary/30 hover:border-primary text-primary hover:text-primary-light rounded-lg transition-all duration-300 hover:bg-primary/5"
-        >
-          Explore services
-        </a>
-      </div>
-    </div>
-
-    <!-- Scroll-Indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-text-muted animate-bounce">
-      <span class="text-xs uppercase tracking-widest">Scroll</span>
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-    </div>
+<Layout title={meta.title} description={meta.description} lang="en">
+  <section class="relative" aria-label="Hero">
+    <HeroAssembler client:visible lang="en" />
   </section>
 
   <!-- ==================== SERVICES ==================== -->

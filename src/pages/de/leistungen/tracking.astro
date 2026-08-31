@@ -1,34 +1,16 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import TrackingDataFlow from '../../../components/TrackingDataFlow.tsx';
+
+const meta = {
+  title: "Tracking Freelancer – Web Tracking & GA4 Setup | Valorferrum",
+  description: "GA4, Google Tag Manager & Conversion-Tracking – DSGVO-konform und datengetrieben. Website Tracking Check für KMU, Startups und NGOs.",
+};
 ---
 
-<Layout 
-  title="Web Tracking, Google Tag Manager & Analytics | Valorferrum"
-  description="Tracking-Setup mit Google Analytics 4, Tag Manager & Server-Side-Tracking. Datenschutzkonforme Lösungen für datengesteuerte Entscheidungen."
-  lang="de"
->
-  <!-- ==================== HERO ==================== -->
-  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-    <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-spectrum-yellow/8 rounded-full blur-[120px] pulse-anim"></div>
-    <div class="absolute bottom-1/4 left-1/4 w-80 h-80 bg-spectrum-blue/6 rounded-full blur-[100px] float-anim"></div>
-
-    <div class="max-w-4xl mx-auto text-center relative">
-      <div class="reveal mb-4">
-        <a href="/de/leistungen/" class="text-sm text-text-muted hover:text-primary transition-colors inline-flex items-center gap-1 group">
-          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-          Alle Leistungen
-        </a>
-      </div>
-
-      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6 leading-tight" style="transition-delay: 100ms;">
-        Tracking & Analytics
-      </h1>
-      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto leading-relaxed" style="transition-delay: 200ms;">
-  Daten, die Entscheidungen treffen. Nicht nur Zahlen sammeln, sondern verstehen – 
-  mit sauberem Tracking, das Dein Marketing messbar macht. 
-  Ob Google Analytics 4, Matomo, Etracker oder Server-Side-Lösungen.
-</p>
-    </div>
+<Layout title={meta.title} description={meta.description} lang="de">
+  <section class="relative" aria-label="Tracking Hero">
+    <TrackingDataFlow client:visible lang="de" />
   </section>
 
   <!-- ==================== DIE 4 SÄULEN ==================== -->

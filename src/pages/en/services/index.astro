@@ -1,16 +1,25 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import HeroAssembler from '../../components/HeroAssembler.tsx';
-
-const meta = {
-  title: "Valorferrum – Freelancer for Digital Visibility | SEO, SEA & Web Dev",
-  description: "Your success. My standard. As a freelancer, I combine SEO, SEA, web development and tracking – from one source, without agency overhead.",
-};
+import Layout from '../../../layouts/Layout.astro';
 ---
 
-<Layout title={meta.title} description={meta.description} lang="en">
-  <section class="relative" aria-label="Hero">
-    <HeroAssembler client:visible lang="en" />
+<Layout
+  title="Services | SEO, SEA, Web Development & Tracking | Valorferrum"
+  description="Performance Marketing from a single source: SEO, SEA, Web Development and Tracking. Sustainable, fair and measurable for SMEs, startups & NGOs."
+  lang="en"
+>
+  <!-- ==================== HERO ==================== -->
+  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-purple/8 rounded-full blur-[120px] pulse-anim"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-pink/6 rounded-full blur-[100px] float-anim"></div>
+
+    <div class="max-w-5xl mx-auto text-center relative">
+      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6">
+        Services
+      </h1>
+      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto" style="transition-delay: 100ms;">
+        Technical, strategic and data-driven. No pressure, no hidden agenda.
+      </p>
+    </div>
   </section>
 
   <!-- ==================== ALL-IN-ONE BENEFIT ==================== -->
