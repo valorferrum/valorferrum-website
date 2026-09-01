@@ -12,8 +12,8 @@
 
 @font-face {
   font-family: 'Permanent Marker';
-  src: url('/fonts/PermanentMarker-Regular.woff2') format('woff2');
-  font-weight: 400;
+  src: url('/fonts/PermanentMarker.ttf') format('truetype');
+  font-weight: 800;
   font-display: swap;
 }
 
@@ -73,20 +73,20 @@ body {
    4. VISUAL IDENTITY 2.0 – SIGNATURE ELEMENTS (V2)
    ============================================================ */
 
-/* --- 4.1 Brush Accent (dicker Pinselstrich, Flame-Gradient) --- */
+/* --- 4.1 Brush Accent (Brand-Gradient, mehr Präsenz) --- */
 .brush-accent {
   font-family: var(--font-brush);
   font-weight: 400;
   display: inline-block;
-  font-size: 1.12em;
+  font-size: 1.2em;
   line-height: 1.15;
   transform: rotate(-2deg);
-  background-image: linear-gradient(92deg, #EC4899 0%, #F97316 45%, #FBBF24 90%);
+  background-image: linear-gradient(92deg, #C49AFF 0%, #A65CF6 30%, #EC4899 65%, #3B82F6 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   padding-right: 0.18em;
-  filter: drop-shadow(0 0 16px rgba(249, 115, 22, 0.35));
+  filter: drop-shadow(0 0 18px rgba(166, 92, 246, 0.45));
 }
 
 /* --- 4.2 Slogan (eigene Bühne, Gradient-Dashes) --- */
@@ -111,50 +111,45 @@ body {
   .vf-slogan::before, .vf-slogan::after { display: none; }
 }
 
-/* --- 4.3 Flame Button V2 (brennender Rahmen + Embers + Cursor-Glow) --- */
+/* --- 4.3 Flame Button V3 (harter Brand-Ring + kristalline Flames) --- */
 .flame-btn {
   position: relative;
   display: inline-flex;
   border-radius: 9999px;
-  padding: 3px;
+  padding: 2px;                              /* harte, scharfe Ring-Kante */
   isolation: isolate;
   text-decoration: none;
   cursor: pointer;
+  background: linear-gradient(90deg, #A65CF6, #EC4899 50%, #3B82F6);
+  box-shadow: 0 0 14px rgba(166, 92, 246, 0.55), 0 0 34px rgba(236, 72, 153, 0.25);
 }
 
-/* Der "brennende" Rahmen */
-.flame-btn__fire {
+/* Scharfe Crystal-Flames (keine Unschärfe!) */
+.flame-btn__flame {
   position: absolute;
-  inset: -2px;
-  border-radius: inherit;
+  pointer-events: none;
   z-index: -1;
-  background: linear-gradient(90deg, #EC4899, #F97316 30%, #FBBF24 50%, #F97316 70%, #EC4899);
-  filter: blur(1.5px) saturate(1.35); /* Fallback ohne SVG-Turbulence */
-  animation: flameFlicker 2.2s ease-in-out infinite;
-  box-shadow:
-    0 0 22px rgba(249, 115, 22, 0.5),
-    0 0 55px rgba(236, 72, 153, 0.28);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: flameShimmer 2.4s ease-in-out infinite;
+}
+.flame-btn__flame--top {
+  top: -12px;
+  clip-path: polygon(50% 0%, 80% 100%, 20% 100%);
+  background: linear-gradient(to top, #7C3AED 0%, #A65CF6 45%, #EC4899 80%, #C49AFF 100%);
+  transform-origin: 50% 100%;
+}
+.flame-btn__flame--bottom {
+  bottom: -12px;
+  clip-path: polygon(50% 100%, 80% 0%, 20% 0%);
+  background: linear-gradient(to bottom, #7C3AED 0%, #A65CF6 45%, #EC4899 80%, #C49AFF 100%);
+  transform-origin: 50% 0%;
+}
+@keyframes flameShimmer {
+  0%, 100% { opacity: 0.85; }
+  50%      { opacity: 1; }
 }
 
-/* Aufsteigende Funken */
-.flame-btn__embers { position: absolute; inset: 0; pointer-events: none; }
-.flame-btn__embers i {
-  position: absolute;
-  bottom: 55%;
-  width: 3px;
-  height: 3px;
-  border-radius: 9999px;
-  opacity: 0;
-  animation: emberRise 1.9s linear infinite;
-}
-.flame-btn__embers i:nth-child(1) { left: 10%; background: #FBBF24; animation-delay: 0.1s; }
-.flame-btn__embers i:nth-child(2) { left: 26%; background: #F97316; animation-delay: 0.7s; animation-duration: 2.3s; }
-.flame-btn__embers i:nth-child(3) { left: 44%; background: #EC4899; animation-delay: 1.2s; }
-.flame-btn__embers i:nth-child(4) { left: 60%; background: #FBBF24; animation-delay: 0.4s; animation-duration: 2.1s; }
-.flame-btn__embers i:nth-child(5) { left: 76%; background: #F97316; animation-delay: 1.5s; }
-.flame-btn__embers i:nth-child(6) { left: 90%; background: #FBBF24; animation-delay: 0.9s; animation-duration: 2.4s; }
-
-/* Cursor-Follow Glow (innen) */
+/* Cursor-Glow innen (Brand-Farben) */
 .flame-btn__glow {
   position: absolute;
   inset: 0;
@@ -163,7 +158,7 @@ body {
   opacity: 0;
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%),
-              #FBBF24 0%, #F97316 35%, #EC4899 65%, transparent 100%);
+              #C49AFF 0%, #A65CF6 40%, #EC4899 70%, transparent 100%);
 }
 .flame-btn:hover .flame-btn__glow,
 .flame-btn:focus-visible .flame-btn__glow { opacity: 1; }
@@ -417,6 +412,8 @@ body {
     /* Bei reduced motion zeigen wir den Glow statisch in der Mitte statt Cursor-Follow */
     background: radial-gradient(160px circle at 50% 50%, #FBBF24 0%, #F97316 35%, #EC4899 65%, transparent 100%);
   }
+
+  .flame-btn__flame { animation: none; transition: none; }
 }
 
 /* Fallback, wenn JavaScript deaktiviert ist */

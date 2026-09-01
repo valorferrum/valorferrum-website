@@ -1,61 +1,50 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import ParticleStream from '../../components/ParticleStream.tsx';
-import FlameButton from '../../components/FlameButton.tsx';
-import BrushAccent from '../../components/BrushAccent.astro';
-import { getCollection } from 'astro:content';
-import LaserBeams from '../../components/LaserBeams.astro';
-
-const lang = 'de';
-const allPosts = await getCollection('blog');
-const posts = allPosts
-  .filter(p => p.slug.startsWith('de/'))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 2);
-
-const meta = {
-  title: "Valorferrum – Freelancer für digitale Sichtbarkeit | SEO, SEA & Webentwicklung",
-  description: "Dein Erfolg. Mein Maßstab. Als Freelancer verbinde ich SEO, SEA, Webentwicklung und Tracking – aus einer Hand, ohne Agentur-Overhead. Für KMU, Startups und NGOs.",
-};
-
-// ⚠️ WICHTIG (Wording-Schutz):
-// Diese Werte sind eine Rekonstruktion aus den Brand-Vorgaben (Slogan, Claim, Meta).
-// Vor dem Löschen von HeroAssembler.tsx bitte 1:1 gegen das dortige STRINGS-Objekt (lang='de') abgleichen.
-// Nur die Werte anpassen – Struktur & Styling bleiben wie unten.
-const hero = {
-  brand: 'Valorferrum',
-  h1Line: 'Freelancer für digitale Sichtbarkeit',
-  subline: 'Dein Erfolg. Mein Maßstab.',
-  intro: 'Als Freelancer verbinde ich SEO, SEA, Webentwicklung und Tracking – aus einer Hand, ohne Agentur-Overhead. Für KMU, Startups und NGOs.',
-  slogan: 'Digitale Sichtbarkeit, die bleibt. Performance, die besteht.',
-  ctaPrimaryLabel: 'Kostenloses Erstgespräch',
-  ctaPrimaryHref: '/de/kontakt',
-  ctaSecondaryLabel: 'Leistungen entdecken',
-  ctaSecondaryHref: '/de/leistungen',
-};
+import ParticleWave from '../../components/ParticleWave';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
 ---
 
-<!-- ==================== HERO (VI 2.0 V2) ==================== -->
-<section class="relative overflow-hidden" aria-label="Hero">
-  <ParticleStream client:visible />
-  <LaserBeams />
-
-  <div class="relative z-10 max-w-5xl mx-auto px-6 pt-24 md:pt-32 pb-32 md:pb-40 text-center">
-    <h1 class="font-display font-extrabold tracking-tight text-text-primary">
-      <BrushAccent text={hero.brand} class="text-5xl md:text-7xl" />
-      <span class="block mt-4 text-3xl md:text-5xl">{hero.h1Line}</span>
-    </h1>
-    <p class="mt-6 text-xl md:text-2xl font-display font-semibold text-text-primary">{hero.subline}</p>
-    <p class="mt-4 text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">{hero.intro}</p>
-    <p class="vf-slogan mt-8 font-mono text-sm md:text-base">{hero.slogan}</p>
-    <div class="mt-10 flex flex-col sm:flex-row gap-5 justify-center">
-      <FlameButton client:visible href={hero.ctaPrimaryHref}>{hero.ctaPrimaryLabel}</FlameButton>
-      <a href={hero.ctaSecondaryHref} class="inline-flex items-center justify-center px-7 py-3.5 rounded-full border border-border hover:border-primary/50 text-text-primary hover:text-primary-light font-medium transition-all duration-300">
-        {hero.ctaSecondaryLabel}
-      </a>
+<Layout title="Valorferrum – Freelancer & Berater für SEO, SEA & Webentwicklung">
+  <Navigation />
+  
+  <!-- HERO SECTION MIT PARTIKELWELLE -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-bg">
+    <!-- Interaktiver Hintergrund -->
+    <ParticleWave 
+      client:visible 
+      cols={90} 
+      rows={35} 
+      amplitude={18} 
+      speed={0.5} 
+      cursorStrength={60} 
+    />
+    
+    <!-- Content Layer (z-index über der Welle) -->
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <!-- SEO-H1 mit Pflicht-Keywords (§7.2) -->
+      <h1 class="text-5xl md:text-7xl font-display font-bold text-text-primary mb-6 tracking-tight">
+        Dein <span class="text-primary">Freelancer</span> & Berater<br />
+        für digitale Sichtbarkeit
+      </h1>
+      
+      <!-- Subline / Claim (§1) -->
+      <p class="text-xl md:text-2xl text-text-secondary mb-10 font-body leading-relaxed">
+        Digitale Sichtbarkeit, die bleibt. Performance, die besteht.<br />
+        <span class="text-text-muted italic">Dein Erfolg. Mein Maßstab.</span>
+      </p>
+      
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/de/kontakt/" class="px-8 py-4 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors duration-300">
+          Erstgespräch vereinbaren
+        </a>
+        <a href="/de/leistungen/" class="px-8 py-4 border border-border hover:border-primary text-text-primary rounded-lg font-medium transition-colors duration-300">
+          Leistungen entdecken
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Divider -->
   <hr class="max-w-6xl mx-auto h-px border-0 bg-gradient-to-r from-transparent via-spectrum-purple/25 to-transparent" />
