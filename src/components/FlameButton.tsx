@@ -1,101 +1,78 @@
-import { useCallback, useRef } from 'react';
-import type { PointerEvent as ReactPointerEvent, ReactNode } from 'react';
-
-type Flame = { pos: number; w: number; h: number; r: number };
-
-const TOP_FLAMES: Flame[] = [
-  { pos: 8, w: 10, h: 12, r: -8 },
-  { pos: 20, w: 14, h: 18, r: 6 },
-  { pos: 33, w: 9, h: 11, r: -4 },
-  { pos: 47, w: 15, h: 20, r: 3 },
-  { pos: 61, w: 10, h: 13, r: 8 },
-  { pos: 74, w: 13, h: 17, r: -6 },
-  { pos: 88, w: 9, h: 12, r: 5 },
-];
-const BOTTOM_FLAMES: Flame[] = [
-  { pos: 14, w: 11, h: 13, r: 6 },
-  { pos: 28, w: 14, h: 18, r: -5 },
-  { pos: 43, w: 9, h: 11, r: 4 },
-  { pos: 58, w: 13, h: 17, r: -7 },
-  { pos: 72, w: 10, h: 12, r: 6 },
-  { pos: 86, w: 12, h: 15, r: -4 },
-];
+// src/components/FlameButton.tsx
+import { useRef, useState } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 interface Props {
   href: string;
   children: ReactNode;
   className?: string;
+  variant?: 'gradient' | 'neon';
 }
 
-export default function FlameButton({ href, children, className = '' }: Props) {
-  const rootRef = useRef<HTMLAnchorElement>(null);
-  const flameRefs = useRef<Map<string, HTMLSpanElement>>(new Map());
-  const frame = useRef(0);
+/**
+ * SPECTRUM FLUX UI:
+ * - variant="gradient": glossy 3D-Pill mit Brand-Gradient (primär)
+ * - variant="neon":     dunkle Pill mit glühendem Violet-Ring (sekundär)
+ * Beide folgen subtil dem Cursor (Glow + Tilt).
+ */
+export default function FlameButton({ href, children, className = '', variant = 'gradient' }: Props) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [pos, setPos] = useState({ x: 0.5, y: 0.5 });
+  const [hover, setHover] = useState(false);
 
-  // Flames schlagen nahe der Cursor-X-Position aus (Gaussian Falloff)
-  const applyFlare = useCallback((xPct: number | null) => {
-    flameRefs.current.forEach((el, key) => {
-      const pos = parseFloat(key.split('-')[1]);
-      const rot = parseFloat(el.dataset.rot || '0');
-      let scale = 1;
-      if (xPct !== null) {
-        const d = pos - xPct;
-        scale = 1 + 1.9 * Math.exp(-(d * d) / (2 * 16 * 16));
-      }
-      el.style.transform = `rotate(${rot}deg) scaleY(${scale})`;
+  const onMove = (e: React.MouseEvent) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    setPos({
+      x: Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width)),
+      y: Math.min(1, Math.max(0, (e.clientY - rect.top) / rect.height)),
     });
-  }, []);
+  };
 
-  const onMove = useCallback((e: ReactPointerEvent<HTMLAnchorElement>) => {
-    const el = rootRef.current;
-    if (!el) return;
-    const { clientX, clientY } = e;
-    cancelAnimationFrame(frame.current);
-    frame.current = requestAnimationFrame(() => {
-      const rect = el.getBoundingClientRect();
-      el.style.setProperty('--mx', `${clientX - rect.left}px`);
-      el.style.setProperty('--my', `${clientY - rect.top}px`);
-      applyFlare(((clientX - rect.left) / rect.width) * 100);
-    });
-  }, [applyFlare]);
+  const tilt: CSSProperties = {
+    transform: hover
+      ? `perspective(700px) rotateX(${(pos.y - 0.5) * -5}deg) rotateY(${(pos.x - 0.5) * 7}deg) translateY(-2px)`
+      : 'perspective(700px)',
+    transition: 'transform 160ms ease-out, box-shadow 220ms ease',
+  };
 
-  const onLeave = useCallback(() => {
-    cancelAnimationFrame(frame.current);
-    applyFlare(null);
-  }, [applyFlare]);
+  const glow: CSSProperties = {
+    background:
+      variant === 'gradient'
+        ? `radial-gradient(120px circle at ${pos.x * 100}% ${pos.y * 100}%, rgba(255,255,255,0.5), transparent 65%)`
+        : `radial-gradient(120px circle at ${pos.x * 100}% ${pos.y * 100}%, rgba(166,92,246,0.45), transparent 65%)`,
+    opacity: hover ? 1 : 0,
+    transition: 'opacity 200ms ease',
+  };
 
-  const renderFlames = (flames: Flame[], edge: 'top' | 'bottom') =>
-    flames.map((f) => (
-      <span
-        key={`${edge}-${f.pos}`}
-        ref={(node) => {
-          if (node) flameRefs.current.set(`${edge}-${f.pos}`, node);
-          else flameRefs.current.delete(`${edge}-${f.pos}`);
-        }}
-        data-rot={f.r}
-        className={`flame-btn__flame flame-btn__flame--${edge}`}
-        style={{
-          left: `${f.pos}%`,
-          width: f.w,
-          height: f.h,
-          transform: `rotate(${f.r}deg)`,
-          animationDelay: `${(f.pos % 7) * 0.3}s`,
-        }}
-      />
-    ));
+  const variantClasses =
+    variant === 'gradient'
+      ? 'bg-gradient-to-r from-primary to-spectrum-pink text-white shadow-[0_0_28px_rgba(236,72,153,0.4)] hover:shadow-[0_0_40px_rgba(236,72,153,0.55)]'
+      : 'border-2 border-primary bg-surface/70 text-text-primary shadow-[0_0_16px_rgba(166,92,246,0.65),inset_0_0_10px_rgba(166,92,246,0.2)] hover:shadow-[0_0_26px_rgba(166,92,246,0.85)]';
 
   return (
-    <a
-      ref={rootRef}
-      href={href}
-      className={`flame-btn ${className}`}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
+    <span
+      className={`relative inline-block ${className}`}
+      onMouseMove={onMove}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => { setHover(false); setPos({ x: 0.5, y: 0.5 }); }}
     >
-      {renderFlames(TOP_FLAMES, 'top')}
-      {renderFlames(BOTTOM_FLAMES, 'bottom')}
-      <span className="flame-btn__glow" aria-hidden="true" />
-      <span className="flame-btn__inner">{children}</span>
-    </a>
+      <a
+        ref={ref}
+        href={href}
+        style={tilt}
+        className={`relative z-10 inline-flex items-center justify-center rounded-full px-9 py-4 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-light ${variantClasses}`}
+      >
+        {/* Gloss-Highlight (3D-Look) nur bei Gradient-Pill */}
+        {variant === 'gradient' && (
+          <span
+            className="pointer-events-none absolute left-2 right-2 top-1 h-[45%] rounded-full bg-gradient-to-b from-white/40 to-transparent"
+            aria-hidden="true"
+          />
+        )}
+        <span className="relative z-10">{children}</span>
+        <span className="pointer-events-none absolute inset-0 rounded-full" style={glow} aria-hidden="true" />
+      </a>
+    </span>
   );
 }
