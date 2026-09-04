@@ -11,42 +11,52 @@
 }
 
 @font-face {
-  font-family: 'Permanent Marker';
-  src: url('/fonts/PermanentMarker.ttf') format('truetype');
-  font-weight: 800;
+  font-family: 'Kalam';
+  src: url('/fonts/Kalam-Regular.ttf') format('ttf');
+  font-weight: 400;
   font-display: swap;
 }
 
 /* ============================================================
-   2. DESIGN TOKENS (@theme)
+   2. DESIGN TOKENS (@theme) – REV 5
    ============================================================ */
 @theme {
-  /* Brand & Spectrum Colors */
+  /* ── Brand Core ── */
   --color-primary: #A65CF6;
   --color-primary-light: #C49AFF;
   --color-primary-dark: #7C3AED;
-  
+
+  /* ─ Spectrum (Gradient-Achse) ─ */
   --color-spectrum-purple: #8B5CF6;
   --color-spectrum-pink: #EC4899;
   --color-spectrum-blue: #3B82F6;
   --color-spectrum-yellow: #FBBF24;
-  --color-ember: #F97316; /* VI 2.0: Brücke Pink -> Gelb */
 
-  /* Surfaces & Text */
-  --color-bg: #0A0A0F;
+  /* ── Atmospheric Accents (Rev 5) ── */
+  --color-smoke-purple: #6D28D9;       /* Linker Rauch */
+  --color-smoke-teal: #3B82F6;         /* Rechter Rauch (Blue/Teal) */
+  --color-ember: #F97316;              /* Funken */
+  --color-ember-light: #FBBF24;
+  --color-chrome: #E5E7EB;             /* Metallische Welle */
+  --color-chrome-dark: #9CA3AF;
+
+  /* ── Backgrounds (Tiefer als zuvor) ── */
+  --color-bg: #08080D;
+  --color-bg-elevated: #0C0C14;
   --color-surface: #14141B;
   --color-surface-elevated: #1E1E2A;
   --color-border: #2A2A3A;
-  
+
+  /* ── Text ── */
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
   --color-text-muted: #64748B;
 
-  /* Typography */
+  /* ── Fonts ─ */
   --font-display: 'Geist', 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-brush: 'Permanent Marker', cursive; /* VI 2.0: Akzent-Schrift */
+  --font-accent: 'Kalam', cursive;     /* Ersetzt Permanent Marker */
 }
 
 /* ============================================================
@@ -62,6 +72,7 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden; /* Verhindert horizontalen Scroll durch Smoke/Glow */
 }
 
 ::selection {
@@ -70,12 +81,22 @@ body {
 }
 
 /* ============================================================
-   4. VISUAL IDENTITY 2.0 – SIGNATURE ELEMENTS (V2)
+   4. REV 5 UTILITIES & COMPONENTS
    ============================================================ */
 
-/* --- 4.1 Brush Accent (Brand-Gradient, mehr Präsenz) --- */
+/* --- 4.1 Spectrum Gradient Text (Hero Headlines) --- */
+.spectrum-text {
+  background: linear-gradient(90deg, #8B5CF6, #EC4899, #3B82F6, #8B5CF6);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: spectrumShift 8s linear infinite;
+}
+
+/* --- 4.2 Brush Accent (Kalam Font) --- */
 .brush-accent {
-  font-family: var(--font-brush);
+  font-family: var(--font-accent);
   font-weight: 400;
   display: inline-block;
   font-size: 1.2em;
@@ -86,235 +107,123 @@ body {
   background-clip: text;
   color: transparent;
   padding-right: 0.18em;
-  filter: drop-shadow(0 0 18px rgba(166, 92, 246, 0.45));
+  filter: drop-shadow(0 0 12px rgba(166, 92, 246, 0.3));
 }
 
-/* --- 4.2 Slogan (eigene Bühne, Gradient-Dashes) --- */
-.vf-slogan {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  color: rgba(248, 250, 252, 0.8);
-}
-.vf-slogan::before,
-.vf-slogan::after {
-  content: '';
-  height: 2px;
-  width: 2.5rem;
-  flex-shrink: 0;
-  border-radius: 2px;
-  background: linear-gradient(90deg, #EC4899, #F97316, #FBBF24);
-  opacity: 0.7;
-}
-@media (max-width: 640px) {
-  .vf-slogan::before, .vf-slogan::after { display: none; }
-}
-
-/* --- 4.3 Flame Button V3 (harter Brand-Ring + kristalline Flames) --- */
-.flame-btn {
+/* --- 4.3 Glassmorphism Card --- */
+.glass-card {
+  background: rgba(20, 20, 27, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 2px solid transparent;
+  /* Gradient Top Border Trick */
+  border-image: linear-gradient(to right, #8B5CF6, #EC4899) 1;
+  border-image-slice: 1;
+  /* Da border-image radius killt, nutzen wir oft einen Wrapper oder pseudo-element für radius. 
+     Hier simplified für Astro Components: */
   position: relative;
-  display: inline-flex;
-  border-radius: 9999px;
-  padding: 2px;                              /* harte, scharfe Ring-Kante */
-  isolation: isolate;
-  text-decoration: none;
-  cursor: pointer;
-  background: linear-gradient(90deg, #A65CF6, #EC4899 50%, #3B82F6);
-  box-shadow: 0 0 14px rgba(166, 92, 246, 0.55), 0 0 34px rgba(236, 72, 153, 0.25);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Scharfe Crystal-Flames (keine Unschärfe!) */
-.flame-btn__flame {
-  position: absolute;
-  pointer-events: none;
-  z-index: -1;
-  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-  animation: flameShimmer 2.4s ease-in-out infinite;
-}
-.flame-btn__flame--top {
-  top: -12px;
-  clip-path: polygon(50% 0%, 80% 100%, 20% 100%);
-  background: linear-gradient(to top, #7C3AED 0%, #A65CF6 45%, #EC4899 80%, #C49AFF 100%);
-  transform-origin: 50% 100%;
-}
-.flame-btn__flame--bottom {
-  bottom: -12px;
-  clip-path: polygon(50% 100%, 80% 0%, 20% 0%);
-  background: linear-gradient(to bottom, #7C3AED 0%, #A65CF6 45%, #EC4899 80%, #C49AFF 100%);
-  transform-origin: 50% 0%;
-}
-@keyframes flameShimmer {
-  0%, 100% { opacity: 0.85; }
-  50%      { opacity: 1; }
-}
-
-/* Cursor-Glow innen (Brand-Farben) */
-.flame-btn__glow {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 50%),
-              #C49AFF 0%, #A65CF6 40%, #EC4899 70%, transparent 100%);
-}
-.flame-btn:hover .flame-btn__glow,
-.flame-btn:focus-visible .flame-btn__glow { opacity: 1; }
-
-.flame-btn__inner {
+/* Fix für Rounded Corners mit Gradient Border (Modern Approach) */
+.glass-card-rounded {
+  background: rgba(20, 20, 27, 0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem; /* rounded-2xl */
   position: relative;
-  border-radius: inherit;
-  background: var(--color-surface);
-  padding: 0.85rem 1.7rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  transition: background-color 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.05);
 }
-.flame-btn:hover .flame-btn__inner { background: var(--color-surface-elevated); }
-
-/* --- 4.4 Particle Stream & Laser Beams --- */
-.particle-stream {
+.glass-card-rounded::before {
+  content: "";
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-.laser-beams {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-.laser-beam { animation: beamBreathe 7s ease-in-out infinite; }
-.laser-beam--2 { animation-delay: 1.4s; }
-.laser-beam--3 { animation-delay: 2.8s; }
-.laser-beam--4 { animation-delay: 4.2s; }
-
-@keyframes flameFlicker {
-  0%, 100% { opacity: 0.88; transform: scale(1, 1); }
-  30%      { opacity: 1;    transform: scale(1.01, 1.04); }
-  55%      { opacity: 0.92; transform: scale(1.005, 0.985); }
-  78%      { opacity: 1;    transform: scale(1.012, 1.02); }
-}
-@keyframes emberRise {
-  0%   { transform: translate(0, 0) scale(1); opacity: 0; }
-  12%  { opacity: 0.95; }
-  100% { transform: translate(4px, -30px) scale(0.3); opacity: 0; }
-}
-@keyframes beamBreathe {
-  0%, 100% { opacity: 0.45; }
-  50%      { opacity: 0.9; }
+  top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, #8B5CF6, #EC4899);
+  opacity: 0.8;
 }
 
-/* ============================================================
-   5. UI COMPONENTS & UTILITIES
-   ============================================================ */
-
-/* --- Cards & Hover --- */
-.card {
-  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
-}
-
-.card:hover {
+.glass-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 0 40px rgba(166, 92, 246, 0.12), 0 20px 40px rgba(0, 0, 0, 0.3);
-  border-color: rgba(166, 92, 246, 0.3);
+  box-shadow: 0 10px 30px -10px rgba(166, 92, 246, 0.2);
 }
 
-/* --- Buttons (Legacy / Secondary) --- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.2s ease-out;
-  cursor: pointer;
-  text-decoration: none;
+/* --- 4.4 Glow Button Base (Logic in React, Styles here) --- */
+.glow-btn {
+  position: relative;
+  transition: all 0.3s ease;
 }
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-spectrum-pink));
-  color: white;
-  box-shadow: 0 10px 25px rgba(166, 92, 246, 0.25);
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* --- Gradient Text Utility --- */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-spectrum-purple), var(--color-spectrum-pink), var(--color-spectrum-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* --- Container Utility --- */
-.container-main {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-/* --- Background Grid Pattern --- */
-.bg-grid-pattern {
-  background-image: 
-    linear-gradient(to right, #2A2A3A 1px, transparent 1px),
-    linear-gradient(to bottom, #2A2A3A 1px, transparent 1px);
-  background-size: 40px 40px;
+/* Der eigentliche Glow-Effekt wird via Tailwind/Inline im React Component gesteuert,
+   aber hier ist die Pulse-Animation Klasse */
+.animate-glow-pulse {
+  animation: glowPulse 3s ease-in-out infinite;
 }
 
 /* ============================================================
-   6. ANIMATIONS & SCROLL REVEAL
+   5. ANIMATIONS & KEYFRAMES (REV 5)
    ============================================================ */
 
-/* --- Scroll Reveal --- */
+/* --- Scroll Reveal (Beibehalten) --- */
 .reveal {
   opacity: 0;
   transform: translateY(1.5rem);
   transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
               transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
 .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* --- Ambient Orbs (Background Decoration) --- */
-.pulse-anim {
-  animation: pulseOrb 6s ease-in-out infinite;
-}
-
-.float-anim {
-  animation: floatOrb 8s ease-in-out infinite;
-}
+/* --- Ambient Orbs (Beibehalten für Pricing etc.) --- */
+.pulse-anim { animation: pulseOrb 6s ease-in-out infinite; }
+.float-anim { animation: floatOrb 8s ease-in-out infinite; }
 
 @keyframes pulseOrb {
   0%, 100% { opacity: 0.3; transform: scale(1); }
   50%      { opacity: 0.6; transform: scale(1.15); }
 }
-
 @keyframes floatOrb {
   0%, 100% { transform: translateY(0) translateX(0); }
   33%      { transform: translateY(-20px) translateX(10px); }
   66%      { transform: translateY(10px) translateX(-10px); }
 }
 
+/* --- REV 5: Atmospheric Keyframes (§16.5) --- */
+
+/* 1. Smoke Drift */
+@keyframes smokeDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+  50% { transform: translate(20px, -10px) scale(1.05); opacity: 0.5; }
+}
+
+/* 2. Ember Float */
+@keyframes emberFloat {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-100px) scale(0.3); opacity: 0; }
+}
+
+/* 3. Glow Pulse (Buttons) */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(166, 92, 246, 0.4), 0 0 40px rgba(236, 72, 153, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(166, 92, 246, 0.6), 0 0 60px rgba(236, 72, 153, 0.4), 0 0 80px rgba(59, 130, 246, 0.2); }
+}
+
+/* 4. Spectrum Shift (Text Gradient) */
+@keyframes spectrumShift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* 5. Chrome Shine (Wave Gloss) */
+@keyframes chromeShine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
 /* ============================================================
-   7. PROSE (Blog Typography)
+   6. PROSE (Blog Typography)
    ============================================================ */
 .prose h1, .prose h2, .prose h3, .prose h4 {
   font-family: var(--font-display);
@@ -323,37 +232,26 @@ body {
   margin-bottom: 1rem;
   font-weight: 600;
 }
-
 .prose h1 { font-size: 2.25rem; }
 .prose h2 { font-size: 1.75rem; }
 .prose h3 { font-size: 1.375rem; }
-
 .prose p {
   color: var(--color-text-secondary);
   margin-bottom: 1.25rem;
   line-height: 1.75;
 }
-
 .prose a {
   color: var(--color-primary);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-
-.prose a:hover {
-  color: var(--color-primary-light);
-}
-
+.prose a:hover { color: var(--color-primary-light); }
 .prose ul, .prose ol {
   margin-bottom: 1.25rem;
   padding-left: 1.5rem;
   color: var(--color-text-secondary);
 }
-
-.prose li {
-  margin-bottom: 0.5rem;
-}
-
+.prose li { margin-bottom: 0.5rem; }
 .prose code {
   font-family: var(--font-mono);
   background: var(--color-surface);
@@ -362,7 +260,6 @@ body {
   font-size: 0.9em;
   color: var(--color-primary-light);
 }
-
 .prose pre {
   background: var(--color-surface);
   padding: 1rem;
@@ -371,13 +268,7 @@ body {
   margin-bottom: 1.25rem;
   border: 1px solid var(--color-border);
 }
-
-.prose pre code {
-  background: transparent;
-  padding: 0;
-  color: var(--color-text-secondary);
-}
-
+.prose pre code { background: transparent; padding: 0; color: var(--color-text-secondary); }
 .prose blockquote {
   border-left: 3px solid var(--color-primary);
   padding-left: 1rem;
@@ -387,10 +278,8 @@ body {
 }
 
 /* ============================================================
-   8. ACCESSIBILITY & FALLBACKS
+   7. ACCESSIBILITY & FALLBACKS
    ============================================================ */
-
-/* Respektiert Nutzer-Einstellungen für reduzierte Bewegung */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   
@@ -400,478 +289,148 @@ body {
     transition: none !important;
   }
   
-  .pulse-anim, .float-anim {
+  .pulse-anim, .float-anim, .animate-glow-pulse, .spectrum-text {
     animation: none !important;
   }
 
-  .flame-btn__fire { animation: none; }
-  .flame-btn__embers { display: none; }
-  .laser-beam { animation: none; }
-
-  .flame-btn__glow {
-    /* Bei reduced motion zeigen wir den Glow statisch in der Mitte statt Cursor-Follow */
-    background: radial-gradient(160px circle at 50% 50%, #FBBF24 0%, #F97316 35%, #EC4899 65%, transparent 100%);
+  /* Smoke & Ember static or hidden */
+  .smoke-layer, .ember-particle {
+    animation: none !important;
+    opacity: 0.2 !important; /* Static low opacity */
   }
-
-  .flame-btn__flame { animation: none; transition: none; }
 }
 
-/* Fallback, wenn JavaScript deaktiviert ist */
 .no-js .reveal {
   opacity: 1 !important;
   transform: none !important;
 }
 
-/* ===== SPECTRUM FLUX: Nebel / Glints / Prismen ===== */
-.vf-nebula {
-  background:
-    radial-gradient(55% 45% at 18% 32%, rgba(43, 76, 122, 0.32), transparent 70%),
-    radial-gradient(45% 40% at 82% 18%, rgba(30, 64, 110, 0.28), transparent 70%),
-    radial-gradient(50% 45% at 62% 62%, rgba(76, 29, 149, 0.16), transparent 72%),
-    radial-gradient(35% 30% at 40% 75%, rgba(236, 72, 153, 0.08), transparent 70%);
-  animation: vfNebulaDrift 28s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes vfNebulaDrift {
-  from { transform: translate3d(-2%, -1%, 0) scale(1.06); }
-  to   { transform: translate3d(2%, 1.5%, 0) scale(1.14); }
-}
+/* ============================================================
+   10. INTENSITY BOOST – überschreibt alle Glow-Werte davor
+   (CSS schlägt SVG-Präsentations-Attribute → wirkt versions-
+   unabhängig auf gb-a*, gb-f*, gb-core, gb-base-frame …)
+   ============================================================ */
 
-.vf-twinkle {
-  opacity: 0;
-  animation-name: vfTwinkle;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-@keyframes vfTwinkle {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  50%      { opacity: 1; transform: scale(1); }
-}
+/* 0) Flames dürfen NICHT geclippt werden (war overflow:hidden) */
+.gb-root { overflow: visible; }
 
-.vf-prism {
-  width: 26px;
-  height: 6px;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, #ef4444, #f97316, #fbbf24, #22c55e, #22d3ee, #8b5cf6);
-  filter: blur(1.5px) saturate(1.3);
-  opacity: 0;
-  animation: vfPrism 7s ease-in-out infinite;
-}
-@keyframes vfPrism {
-  0%, 100% { opacity: 0; }
-  50%      { opacity: 0.55; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vf-nebula, .vf-twinkle, .vf-prism { animation: none !important; }
-  .vf-twinkle { opacity: 0.5; }
-  .vf-prism   { opacity: 0.3; }
-}
-
-/* ===== SPECTRUM FLUX: Ribbons (bewegt + glossy) ===== */
-.vf-ribbon {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: vfRibbonSway var(--dur, 12s) ease-in-out var(--delay, 0s) infinite alternate;
-}
-@keyframes vfRibbonSway {
-  from { transform: translate3d(0, -10px, 0) rotate(-0.4deg); }
-  to   { transform: translate3d(0, 12px, 0) rotate(0.5deg); }
-}
-
-.vf-rib-glow  { filter: blur(14px); opacity: 0.32; }
-.vf-rib-shade { filter: blur(1px); }
-.vf-rib-core  { opacity: 0.95; }
-
-/* Licht-Impuls, der die Ribbon-Kante entlangläuft */
-.vf-rib-gloss {
-  stroke-dasharray: 90 620;
-  animation: vfRibbonFlow 5.5s linear infinite;
-  opacity: 0.85;
-  filter: blur(0.6px);
-}
-@keyframes vfRibbonFlow {
-  to { stroke-dashoffset: -710; } /* exakt 1 Dash-Zyklus (90+620) → nahtlos */
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vf-ribbon, .vf-rib-gloss { animation: none !important; }
-}
-
-/* ===== SPECTRUM FLUX: Section-Upgrades ===== */
-
-/* Spectrum-Card: Gradient-Rahmen + Licht-Sweep (nur bei Hover → ruhig & sachlich) */
-.vf-card { position: relative; overflow: hidden; }
-.vf-card::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-  background: conic-gradient(from 120deg, #EC4899, #A65CF6, #3B82F6, #FBBF24, #EC4899);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0; transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-.vf-card:hover::before { opacity: 1; }
-.vf-card::after {
-  content: ""; position: absolute; top: -60%; left: -70%; width: 40%; height: 220%;
-  transform: rotate(20deg);
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  transition: left 0.9s ease;
-  pointer-events: none;
-}
-.vf-card:hover::after { left: 130%; }
-
-/* Kicker-Label mit Spectrum-Dashes links/rechts */
-.vf-kicker { display: inline-flex; align-items: center; gap: 0.75rem; }
-.vf-kicker::before,
-.vf-kicker::after {
-  content: ""; width: 22px; height: 4px; border-radius: 9999px;
-  background: linear-gradient(90deg, #EC4899, #A65CF6, #3B82F6);
-  opacity: 0.8;
-}
-
-/* Prozess: vertikale Ribbon-Linie mit wanderndem Licht-Impuls */
-.vf-process-line {
-  position: absolute; left: 24px; top: 8px; bottom: 8px; width: 2px;
-  background: linear-gradient(180deg, #A65CF6, #EC4899, #3B82F6);
-  opacity: 0.35;
-}
-.vf-process-line::after {
-  content: ""; position: absolute; left: 0; width: 100%; height: 25%;
-  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.9), transparent);
-  animation: vfLineFlow 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-@keyframes vfLineFlow {
-  0%   { transform: translateY(-110%); }
-  100% { transform: translateY(520%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vf-process-line::after { animation: none !important; opacity: 0; }
-  .vf-card::after { transition: none; }
-}
-
-/* ===== SPECTRUM FLUX: Layered / Editorial Layout ===== */
-
-.vf-depth-section {
-  position: relative;
-  isolation: isolate;
-}
-
-.vf-depth-section::before,
-.vf-depth-section::after {
+/* 1) Statischer Halo hinter dem Button = Grund-Präsenz */
+.gb-root::before {
   content: "";
   position: absolute;
-  pointer-events: none;
-  z-index: -1;
+  inset: -14px;
   border-radius: 9999px;
-  filter: blur(70px);
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #A65CF6, #EC4899, #3B82F6);
+  filter: blur(26px);
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  animation: gbHaloPulse 3.5s ease-in-out infinite;
+}
+@keyframes gbHaloPulse {
+  0%, 100% { opacity: 0.42; }
+  50%      { opacity: 0.62; }
+}
+
+/* 2) SVG-Glow deutlich stärker (mehrfarbiger Hof) */
+.gb-svg-layer {
+  filter: drop-shadow(0 0 16px rgba(166, 92, 246, 0.6))
+          drop-shadow(0 0 40px rgba(236, 72, 153, 0.4))
+          drop-shadow(0 0 70px rgba(59, 130, 246, 0.25))
+          drop-shadow(0 14px 28px rgba(0, 0, 0, 0.6));
+}
+
+/* 3) Gesamter Stack: satter + leicht gesättigter */
+.gb-stack { filter: saturate(1.25); }
+
+/* 4) Basis-Rahmen: klar sichtbar */
+.gb-base-frame { stroke-width: 2.2; opacity: 0.95; }
+
+/* 5) Aura (durchgehend) – von „ahnen“ auf „sehen“ */
+.gb-a1 { opacity: 0.50; stroke-width: 4; }
+.gb-a2 { opacity: 0.34; stroke-width: 6; }
+.gb-a3 { opacity: 0.22; stroke-width: 9; }
+
+/* 6) Wellen-Buckel */
+.gb-w1 { opacity: 0.65; }
+.gb-w2 { opacity: 0.45; }
+.gb-w3 { opacity: 0.32; }
+
+/* 7) Heißer Kern */
+.gb-core { opacity: 1; stroke-width: 2.6; filter: blur(0.6px) brightness(2.6); }
+
+/* 8) Flammen-Lift-Off: jede Stufe ~+0.2 Opacity */
+.gb-f1  { opacity: 0.95; stroke-width: 7.5; }
+.gb-f2  { opacity: 0.80; }
+.gb-f3  { opacity: 0.68; }
+.gb-f4  { opacity: 0.56; }
+.gb-f5  { opacity: 0.47; }
+.gb-f6  { opacity: 0.40; }
+.gb-f7  { opacity: 0.32; }
+.gb-f8  { opacity: 0.26; }
+.gb-f9  { opacity: 0.20; }
+.gb-f10 { opacity: 0.15; }
+.gb-f11 { opacity: 0.11; }
+.gb-f12 { opacity: 0.08; }
+
+/* 9) Hover-Flammen: voller + heißer */
+.gb-root.is-hovering .gb-flames {
+  opacity: 1;
+  filter: blur(3px) brightness(1.35) saturate(1.3);
+}
+.gb-root.is-hovering .gb-flame-burst { opacity: 1; filter: blur(6px); }
+.gb-root.is-hovering .gb-stack { opacity: 0.7; } /* Basis bleibt präsenter als vorher (war .55) */
+
+/* 10) Inner-Glow (Cursor) intensiver */
+.gb-root:hover .gb-glow,
+.gb-root:focus-visible .gb-glow { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gb-root::before { animation: none !important; opacity: 0.35; }
+}
+
+/* ============================================================
+   11. SOFT GLOW – Glow-Pyramide: 8 Stufen, stufenloser Auslauf
+   ============================================================ */
+
+/* Pyramide: Breite ↑, Blur ↑, Opacity ↓ → keine sichtbaren Stufen */
+.gb-a1 { stroke-width: 3;  filter: blur(2px);  opacity: 0.55; }
+.gb-a2 { stroke-width: 5;  filter: blur(4px);  opacity: 0.40; }
+.gb-a3 { stroke-width: 8;  filter: blur(7px);  opacity: 0.30; }
+.gb-a4 { stroke-width: 12; filter: blur(11px); opacity: 0.22; }
+.gb-a5 { stroke-width: 17; filter: blur(16px); opacity: 0.16; }
+.gb-a6 { stroke-width: 23; filter: blur(22px); opacity: 0.11; }
+.gb-a7 { stroke-width: 30; filter: blur(30px); opacity: 0.07; }
+.gb-a8 { stroke-width: 40; filter: blur(40px); opacity: 0.04; }
+
+/* Halo: größer + viel weicher (löst die Pill-Kante auf) */
+.gb-root::before {
+  inset: -26px;
+  filter: blur(45px);
   opacity: 0.38;
 }
-
-.vf-depth-section::before {
-  width: 420px;
-  height: 260px;
-  top: 8%;
-  left: -120px;
-  background: radial-gradient(circle, rgba(166, 92, 246, 0.28), transparent 68%);
+@keyframes gbHaloPulse {
+  0%, 100% { opacity: 0.32; }
+  50%      { opacity: 0.45; }
 }
 
-.vf-depth-section::after {
-  width: 460px;
-  height: 320px;
-  right: -140px;
-  bottom: 4%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 70%);
+/* Drop-Shadow: nur noch 2 weiche Höfe statt 4 harte Silhouetten */
+.gb-svg-layer {
+  filter: drop-shadow(0 0 24px rgba(166, 92, 246, 0.45))
+          drop-shadow(0 0 60px rgba(236, 72, 153, 0.25));
 }
 
-/* Card bekommt mehr Tiefe, ohne unruhig zu werden */
-.vf-layer-card {
-  position: relative;
-  transform-style: preserve-3d;
-  box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.vf-layer-card::before {
+/* Inner-Glow: zieht das Licht weich IN den Button (Kante verschmilzt) */
+.gb-root::after {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.08), transparent 30%),
-    radial-gradient(circle at 20% 0%, rgba(166,92,246,0.16), transparent 34%),
-    radial-gradient(circle at 100% 90%, rgba(59,130,246,0.12), transparent 34%);
-  opacity: 0.7;
   pointer-events: none;
-}
-
-.vf-layer-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* Kleine individuelle Versätze für Desktop */
-.vf-lift-1 { transform: translateY(-18px); }
-.vf-lift-2 { transform: translateY(22px); }
-.vf-lift-3 { transform: translateY(-8px); }
-.vf-lift-4 { transform: translateY(34px); }
-
-.vf-rotate-soft-left {
-  transform: translateY(10px) rotate(-1.2deg);
-}
-
-.vf-rotate-soft-right {
-  transform: translateY(-10px) rotate(1.2deg);
-}
-
-.vf-layer-card:hover {
-  transform: translateY(-6px) scale(1.01);
-}
-
-.vf-lift-1:hover,
-.vf-lift-2:hover,
-.vf-lift-3:hover,
-.vf-lift-4:hover,
-.vf-rotate-soft-left:hover,
-.vf-rotate-soft-right:hover {
-  transform: translateY(-6px) scale(1.01);
-}
-
-/* Flüssiger Hintergrund-Akzent innerhalb einzelner Sections */
-.vf-section-ribbon-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.45;
-  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-}
-
-/* Editorial/Bento-Grids */
-.vf-bento-services {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 1.5rem;
-  align-items: stretch;
-}
-
-.vf-bento-blog {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 1.5rem;
-}
-
-/* Mobile: alles wieder klar und linear */
-@media (max-width: 767px) {
-  .vf-bento-services,
-  .vf-bento-blog {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .vf-lift-1,
-  .vf-lift-2,
-  .vf-lift-3,
-  .vf-lift-4,
-  .vf-rotate-soft-left,
-  .vf-rotate-soft-right,
-  .vf-layer-card,
-  .vf-layer-card:hover {
-    transform: none;
-  }
-
-  .vf-depth-section::before,
-  .vf-depth-section::after {
-    opacity: 0.22;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vf-layer-card,
-  .vf-layer-card:hover,
-  .vf-lift-1,
-  .vf-lift-2,
-  .vf-lift-3,
-  .vf-lift-4,
-  .vf-rotate-soft-left,
-  .vf-rotate-soft-right {
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
-/* ===== SPECTRUM FLUX: Sektions-Fades (keine harten Kanten mehr) ===== */
-.vf-fade-section {
-  position: relative;
-  /* Der Hintergrund der Section selbst wird an den Rändern transparent maskiert */
-  mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-
-/* Für Sections, die einen eigenen farbigen Hintergrund haben (z.B. CTA), 
-   blenden wir den Hintergrund INHALT der Section aus, nicht die Section selbst */
-.vf-fade-content-bg::before {
-  content: "";
-  position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: inherit; /* Erbt den Gradient der Section */
-  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
-/* ===== Service-Index-Rows (statt Kacheln) ===== */
-.vf-row + .vf-row::before {
-  content: "";
-  position: absolute; top: 0; left: 6%; right: 6%; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(166,92,246,0.35), rgba(59,130,246,0.25), transparent);
-}
-.vf-row-line {
-  position: absolute; left: 6%; right: 6%; bottom: 0; height: 2px;
-  background: var(--vf-line, linear-gradient(90deg, #EC4899, #A65CF6, #3B82F6));
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 0.8;
-}
-.vf-row:hover .vf-row-line { transform: scaleX(1); }
-
-/* ===== Prozess-Ribbon ===== */
-.vf-proc-pulse {
-  stroke-dasharray: 16 84;
-  animation: vfProcFlow 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-@keyframes vfProcFlow {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -100; }
-}
-.vf-node {
-  position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px;
-  border-radius: 9999px; background: #fff;
-  box-shadow: 0 0 10px #A65CF6, 0 0 26px rgba(166, 92, 246, 0.65);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .vf-proc-pulse { animation: none; }
-  .vf-row-line { transition: none; }
-}
-
-/* ===== USP: Rahmenlos mit Dividern ===== */
-.vf-usp-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-@media (min-width: 768px) {
-  .vf-usp-grid {
-    grid-template-columns: 1fr 1.2fr 1fr; /* Mitte breiter */
-  }
-}
-
-/* Vertikale Divider zwischen USPs (nur Desktop) */
-.vf-usp-item {
-  position: relative;
-  padding: 2rem;
-}
-@media (min-width: 768px) {
-  .vf-usp-item:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    right: 0; top: 15%; bottom: 15%;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(166, 92, 246, 0.3), rgba(59, 130, 246, 0.3), transparent);
-  }
-}
-
-/* Spotlight-Effekt für die mittlere Card (ohne Rahmen) */
-.vf-usp-spotlight {
-  background: radial-gradient(circle at 50% 0%, rgba(166, 92, 246, 0.08), transparent 70%);
-}
-
-/* ===== HERO FADE-OUT (Fix für harten Schnitt nach Hero) ===== */
-.vf-hero-fade-out {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 160px; /* Großzügiger Bereich für weichen Übergang */
-  background: linear-gradient(to bottom, transparent, var(--color-bg));
-  pointer-events: none;
-  z-index: 20; /* Über den Ribbons/Glints, aber unter der Nav falls sticky */
-}
-
-/* ===== ROBUSTE GLOW SECTIONS (Fix für "nur dunkel") ===== */
-.vf-glow-section {
-  position: relative;
-  background-color: transparent; /* Wichtig: Section selbst ist transparent */
-  z-index: 0;
-}
-
-/* Der Glow-Layer liegt hinter dem Content, läuft weich radial aus */
-.vf-glow-layer {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  /* Standard Glow (USP) */
-  background: radial-gradient(
-    ellipse 60% 50% at 50% 50%, 
-    rgba(20, 20, 27, 0.8) 0%, 
-    rgba(10, 10, 15, 0) 70%
-  );
-}
-
-/* Violetter Glow (About) */
-.vf-glow-layer-purple {
-  background: radial-gradient(
-    ellipse 60% 50% at 50% 50%, 
-    rgba(139, 92, 246, 0.12) 0%, 
-    rgba(10, 10, 15, 0) 70%
-  );
-}
-
-.vf-glow-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  /* Radialer Verlauf: In der Mitte leicht aufgehellt (Surface-Farbe), außen transparent */
-  background: radial-gradient(
-    ellipse 80% 50% at 50% 50%, 
-    rgba(20, 20, 27, 0.6) 0%, 
-    rgba(10, 10, 15, 0) 70%
-  );
-}
-
-/* Variante für About (leicht violetter Touch) */
-.vf-glow-section-purple::before {
-  background: radial-gradient(
-    ellipse 80% 50% at 50% 50%, 
-    rgba(139, 92, 246, 0.08) 0%, 
-    rgba(10, 10, 15, 0) 70%
-  );
-}
-
-/* Top/Bottom Fades für Sektionen, damit sie ineinander fließen */
-.vf-section-fade-masks {
-  mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
-/* Weiche Übergänge an den Rändern der Sektion (Top/Bottom Fade) */
-.vf-edge-fades::before,
-.vf-edge-fades::after {
-  content: "";
-  position: absolute;
-  left: 0; right: 0;
-  height: 120px;
-  pointer-events: none;
-  z-index: 1; /* Über dem Glow, unter dem Content (wenn Content z-10 hat) */
-}
-.vf-edge-fades::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--color-bg), transparent);
-}
-.vf-edge-fades::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--color-bg), transparent);
+  z-index: 4;
+  box-shadow:
+    inset 0 0 22px rgba(196, 154, 255, 0.35),
+    inset 0 0 8px  rgba(255, 255, 255, 0.22),
+    inset 0 0 40px rgba(236, 72, 153, 0.18);
 }

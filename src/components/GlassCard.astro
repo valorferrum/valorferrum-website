@@ -1,0 +1,54 @@
+---
+/**
+ * GlassCard – Rev 5.1
+ * Glassmorphism + Gradient-Top-Border. Optional: EmberParticles innerhalb der Card.
+ */
+import EmberParticles from './EmberParticles.astro';
+
+interface Props {
+  href?: string;
+  embers?: boolean;
+  seed?: number;
+  class?: string;
+}
+const { href, embers = false, seed = 5, class: className = '' } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag href={href} class={`glass group ${className}`}>
+  {embers && <EmberParticles count={6} seed={seed} mode="fill" />}
+  <slot name="icon" />
+  <slot />
+</Tag>
+
+<style>
+  .glass {
+    position: relative;
+    display: block;
+    height: 100%;
+    background: rgba(20, 20, 27, 0.7);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 1rem;
+    overflow: hidden;
+    padding: 1.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .glass::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-spectrum-purple), var(--color-spectrum-pink));
+    opacity: 0.9;
+  }
+  .glass:hover {
+    transform: translateY(-4px);
+    border-color: rgba(166, 92, 246, 0.25);
+    box-shadow: 0 12px 40px -12px rgba(166, 92, 246, 0.25);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glass:hover { transform: none; }
+  }
+</style>
