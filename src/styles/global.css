@@ -3,6 +3,7 @@
 /* ============================================================
    1. FONTS
    ============================================================ */
+
 @font-face {
   font-family: 'Geist';
   src: url('/fonts/Geist-Variable.woff2') format('woff2');
@@ -16,10 +17,39 @@
   font-weight: 400;
   font-display: swap;
 }
+/* ── Bold Brush Accent ── */
+@font-face {
+  font-family: 'Kalam';
+  src: url('/fonts/Kalam-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+.brush-accent {
+  font-family: var(--font-accent);
+  font-weight: 700;
+  display: inline-block;
+  font-size: 1.22em;
+  line-height: 1.1;
+  transform: rotate(-3deg);
+  background-image: linear-gradient(
+    92deg,
+    #C49AFF 0%,
+    #A65CF6 30%,
+    #EC4899 65%,
+    #3B82F6 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.18em;
+  filter: drop-shadow(0 0 14px rgb(166 92 246 / 0.45));
+}
 
 /* ============================================================
-   2. DESIGN TOKENS (@theme) – REV 5
+   2. DESIGN TOKENS (@theme) – REV 6
    ============================================================ */
+
 @theme {
   /* ── Brand Core ── */
   --color-primary: #A65CF6;
@@ -30,11 +60,6 @@
   --color-spectrum-purple: #8B5CF6;
   --color-spectrum-pink: #EC4899;
   --color-spectrum-blue: #3B82F6;
-  --color-spectrum-yellow: #FBBF24;
-
-  /* ── Atmospheric Accents ── */
-  --color-ember: #F97316;
-  --color-ember-light: #FBBF24;
 
   /* ── Backgrounds ── */
   --color-bg: #08080D;
@@ -53,17 +78,38 @@
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-accent: 'Kalam', cursive;
+
+  /* ── Shape ── */
+  --radius-panel: 1.25rem;
+  --radius-pill: 999px;
+
+  /* ── Motion ── */
+  --ease-brand: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-fast: 180ms;
+  --duration-base: 260ms;
+  --duration-slow: 600ms;
+
+  /* ── Shadows ── */
+  --shadow-panel: 0 20px 60px rgb(8 8 13 / 0.45);
+  --shadow-glow-primary: 0 0 0 1px rgb(166 92 246 / 0.25), 0 0 28px rgb(166 92 246 / 0.22);
+  --shadow-glow-primary-hover: 0 0 0 1px rgb(166 92 246 / 0.4), 0 0 42px rgb(166 92 246 / 0.32);
 }
 
 /* ============================================================
    3. BASE STYLES
    ============================================================ */
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--color-bg);
+  background-image:
+    radial-gradient(circle at 15% 0%, rgb(139 92 246 / 0.06), transparent 32%),
+    radial-gradient(circle at 85% 10%, rgb(59 130 246 / 0.04), transparent 28%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--color-text-primary);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -71,13 +117,410 @@ body {
   overflow-x: hidden;
 }
 
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+}
+
 ::selection {
   background-color: rgba(166, 92, 246, 0.3);
   color: var(--color-text-primary);
 }
 
+:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 3px;
+}
+
 /* ============================================================
-   4. UTILITIES & COMPONENTS
+   4. LAYOUT SYSTEM – SECTIONS
+   ============================================================ */
+
+.section {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+.section[id] {
+  scroll-margin-top: 6rem;
+}
+
+.section-inner {
+  width: min(100% - 2rem, 74rem);
+  margin-inline: auto;
+}
+
+.section--tight {
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.section-header {
+  max-width: 52rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+.section-intro {
+  margin-top: 1rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  max-width: 62ch;
+}
+
+.section-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Section Themes */
+
+.section--grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
+}
+
+.section--soft {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgb(12 12 20 / 0.6),
+    transparent
+  );
+}
+
+.section--cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 0%, rgb(166 92 246 / 0.14), transparent 45%);
+}
+
+/* ============================================================
+   5. MICRO LABELS / BADGES / LINES
+   ============================================================ */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--color-spectrum-purple),
+    var(--color-spectrum-blue)
+  );
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(42 42 58 / 0.9);
+  background: rgb(20 20 27 / 0.5);
+  padding: 0.375rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-secondary);
+  transition:
+    border-color var(--duration-base) var(--ease-brand),
+    color var(--duration-base) var(--ease-brand);
+}
+
+.badge:hover {
+  border-color: rgb(166 92 246 / 0.35);
+  color: var(--color-text-primary);
+}
+
+.spectrum-line {
+  height: 1px;
+  width: 100%;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(139 92 246 / 0.7),
+    rgb(236 72 153 / 0.45),
+    rgb(59 130 246 / 0.6),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* ============================================================
+   6. PANELS / CARDS
+   ============================================================ */
+
+.panel,
+.card,
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  border: 1px solid rgb(42 42 58 / 0.9);
+  background:
+    linear-gradient(
+      180deg,
+      rgb(30 30 42 / 0.65),
+      rgb(20 20 27 / 0.88)
+    );
+  backdrop-filter: blur(4px);
+  background:
+    linear-gradient(180deg, rgb(26 26 34 / 0.85), rgb(16 16 22 / 0.95));
+  padding: 1.75rem;
+  transition:
+    border-color var(--duration-base) var(--ease-brand),
+    transform var(--duration-base) var(--ease-brand),
+    box-shadow var(--duration-base) var(--ease-brand);
+}
+
+.panel::before,
+.card::before,
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(139 92 246 / 0.8),
+    rgb(236 72 153 / 0.45),
+    transparent
+  );
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.panel:hover,
+.card:hover,
+.glass-card:hover {
+  border-color: rgb(166 92 246 / 0.32);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgb(166 92 246 / 0.08),
+    0 20px 60px rgb(8 8 13 / 0.5);
+}
+
+/* Panel variants */
+
+.panel--service,
+.card--service {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.panel--metric,
+.card--metric {
+  padding: 1.25rem;
+}
+
+.panel--metric .metric-value,
+.card--metric .metric-value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--color-text-primary);
+}
+
+.panel--metric .metric-label,
+.card--metric .metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.panel--process,
+.card--process {
+  padding-left: 2rem;
+}
+
+.panel--process::after,
+.card--process::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 1.75rem;
+  bottom: 1.75rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgb(166 92 246 / 0.8),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.panel--cta,
+.card--cta {
+  text-align: center;
+  padding-block: clamp(3rem, 7vw, 5rem);
+  background:
+    radial-gradient(circle at 50% 0%, rgb(166 92 246 / 0.16), transparent 42%),
+    linear-gradient(
+      180deg,
+      rgb(30 30 42 / 0.65),
+      rgb(20 20 27 / 0.9)
+    );
+}
+
+.panel--cta::before,
+.card--cta::before {
+  opacity: 0.9;
+}
+
+/* ============================================================
+   7. TABLE PANEL
+   ============================================================ */
+
+.table-panel {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(
+    180deg,
+    rgb(30 30 42 / 0.5),
+    rgb(20 20 27 / 0.8)
+  );
+}
+
+.table-panel table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-panel th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-secondary);
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-panel td {
+  padding: 1rem 1.25rem;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid rgb(42 42 58 / 0.5);
+}
+
+.table-panel tr:last-child td {
+  border-bottom: 0;
+}
+
+.table-panel tr:hover td {
+  background-color: rgb(166 92 246 / 0.04);
+}
+
+/* ============================================================
+   8. NAVIGATION & FOOTER
+   ============================================================ */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgb(42 42 58 / 0.6);
+  background: rgb(8 8 13 / 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.nav-link {
+  color: var(--color-text-secondary);
+  transition: color var(--duration-fast) ease;
+}
+
+.nav-link:hover {
+  color: var(--color-text-primary);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--color-text-primary);
+  text-shadow: 0 0 24px rgb(166 92 246 / 0.25);
+}
+
+.footer {
+  position: relative;
+  border-top: 1px solid rgb(42 42 58 / 0.7);
+  padding-block: 4rem 2rem;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(139 92 246 / 0.7),
+    rgb(236 72 153 / 0.4),
+    rgb(59 130 246 / 0.6),
+    transparent
+  );
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.footer-link {
+  color: var(--color-text-secondary);
+  transition: color var(--duration-fast) ease;
+}
+
+.footer-link:hover {
+  color: var(--color-text-primary);
+}
+
+/* ============================================================
+   9. TYPOGRAPHY UTILITIES
    ============================================================ */
 
 /* --- Spectrum Gradient Text --- */
@@ -87,7 +530,7 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: spectrumShift 8s linear infinite;
+  animation: spectrumShift 12s linear infinite;
 }
 
 /* --- Brush Accent (Kalam Font) --- */
@@ -98,7 +541,13 @@ body {
   font-size: 1.2em;
   line-height: 1.15;
   transform: rotate(-2deg);
-  background-image: linear-gradient(92deg, #C49AFF 0%, #A65CF6 30%, #EC4899 65%, #3B82F6 100%);
+  background-image: linear-gradient(
+    92deg,
+    #C49AFF 0%,
+    #A65CF6 30%,
+    #EC4899 65%,
+    #3B82F6 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -106,133 +555,495 @@ body {
   filter: drop-shadow(0 0 12px rgba(166, 92, 246, 0.3));
 }
 
-/* ============================================================
-   5. ANIMATIONS & KEYFRAMES
-   ============================================================ */
-
-/* --- Scroll Reveal --- */
-.reveal {
-  opacity: 0;
-  transform: translateY(1.5rem);
-  transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- Ambient Orbs --- */
-.pulse-anim { animation: pulseOrb 6s ease-in-out infinite; }
-.float-anim { animation: floatOrb 8s ease-in-out infinite; }
-
-@keyframes pulseOrb {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50%      { opacity: 0.6; transform: scale(1.15); }
-}
-@keyframes floatOrb {
-  0%, 100% { transform: translateY(0) translateX(0); }
-  33%      { transform: translateY(-20px) translateX(10px); }
-  66%      { transform: translateY(10px) translateX(-10px); }
-}
-
-/* --- Spectrum Shift (Text Gradient) --- */
-@keyframes spectrumShift {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-/* ============================================================
-   6. PROSE (Blog Typography)
-   ============================================================ */
-.prose h1, .prose h2, .prose h3, .prose h4 {
+/* --- Chrome Headline --- */
+.chrome-text {
   font-family: var(--font-display);
-  color: var(--color-text-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #cbd5e1 35%,
+    #64748b 50%,
+    #f1f5f9 65%,
+    #94a3b8 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.65));
+}
+
+/* --- Brand Gradient Line --- */
+.brand-line {
+  width: 60%;
+  max-width: 260px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    90deg,
+    var(--color-spectrum-purple),
+    var(--color-spectrum-pink),
+    var(--color-spectrum-blue)
+  );
+  box-shadow: 0 0 16px rgba(166, 92, 246, 0.6);
+}
+
+/* ============================================================
+   10. BUTTONS
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2.25rem;
+  border-radius: var(--radius-pill);
   font-weight: 600;
+  font-size: 0.95rem;
+  transition:
+    all var(--duration-base) var(--ease-brand);
 }
-.prose h1 { font-size: 2.25rem; }
-.prose h2 { font-size: 1.75rem; }
-.prose h3 { font-size: 1.375rem; }
-.prose p {
+
+.btn-primary {
+  color: #ffffff;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-spectrum-pink),
+    var(--color-spectrum-blue),
+    var(--color-primary)
+  );
+  background-size: 250% auto;
+  border: none;
+  box-shadow:
+    0 0 24px rgb(166 92 246 / 0.45),
+    inset 0 0 0 1px rgb(255 255 255 / 0.2);
+}
+
+.btn-primary:hover {
+  background-position: 60% center;   /* Gradient fließt */
+  box-shadow:
+    0 0 36px rgb(166 92 246 / 0.6),
+    0 0 60px rgb(236 72 153 / 0.3),
+    inset 0 0 0 1px rgb(255 255 255 / 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.btn-secondary {
   color: var(--color-text-secondary);
-  margin-bottom: 1.25rem;
-  line-height: 1.75;
+  background: transparent;
+  border: 1px solid var(--color-text-muted);
 }
-.prose a {
-  color: var(--color-primary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+
+.btn-secondary:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 16px rgba(166, 92, 246, 0.3);
 }
-.prose a:hover { color: var(--color-primary-light); }
-.prose ul, .prose ol {
-  margin-bottom: 1.25rem;
-  padding-left: 1.5rem;
-  color: var(--color-text-secondary);
+
+.btn:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--color-primary-light);
+  outline-offset: 3px;
 }
-.prose li { margin-bottom: 0.5rem; }
-.prose code {
+
+/* ============================================================
+   11. HERO – REV 6
+   ============================================================ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 2rem, 74rem);
+  margin-inline: auto;
+}
+
+.hero-copy {
+  max-width: 42rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+/* --- Hero Background Layers --- */
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(circle at center, black 0%, transparent 75%);
+  mask-image: radial-gradient(circle at center, black 0%, transparent 75%);
+}
+
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 28%, rgb(166 92 246 / 0.16), transparent 40%),
+    radial-gradient(circle at 80% 18%, rgb(59 130 246 / 0.10), transparent 36%),
+    radial-gradient(circle at 65% 70%, rgb(236 72 153 / 0.06), transparent 32%);
+}
+
+/* --- Ambient Side-Glows --- */
+
+/* ── Hero-Glows: langsames Driften ── */
+.hero-glow-left  { animation: glowDriftLeft 24s ease-in-out infinite; }
+.hero-glow-right { animation: glowDriftRight 28s ease-in-out infinite; }
+
+@keyframes glowDriftLeft {
+  0%, 100% { transform: translateY(-50%) translateX(0)     scale(1);    opacity: 0.40; }
+  50%      { transform: translateY(-44%) translateX(5vw)  scale(1.15); opacity: 0.55; }
+}
+
+@keyframes glowDriftRight {
+  0%, 100% { transform: translateY(-50%) translateX(0)      scale(1);   opacity: 0.30; }
+  50%      { transform: translateY(-56%) translateX(-5vw)  scale(1.1); opacity: 0.45; }
+}
+
+/* ── Wiederverwendbare Wolken für Sections ── */
+.glow-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
+}
+.glow-cloud--purple { background: radial-gradient(circle, rgb(166 92 246 / 0.16), transparent 70%); }
+.glow-cloud--pink   { background: radial-gradient(circle, rgb(236 72 153 / 0.10), transparent 70%); }
+.glow-cloud--blue   { background: radial-gradient(circle, rgb(59 130 246 / 0.12), transparent 70%); }
+
+.glow-cloud--float { animation: cloudFloat 22s ease-in-out infinite; }
+
+@keyframes cloudFloat {
+  0%, 100% { transform: translate(0, 0)          scale(1);    }
+  33%      { transform: translate(4rem, -2rem)   scale(1.08); }
+  66%      { transform: translate(-3rem, 1.5rem) scale(0.95); }
+}
+
+.hero-glow-left {
+  left: -18vw;
+  opacity: 0.4;
+  background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+}
+
+.hero-glow-right {
+  right: -18vw;
+  opacity: 0.3;
+  background: radial-gradient(circle, var(--color-spectrum-blue) 0%, transparent 70%);
+}
+
+/* --- Constellation --- */
+
+.hero-constellation {
+  position: absolute;
+  top: 12%;
+  right: 6%;
+  width: min(220px, 24vw);
+  pointer-events: none;
+}
+
+hero-constellation path { /* FIX: Punkt fehlte */
+  stroke: rgb(196 154 255 / 0.3);
+}
+
+
+/* --- Ring Stage --- */
+
+.hero-stage {
+  position: relative;
+  width: min(560px, 88vw);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Orbit Ellipse --- */
+
+.hero-orbit {
+  position: absolute;
+  border-color: rgb(196 154 255 / 0.22);
+  inset: 4% -22%;
+  border: 1px solid rgba(248, 250, 252, 0.25);
+  border-radius: 50%;
+  transform: rotate(-14deg);
+  pointer-events: none;
+}
+
+.orbit-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow:
+    0 0 10px var(--c),
+    0 0 24px var(--c);
+  animation: dotPulse 4s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+/* --- Chrome Ring --- */
+
+.hero-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10%;
+  background: rgba(8, 8, 13, 0.9);
+  box-shadow:
+    inset 0 0 60px rgba(166, 92, 246, 0.28),
+    inset 0 0 120px rgba(59, 130, 246, 0.15);
+}
+
+/* Metallic ring */
+.hero-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 3%;
+  background: conic-gradient(
+    from 210deg,
+    #f8fafc 0%,
+    #94a3b8 12%,
+    #f1f5f9 25%,
+    #64748b 38%,
+    #e2e8f0 50%,
+    #94a3b8 62%,
+    #f8fafc 75%,
+    #64748b 88%,
+    #f8fafc 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Outer dual glow */
+.hero-ring::after {
+  content: "";
+  position: absolute;
+  inset: -4%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 12% 50%, rgba(166, 92, 246, 0.55), transparent 55%),
+    radial-gradient(circle at 88% 50%, rgba(59, 130, 246, 0.45), transparent 55%),
+    radial-gradient(circle at 50% 0%, rgba(236, 72, 153, 0.25), transparent 45%);
+  filter: blur(30px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Optional technical ticks inside the ring */
+.ring-ticks {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    rgb(148 163 184 / 0.4) 0deg 1deg,
+    transparent 1deg 14deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 0 64%, black 65% 66%, transparent 67%);
+  mask: radial-gradient(circle, transparent 0 64%, black 65% 66%, transparent 67%);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* --- Hero Spectrum Dots --- */
+
+.hero-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--c, #A65CF6);
+  box-shadow: 0 0 14px var(--c, #A65CF6);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+  animation: heroDotFloat var(--dur, 9s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-readout {
+  margin-top: 2.5rem;
   font-family: var(--font-mono);
-  background: var(--color-surface);
-  padding: 0.15rem 0.4rem;
-  border-radius: 4px;
-  font-size: 0.9em;
-  color: var(--color-primary-light);
-}
-.prose pre {
-  background: var(--color-surface);
-  padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin-bottom: 1.25rem;
-  border: 1px solid var(--color-border);
-}
-.prose pre code { background: transparent; padding: 0; color: var(--color-text-secondary); }
-.prose blockquote {
-  border-left: 3px solid var(--color-primary);
-  padding-left: 1rem;
-  margin-bottom: 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
   color: var(--color-text-muted);
-  font-style: italic;
+  text-align: center;
+}
+
+.hero-readout::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 0.25em;
+  background: var(--color-primary);
+  vertical-align: text-bottom;
+  animation: cursorBlink 1.2s steps(2) infinite;
+}
+
+@keyframes cursorBlink {
+  50% { opacity: 0; }
 }
 
 /* ============================================================
-   7. ACCESSIBILITY & FALLBACKS
+   REV 7 – FORGED IRON RING (Eisen + Brand-Lila)
    ============================================================ */
+
+/* Ring-Körper: dunkles Eisen, lila Innenlicht */
+.hero-ring {
+  background:
+    radial-gradient(circle at 30% 25%, rgb(166 92 246 / 0.10), transparent 55%),
+    rgb(10 10 15 / 0.92);
+  box-shadow:
+    inset 0 0 60px rgb(166 92 246 / 0.30),
+    inset 0 0 120px rgb(59 130 246 / 0.16),
+    inset 0 0 0 1px rgb(196 154 255 / 0.12);
+}
+
+/* Eisen-Band: Gunmetal mit lila Reflektionen statt Weißchrom */
+.hero-ring::before {
+  background: conic-gradient(from 210deg,
+    #14141a 0%,
+    #3a3a46 8%,
+    #1b1b23 16%,
+    #565664 26%,
+    #4a3f63 34%,   /* lila Reflektion */
+    #20202a 46%,
+    #4e4e5c 58%,
+    #5c4a78 66%,   /* lila Reflektion */
+    #191922 78%,
+    #43434f 90%,
+    #14141a 100%);
+}
+
+/* Hitze-Naht: lila glühender Arc, wandert langsam (Schmiede-Scan) */
+.ring-heat {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 3%;
+  background: conic-gradient(from 0deg,
+    transparent 0deg 40deg,
+    rgb(196 154 255 / 0.9) 55deg,
+    rgb(166 92 246 / 0.6) 70deg,
+    transparent 92deg 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  filter: blur(2px) drop-shadow(0 0 12px rgb(166 92 246 / 0.8));
+  animation: ringHeat 14s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes ringHeat {
+  to { transform: rotate(360deg); }
+}
+
+/* Ticks: Messinstrument-Charakter, lila statt grau */
+.ring-ticks {
+  background: repeating-conic-gradient(
+    rgb(196 154 255 / 0.35) 0deg 1deg,
+    transparent 1deg 14deg
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-  
-  .pulse-anim, .float-anim, .spectrum-text {
-    animation: none !important;
-  }
-  .hero-dot { 
-    animation: none !important; 
-  }
+  .ring-heat { animation: none; }
 }
 
-.no-js .reveal {
-  opacity: 1 !important;
-  transform: none !important;
+.ring-echo {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgb(166 92 246 / 0.10);
+  pointer-events: none;
+}
+.ring-echo--dashed::after {
+  content: "";
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  border: 1px dashed rgb(196 154 255 / 0.12);
+}
+
+.constellation {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.7;
 }
 
 /* ============================================================
-   10. GLOW BUTTON STYLES
+   12. GLOW BUTTON COMPONENT
    ============================================================ */
 
-.gb-root { overflow: visible; }
+.gb-root {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.gb-root > * {
+  position: relative;
+  z-index: 1;
+}
 
 .gb-root::before {
   content: "";
   position: absolute;
   inset: -26px;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   z-index: 0;
   pointer-events: none;
   background: linear-gradient(90deg, #A65CF6, #EC4899, #3B82F6);
@@ -241,25 +1052,35 @@ body {
   opacity: 0.38;
   animation: gbHaloPulse 3.5s ease-in-out infinite;
 }
-@keyframes gbHaloPulse {
-  0%, 100% { opacity: 0.32; }
-  50%      { opacity: 0.45; }
-}
 
 .gb-svg-layer {
   filter: drop-shadow(0 0 24px rgba(166, 92, 246, 0.45))
           drop-shadow(0 0 60px rgba(236, 72, 153, 0.25));
 }
 
-.gb-stack { filter: saturate(1.25); }
-.gb-base-frame { stroke-width: 2.2; opacity: 0.95; }
+.gb-stack {
+  filter: saturate(1.25);
+}
+
+.gb-base-frame {
+  stroke-width: 2.2;
+  opacity: 0.95;
+}
+
 .gb-a1 { opacity: 0.50; stroke-width: 4; }
 .gb-a2 { opacity: 0.34; stroke-width: 6; }
 .gb-a3 { opacity: 0.22; stroke-width: 9; }
+
 .gb-w1 { opacity: 0.65; }
 .gb-w2 { opacity: 0.45; }
 .gb-w3 { opacity: 0.32; }
-.gb-core { opacity: 1; stroke-width: 2.6; filter: blur(0.6px) brightness(2.6); }
+
+.gb-core {
+  opacity: 1;
+  stroke-width: 2.6;
+  filter: blur(0.6px) brightness(2.6);
+}
+
 .gb-f1  { opacity: 0.95; stroke-width: 7.5; }
 .gb-f2  { opacity: 0.80; }
 .gb-f3  { opacity: 0.68; }
@@ -277,11 +1098,20 @@ body {
   opacity: 1;
   filter: blur(3px) brightness(1.35) saturate(1.3);
 }
-.gb-root.is-hovering .gb-flame-burst { opacity: 1; filter: blur(6px); }
-.gb-root.is-hovering .gb-stack { opacity: 0.7; }
+
+.gb-root.is-hovering .gb-flame-burst {
+  opacity: 1;
+  filter: blur(6px);
+}
+
+.gb-root.is-hovering .gb-stack {
+  opacity: 0.7;
+}
 
 .gb-root:hover .gb-glow,
-.gb-root:focus-visible .gb-glow { opacity: 1; }
+.gb-root:focus-visible .gb-glow {
+  opacity: 1;
+}
 
 .gb-root::after {
   content: "";
@@ -292,220 +1122,292 @@ body {
   z-index: 4;
   box-shadow:
     inset 0 0 22px rgba(196, 154, 255, 0.35),
-    inset 0 0 8px  rgba(255, 255, 255, 0.22),
+    inset 0 0 8px rgba(255, 255, 255, 0.22),
     inset 0 0 40px rgba(236, 72, 153, 0.18);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .gb-root::before { animation: none !important; opacity: 0.35; }
+/* ============================================================
+   13. ANIMATIONS & KEYFRAMES
+   ============================================================ */
+
+/* --- Scroll Reveal --- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity var(--duration-slow) var(--ease-brand),
+    transform var(--duration-slow) var(--ease-brand);
+  transition-delay: var(--delay, 0ms);
 }
 
-/* --- Hero Spectrum Dots --- */
-.hero-dot {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: var(--c, #A65CF6);
-  box-shadow: 0 0 14px var(--c, #A65CF6);
-  opacity: 0.6;
-  pointer-events: none;
-  z-index: 1;
-  animation: heroDotFloat var(--dur, 9s) ease-in-out infinite;
-  animation-delay: var(--d, 0s);
+.reveal.revealed,
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
+
+/* --- Ambient Orbs --- */
+
+.pulse-anim {
+  animation: pulseOrb 6s ease-in-out infinite;
+}
+
+.float-anim {
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+@keyframes pulseOrb {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes floatOrb {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  33% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  66% {
+    transform: translateY(10px) translateX(-10px);
+  }
+}
+
+/* --- Spectrum Shift --- */
+
+@keyframes spectrumShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* --- Hero / Orbit Dots --- */
 
 @keyframes heroDotFloat {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.45; }
-  50%      { transform: translateY(-22px) scale(1.15); opacity: 0.9; }
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-22px) scale(1.15);
+    opacity: 0.9;
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+/* --- Glow Button Halo --- */
+
+@keyframes gbHaloPulse {
+  0%, 100% {
+    opacity: 0.32;
+  }
+  50% {
+    opacity: 0.45;
+  }
 }
 
 /* ============================================================
-   REV 6 – CHROME HERO (Mockup-Richtung)
+   14. PROSE – BLOG TYPOGRAPHY
    ============================================================ */
 
-/* --- Ambient Side-Glows (Lila dominant, Blau als Kontrast) --- */
-.hero-glow-left,
-.hero-glow-right {
-  position: absolute;
-  top: 50%;
-  width: 42vw;
-  height: 75vh;
-  transform: translateY(-50%);
-  filter: blur(90px);
-  pointer-events: none;
-}
-.hero-glow-left {
-  left: -18vw;
-  opacity: 0.4;
-  background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
-}
-.hero-glow-right {
-  right: -18vw;
-  opacity: 0.3;
-  background: radial-gradient(circle, var(--color-spectrum-blue) 0%, transparent 70%);
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-family: var(--font-display);
+  color: var(--color-text-primary);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-/* --- Konstellation oben rechts --- */
-.hero-constellation {
-  position: absolute;
-  top: 12%;
-  right: 6%;
-  width: min(220px, 24vw);
+.prose h1 {
+  font-size: 2.25rem;
 }
 
-/* --- Ring-Bühne --- */
-.hero-stage {
-  position: relative;
-  width: min(560px, 88vw);
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.prose h2 {
+  font-size: 1.75rem;
 }
 
-/* --- Orbit-Ellipse --- */
-.hero-orbit {
-  position: absolute;
-  inset: 4% -22%;
-  border: 1px solid rgba(248, 250, 252, 0.25);
-  border-radius: 50%;
-  transform: rotate(-14deg);
-  pointer-events: none;
-}
-.orbit-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--c);
-  box-shadow: 0 0 10px var(--c), 0 0 24px var(--c);
-  animation: dotPulse 4s ease-in-out infinite;
-  animation-delay: var(--d, 0s);
-}
-@keyframes dotPulse {
-  0%, 100% { transform: scale(1);    opacity: 0.8; }
-  50%      { transform: scale(1.3);  opacity: 1; }
+.prose h3 {
+  font-size: 1.375rem;
 }
 
-/* --- Chrome-Ring --- */
-.hero-ring {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 10%;
-  background: rgba(8, 8, 13, 0.9);
-  /* Innerer Glow: Lila + Blau, wie im Mockup */
-  box-shadow:
-    inset 0 0 60px rgba(166, 92, 246, 0.28),
-    inset 0 0 120px rgba(59, 130, 246, 0.15);
+.prose p {
+  color: var(--color-text-secondary);
+  margin-bottom: 1.25rem;
+  line-height: 1.75;
 }
 
-/* Metallischer Ring (Chrome) */
-.hero-ring::before {
-  content: "";
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--color-primary-light);
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+  color: var(--color-text-secondary);
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  background: var(--color-surface);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--color-primary-light);
+}
+
+.prose pre {
+  background: var(--color-surface);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--color-border);
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--color-text-secondary);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: 1rem;
+  margin-bottom: 1.25rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   15. ACCESSIBILITY & FALLBACKS
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .pulse-anim,
+  .float-anim,
+  .spectrum-text,
+  .hero-dot,
+  .orbit-dot {
+    animation: none !important;
+  }
+
+  .gb-root::before {
+    animation: none !important;
+    opacity: 0.35;
+  }
+
+  .panel:hover,
+  .card:hover,
+  .glass-card:hover,
+  .btn:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: none !important;
+  }
+}
+
+.no-js .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Ring Ripple Layer (FIX: Z-Index hinzugefügt) ── */
+.ring-ripple-layer {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  padding: 3%; /* Ringdicke */
-  background: conic-gradient(from 210deg,
-    #f8fafc 0%, #94a3b8 12%, #f1f5f9 25%, #64748b 38%,
-    #e2e8f0 50%, #94a3b8 62%, #f8fafc 75%, #64748b 88%, #f8fafc 100%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask-composite: exclude;
+  overflow: hidden;
+  z-index: 2; /* Liegt über dem Eisen-Hintergrund, aber unter dem Text */
+}
+
+.ring-cursor-glow {
+  position: absolute;
+  width: 45%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgb(196 154 255 / 0.25), transparent 60%);
+  transition: opacity 0.4s var(--ease-brand);
   pointer-events: none;
 }
 
-/* Äußerer Dual-Glow: Lila links, Blau rechts */
-.hero-ring::after {
-  content: "";
+.ring-ripple {
   position: absolute;
-  inset: -4%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 12% 50%, rgba(166, 92, 246, 0.55), transparent 55%),
-    radial-gradient(circle at 88% 50%, rgba(59, 130, 246, 0.45), transparent 55%),
-    radial-gradient(circle at 50% 0%,  rgba(236, 72, 153, 0.25), transparent 45%);
-  filter: blur(30px);
-  z-index: -1;
+  border: 1.5px solid var(--ripple-color);
+  box-shadow: 0 0 14px var(--ripple-color);
+  animation: ringRipple 1.4s var(--ease-brand) forwards;
+  pointer-events: none;
 }
 
-/* --- Chrome-Headline --- */
-.chrome-text {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.5rem, 7vw, 4.25rem);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  background: linear-gradient(180deg,
-    #ffffff 0%, #cbd5e1 35%, #64748b 50%, #f1f5f9 65%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.65));
+@keyframes ringRipple {
+  0%   { transform: scale(0.3); opacity: 0.9; }
+  100% { transform: scale(18);  opacity: 0; } /* Scale leicht erhöht für mehr Wucht */
 }
 
-/* --- Brandgradient-Linie (DER prägnante Akzent) --- */
-.brand-line {
-  width: 60%;
-  max-width: 260px;
-  height: 4px;
-  border-radius: 9999px;
-  background: linear-gradient(90deg,
-    var(--color-spectrum-purple),
-    var(--color-spectrum-pink),
-    var(--color-spectrum-blue));
-  box-shadow: 0 0 16px rgba(166, 92, 246, 0.6);
+/* Ring-Inhalt liegt über dem Effekt-Layer (FIX: Z-Index angepasst) */
+.hero-ring > :not(.ring-ripple-layer) {
+  position: relative;
+  z-index: 3; /* Text und Heat-Naht liegen über den Ripples */
+  pointer-events: none;
 }
 
-/* --- Buttons (Mockup: Glow-Pill + Ghost-Pill) --- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 2.25rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-}
-.btn-primary {
-  color: var(--color-text-primary);
-  background: rgba(166, 92, 246, 0.1);
-  border: 2px solid var(--color-primary);
-  box-shadow:
-    0 0 18px rgba(166, 92, 246, 0.55),
-    inset 0 0 14px rgba(166, 92, 246, 0.25);
-}
-.btn-primary:hover {
-  background: rgba(166, 92, 246, 0.2);
-  box-shadow:
-    0 0 28px rgba(166, 92, 246, 0.8),
-    0 0 50px rgba(236, 72, 153, 0.35),
-    inset 0 0 18px rgba(166, 92, 246, 0.35);
-  transform: translateY(-2px);
-}
-.btn-secondary {
-  color: var(--color-text-secondary);
-  background: transparent;
-  border: 1px solid var(--color-text-muted);
-}
-.btn-secondary:hover {
-  color: var(--color-text-primary);
-  border-color: var(--color-primary-light);
-  box-shadow: 0 0 16px rgba(166, 92, 246, 0.3);
-}
-
-/* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
-  .orbit-dot { animation: none; }
+  .ring-ripple { animation: none; opacity: 0; }
+  .ring-cursor-glow { display: none; }
 }

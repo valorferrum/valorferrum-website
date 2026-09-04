@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import BrandOrbit from '../../components/BrandOrbit';
+import RingRipple from '../../components/RingRipple';
 
 // Neueste DE-Artikel für den Blog-Teaser (§8 Content-Architektur)
 const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
@@ -11,85 +12,103 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
 
 <Layout title="Valorferrum – Freelancer & Berater für SEO, SEA & Webentwicklung">
 
-  <!-- ==================== HERO: CHROME RING (REV 6) ==================== -->
-  <section class="hero relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-bg px-6 py-24">
-
+  <!-- ==================== HERO: CHROME RING (REV 6 + REV 7 STYLING) ==================== -->
+  <section class="hero section section--hero" aria-label="Hero">
+    <!-- Hero Background Layers -->
+    <div class="hero-glow" aria-hidden="true"></div>
+    
     <!-- Ambient Side-Glows: Lila links, Blau rechts -->
     <div class="hero-glow-left" aria-hidden="true"></div>
     <div class="hero-glow-right" aria-hidden="true"></div>
 
-    <!-- Konstellation oben rechts -->
-    <svg class="hero-constellation" viewBox="0 0 220 150" aria-hidden="true">
-      <path d="M30 25 L185 55 L120 125" fill="none" stroke="rgba(248,250,252,0.3)" stroke-width="1" />
-      <circle cx="30"  cy="25"  r="6" fill="#C49AFF" style="filter: drop-shadow(0 0 8px #C49AFF);" />
-      <circle cx="185" cy="55"  r="6" fill="#3B82F6" style="filter: drop-shadow(0 0 8px #3B82F6);" />
-      <circle cx="120" cy="125" r="5" fill="#F8FAFC" style="filter: drop-shadow(0 0 8px #F8FAFC);" />
-    </svg>
+    <div class="hero-content">
+      <!-- Konstellation oben rechts -->
+      <svg class="hero-constellation" viewBox="0 0 220 150" aria-hidden="true">
+        <path d="M30 25 L185 55 L120 125" fill="none" stroke="rgba(248,250,252,0.3)" stroke-width="1" />
+        <circle cx="30"  cy="25"  r="6" fill="#C49AFF" style="filter: drop-shadow(0 0 8px #C49AFF);" />
+        <circle cx="185" cy="55"  r="6" fill="#3B82F6" style="filter: drop-shadow(0 0 8px #3B82F6);" />
+        <circle cx="120" cy="125" r="5" fill="#F8FAFC" style="filter: drop-shadow(0 0 8px #F8FAFC);" />
+      </svg>
 
-    <!-- Ring-Bühne mit animiertem Orbit -->
-    <div class="hero-stage reveal">
-      <!-- Animierter Orbit (Lila-dominant), läuft hinter dem Ring -->
-      <BrandOrbit
-        client:visible
-        className="inset-y-[2%] -inset-x-[20%]"
-        tilt={-14}
-        rx={0.5}
-        ry={0.32}
-        duration={28}
-      />
+      <!-- Ring-Bühne mit animiertem Orbit -->
+      <div class="hero-stage reveal mx-auto">
+        <!-- Animierter Orbit (Lila-dominant), läuft hinter dem Ring - nur Desktop -->
+        <div class="hero-orbit" aria-hidden="true">
+          <BrandOrbit
+            client:media="(min-width: 1024px)"
+            className="inset-y-[2%] -inset-x-[20%]"
+            tilt={-14}
+            rx={0.5}
+            ry={0.32}
+            duration={28}
+          />
+        </div>
 
-      <div class="hero-ring">
-        <p class="font-mono text-xs uppercase tracking-[0.28em] text-text-secondary mb-4">
-          SEO · SEA · Webentwicklung · Tracking
+        <div class="hero-ring">
+          <RingRipple client:only="react" />
+          <div class="ring-heat" aria-hidden="true"></div>
+          <p class="eyebrow justify-center mb-4">
+            SEO · SEA · Webentwicklung · Tracking
+          </p>
+
+          <!-- Headline: Brandgradient, KEIN Chrome -->
+          <h1 class="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-3">
+            <span class="spectrum-text">Valorferrum</span>
+          </h1>
+
+          <h2 class="text-lg md:text-2xl font-display font-semibold text-text-primary leading-tight mb-5">
+            Dein Freelancer &amp; Berater<br /> für digitale Sichtbarkeit
+          </h2>
+          <div class="brand-line mx-auto" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <!-- Hero-Claim -->
+        <p class="reveal text-text-secondary text-center max-w-xl mx-auto mt-12 mb-10 leading-relaxed">
+          Digitale Sichtbarkeit, die <span class="brush-accent">bleibt.</span>
+          Performance, die besteht.
+          <span class="text-text-muted italic">Dein Erfolg. Mein Maßstab.</span>
         </p>
 
-        <!-- Headline: Brandgradient, KEIN Chrome -->
-        <h1 class="text-4xl md:text-6xl font-display font-bold tracking-tighter mb-3">
-          <span class="spectrum-text">Valorferrum</span>
-        </h1>
-
-        <h2 class="text-lg md:text-2xl font-display font-semibold text-text-primary leading-tight mb-5">
-          Dein Freelancer &amp; Berater<br /> für digitale Sichtbarkeit
-        </h2>
-        <div class="brand-line" aria-hidden="true"></div>
+      <!-- Buttons -->
+      <div class="reveal hero-actions justify-center">
+        <a href="/de/kontakt/" class="btn btn-primary">Erstgespräch vereinbaren</a>
+        <a href="/de/leistungen/" class="btn btn-secondary">Leistungen entdecken</a>
       </div>
-    </div>
 
-    <!-- Claim unter dem Ring -->
-    <p class="reveal text-text-secondary text-center max-w-xl mx-auto mt-12 mb-10 leading-relaxed">
-      Digitale Sichtbarkeit, die bleibt. Performance, die besteht.
-      <span class="text-text-muted italic">Dein Erfolg. Mein Maßstab.</span>
-    </p>
-
-    <!-- Buttons -->
-    <div class="reveal flex flex-col sm:flex-row items-center gap-5">
-      <a href="/de/kontakt/" class="btn btn-primary">Erstgespräch vereinbaren</a>
-      <a href="/de/leistungen/" class="btn btn-secondary">Leistungen entdecken</a>
+      <p class="hero-readout" aria-hidden="true">&gt; valorferrum.sys // sichtbarkeit: aktiv_</p>
+      
+      <!-- Trust Badges -->
+      <ul class="reveal hero-badges justify-center mt-8">
+        <li class="badge">DSGVO-first</li>
+        <li class="badge">Festpreis möglich</li>
+        <li class="badge">Astro / WordPress / TYPO3</li>
+        <li class="badge">GA4 / GTM</li>
+      </ul>
     </div>
   </section>
 
-  <!-- Hero → Content -->
-  <div class="relative z-10 -mt-10 md:-mt-16">
-    <!-- Platzhalter für Wellen-Übergang -->
-  </div>
-
   <!-- ==================== LEISTUNGEN (Cards) ==================== -->
-  <section class="relative py-24 px-6 overflow-hidden" aria-labelledby="leistungen-heading">
-    <div class="max-w-6xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <p class="reveal font-mono text-xs uppercase tracking-[0.24em] text-primary-light mb-4">SERVICE_SYSTEM</p>
-        <h2 id="leistungen-heading" class="reveal text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">
+  <section class="section section--soft" aria-labelledby="leistungen-heading">
+  <!-- Decor: max. 2–3 Elemente pro Section -->
+  <div class="ring-echo ring-echo--dashed" style="width:26rem;height:26rem;top:-9rem;right:-10rem;" aria-hidden="true"></div>
+  <span class="hero-dot" style="--c:#EC4899; --dur:11s; top:18%; left:6%;" aria-hidden="true"></span>
+
+  <div class="section-inner">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">01 / Leistungen</p>
+        <h2 id="leistungen-heading" class="section-title">
           Vier Disziplinen. <span class="spectrum-text">Eine Strategie.</span>
         </h2>
-        <p class="reveal text-text-secondary max-w-2xl mx-auto">
+        <p class="section-intro mx-auto">
           SEO, SEA, Webentwicklung und Tracking greifen ineinander. Ich optimiere Deine Sichtbarkeit
           technisch, inhaltlich und bezahlt – und baue die Infrastruktur, die das alles trägt.
         </p>
-      </div>
+      </header>
 
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <!-- SEO -->
-        <a href="/de/leistungen/seo/" class="card group">
+        <a href="/de/leistungen/seo/" class="card panel--service group reveal">
           <div class="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center mb-6">
             <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </div>
@@ -103,7 +122,7 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
         </a>
 
         <!-- SEA -->
-        <a href="/de/leistungen/sea/" class="card group">
+        <a href="/de/leistungen/sea/" class="card panel--service group reveal" style="--delay: 80ms;">
           <div class="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center mb-6">
             <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
           </div>
@@ -117,7 +136,7 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
         </a>
 
         <!-- Webentwicklung -->
-        <a href="/de/leistungen/webentwicklung/" class="card group">
+        <a href="/de/leistungen/webentwicklung/" class="card panel--service group reveal" style="--delay: 160ms;">
           <div class="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center mb-6">
             <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
           </div>
@@ -131,7 +150,7 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
         </a>
 
         <!-- Tracking -->
-        <a href="/de/leistungen/tracking/" class="card group">
+        <a href="/de/leistungen/tracking/" class="card panel--service group reveal" style="--delay: 240ms;">
           <div class="w-12 h-12 rounded-full border border-primary/30 bg-primary/10 flex items-center justify-center mb-6">
             <svg class="w-5 h-5 text-primary-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
           </div>
@@ -148,40 +167,42 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
   </section>
 
   <!-- ==================== WARUM VALORFERRUM ==================== -->
-  <section class="py-24 px-6 relative overflow-hidden" aria-labelledby="usp-heading">
-    <div class="max-w-6xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <p class="reveal font-mono text-xs uppercase tracking-[0.24em] text-primary-light mb-4">WHY_VALORFERRUM</p>
-        <h2 id="usp-heading" class="reveal text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">
+  <section class="section section--soft" aria-labelledby="usp-heading">
+    <div class="glow-cloud glow-cloud--purple glow-cloud--float" style="width:34rem;height:34rem;top:-10rem;left:-12rem;" aria-hidden="true"></div>
+    <div class="glow-cloud glow-cloud--blue" style="width:26rem;height:26rem;bottom:-8rem;right:-10rem;" aria-hidden="true"></div>
+    <div class="section-inner">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">02 / Differenzierung</p>
+        <h2 id="usp-heading" class="section-title">
           Eine Person. Keine Brüche. <span class="spectrum-text">Faire Kalkulation.</span>
         </h2>
-        <p class="reveal text-text-secondary max-w-2xl mx-auto">
+        <p class="section-intro mx-auto">
           Keine Silos, keine Kommunikationsketten, keine versteckten Kosten.
           Ich bin Entwickler, Marketer und Analyst in einer Person.
         </p>
-      </div>
+      </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border/60">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- USP 1 -->
-        <div class="reveal p-8 md:p-12 text-center">
-          <div class="text-4xl font-display font-bold mb-2 spectrum-text inline-block">110 €</div>
-          <div class="text-sm text-text-muted uppercase tracking-wide mb-4">/ Stunde</div>
+        <div class="panel panel--metric text-center reveal">
+          <div class="metric-value spectrum-text mb-2">110 €</div>
+          <div class="metric-label mb-4">/ Stunde</div>
           <h3 class="text-lg font-semibold text-text-primary mb-3">Transparente Preisgestaltung</h3>
           <p class="text-text-secondary text-sm leading-relaxed">Fair kalkuliert, nicht ausgedacht. Kostendeckung + Risiko-Puffer.</p>
         </div>
 
         <!-- USP 2 -->
-        <div class="reveal p-8 md:p-12 text-center bg-gradient-to-b from-transparent via-primary/5 to-transparent" style="transition-delay:100ms;">
-          <div class="text-6xl font-display font-bold mb-2 spectrum-text inline-block">1</div>
+        <div class="panel panel--metric text-center reveal bg-gradient-to-b from-transparent via-primary/5 to-transparent" style="--delay: 100ms;">
+          <div class="text-6xl font-display font-bold mb-2 spectrum-text">1</div>
           <div class="text-base text-text-primary font-medium uppercase tracking-wide mb-4">Ansprechpartner</div>
           <h3 class="text-2xl font-semibold text-text-primary mb-3">Kein Agentur-Overhead</h3>
           <p class="text-text-secondary leading-relaxed max-w-xs mx-auto">Kein Büro, kein PM, keine GF. Du zahlst für meine Zeit und mein Know-how.</p>
         </div>
 
         <!-- USP 3 -->
-        <div class="reveal p-8 md:p-12 text-center" style="transition-delay:200ms;">
-          <div class="text-4xl font-display font-bold mb-2 spectrum-text inline-block">100%</div>
-          <div class="text-sm text-text-muted uppercase tracking-wide mb-4">Ehrlichkeit</div>
+        <div class="panel panel--metric text-center reveal" style="--delay: 200ms;">
+          <div class="metric-value spectrum-text mb-2">100%</div>
+          <div class="metric-label mb-4">Ehrlichkeit</div>
           <h3 class="text-lg font-semibold text-text-primary mb-3">Realistische Ziele</h3>
           <p class="text-text-secondary text-sm leading-relaxed">Kein "Platz 1 in 3 Monaten". Wir definieren gemeinsam machbare Erfolge.</p>
         </div>
@@ -190,17 +211,19 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
   </section>
 
   <!-- ==================== PROZESS ==================== -->
-  <section class="py-24 px-6 relative overflow-hidden bg-bg-elevated/40" aria-labelledby="prozess-heading">
-    <div class="max-w-4xl mx-auto relative z-10">
-      <div class="text-center mb-16">
-        <p class="reveal font-mono text-xs uppercase tracking-[0.24em] text-primary-light mb-4">PROCESS_FLOW</p>
-        <h2 id="prozess-heading" class="reveal text-3xl md:text-4xl font-display font-bold text-text-primary mb-4">
+  <section class="section section--soft" aria-labelledby="prozess-heading">
+    <div class="ring-echo ring-echo--dashed" style="width:26rem;height:26rem;top:-9rem;right:-10rem;" aria-hidden="true"></div>
+  <span class="hero-dot" style="--c:#EC4899; --dur:11s; top:18%; left:6%;" aria-hidden="true"></span>
+    <div class="section-inner max-w-4xl mx-auto">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">03 / Prozess</p>
+        <h2 id="prozess-heading" class="section-title">
           So <span class="spectrum-text">arbeiten</span> wir zusammen
         </h2>
-      </div>
+      </header>
 
       <div class="space-y-6">
-        <div class="card">
+        <div class="card panel--process reveal">
           <div class="flex gap-6">
             <div class="text-3xl font-display font-bold shrink-0 w-12 spectrum-text">01</div>
             <div>
@@ -213,7 +236,7 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
           </div>
         </div>
 
-        <div class="card">
+        <div class="card panel--process reveal" style="--delay: 100ms;">
           <div class="flex gap-6">
             <div class="text-3xl font-display font-bold shrink-0 w-12 spectrum-text">02</div>
             <div>
@@ -226,7 +249,7 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
           </div>
         </div>
 
-        <div class="card">
+        <div class="card panel--process reveal" style="--delay: 200ms;">
           <div class="flex gap-6">
             <div class="text-3xl font-display font-bold shrink-0 w-12 spectrum-text">03</div>
             <div>
@@ -243,8 +266,8 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
   </section>
 
   <!-- ==================== ÜBER MICH TEASER ==================== -->
-  <section class="py-24 px-6 relative overflow-hidden" aria-labelledby="about-heading">
-    <div class="max-w-5xl mx-auto relative z-10 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+  <section class="section" aria-labelledby="about-heading">
+    <div class="section-inner max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
       <!-- Avatar / Visual -->
       <div class="reveal relative shrink-0">
         <div class="absolute -inset-4 bg-gradient-to-br from-primary via-spectrum-pink to-spectrum-blue opacity-30 blur-2xl rounded-[2.5rem]" aria-hidden="true"></div>
@@ -255,9 +278,9 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
 
       <!-- Text -->
       <div class="reveal flex-1">
-        <p class="font-mono text-xs uppercase tracking-[0.24em] text-primary-light mb-4">ABOUT_SIGNAL</p>
-        <h2 id="about-heading" class="text-3xl md:text-4xl font-display font-bold text-text-primary mb-6">
-          Der Mensch hinter <span class="spectrum-text">Valorferrum</span>
+        <p class="eyebrow">04 / Über mich</p>
+        <h2 id="about-heading" class="section-title mb-6">
+          Der Mensch hinter <span class="brush-accent">Valorferrum</span>
         </h2>
         <p class="text-text-secondary leading-relaxed mb-8 text-lg">
           Ich bin der Kopf hinter Valorferrum – kein Team, keine Ausreden.
@@ -273,27 +296,26 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
 
   <!-- ==================== BLOG TEASER ==================== -->
   {posts.length > 0 && (
-    <section class="py-24 px-6" aria-labelledby="blog-heading">
-      <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-end mb-12">
-          <div>
-            <p class="reveal font-mono text-xs uppercase tracking-[0.24em] text-primary-light mb-2">KNOWLEDGE_BASE</p>
-            <h2 id="blog-heading" class="reveal text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">
+    <section class="section section--soft" aria-labelledby="blog-heading">
+      <div class="section-inner">
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+          <div class="section-header mb-0">
+            <p class="eyebrow">05 / Blog</p>
+            <h2 id="blog-heading" class="section-title mb-2">
               Wissen & <span class="spectrum-text">Insights</span>
             </h2>
-            <p class="reveal text-text-secondary">Praxisnahe Einblicke in SEO, SEA und Webentwicklung.</p>
+            <p class="section-intro">Praxisnahe Einblicke in SEO, SEA und Webentwicklung.</p>
           </div>
           <a href="/de/blog/" class="hidden md:block text-primary hover:text-primary-light font-medium transition-colors">Alle Artikel →</a>
-        </div>
+        </header>
 
         <div class="grid md:grid-cols-3 gap-6">
           {posts.map((post, i) => (
             <a
               href={`/de/blog/${post.slug}/`}
-              class="reveal group relative p-6 rounded-2xl bg-surface/70 backdrop-blur-md border border-border hover:border-primary/40 transition-all duration-300 overflow-hidden"
-              style={`transition-delay:${(i+1) * 100}ms;`}
+              class="panel reveal group"
+              style={`--delay: ${(i+1) * 100}ms;`}
             >
-              <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-spectrum-purple to-spectrum-pink opacity-70" aria-hidden="true"></div>
               <div class="text-sm text-primary mb-3">{new Date(post.data.pubDate).toLocaleDateString('de-DE')}</div>
               <h3 class="text-xl font-semibold text-text-primary mb-3 group-hover:text-primary-light transition-colors">{post.data.title}</h3>
               <p class="text-text-secondary text-sm line-clamp-3">{post.data.description}</p>
@@ -306,23 +328,22 @@ const posts = (await getCollection('blog', (post) => post.data.lang === 'de'))
     </section>
   )}
 
-  <!-- optional: vor der CTA-Sektion, etwas dezenter -->
-  <!-- Platzhalter für Wellen-Übergang -->
-
   <!-- ==================== CTA ==================== -->
-  <section class="relative py-32 px-6 overflow-hidden bg-bg" aria-labelledby="cta-heading">
-    <div class="max-w-3xl mx-auto text-center relative z-10">
-      <p class="reveal font-mono text-xs uppercase tracking-[0.24em] text-primary-light mb-4">INITIAL_CHECK</p>
-      <h2 id="cta-heading" class="reveal text-3xl md:text-5xl font-display font-bold text-text-primary mb-6">
-        Lass uns prüfen, wo dein größter <span class="spectrum-text">Hebel</span> liegt.
-      </h2>
-      <p class="reveal text-lg text-text-secondary mb-10 leading-relaxed">
-        Keine Verkaufsmasche. Ein ehrlicher Blick auf Potenzial, Aufwand und Prioritäten –
-        ob SEO-Optimierung, Google Ads oder eine neue Website.
-      </p>
-      <div class="reveal flex flex-col items-center gap-5">
-        <a href="/de/kontakt/" class="btn btn-primary">Kostenloses Erstgespräch</a>
-        <a href="/de/preise/" class="btn btn-secondary">Preise & Pakete</a>
+  <section class="section section--cta" aria-labelledby="cta-heading">
+    <div class="section-inner max-w-3xl mx-auto">
+      <div class="panel panel--cta reveal">
+        <p class="eyebrow justify-center">06 / Kontakt</p>
+        <h2 id="cta-heading" class="section-title text-3xl md:text-5xl mb-6">
+          Lass uns prüfen, wo dein größter <span class="brush-accent">Hebel</span> liegt.
+        </h2>
+        <p class="text-lg text-text-secondary mb-10 leading-relaxed max-w-2xl mx-auto">
+          Keine Verkaufsmasche. Ein ehrlicher Blick auf Potenzial, Aufwand und Prioritäten –
+          ob SEO-Optimierung, Google Ads oder eine neue Website.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+          <a href="/de/kontakt/" class="btn btn-primary">Kostenloses Erstgespräch</a>
+          <a href="/de/preise/" class="btn btn-secondary">Preise & Pakete</a>
+        </div>
       </div>
     </div>
   </section>
