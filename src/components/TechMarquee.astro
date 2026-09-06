@@ -1,0 +1,40 @@
+---
+const items = [
+  'SEO',
+  'SEA',
+  'ASTRO',
+  'WORDPRESS',
+  'TYPO3',
+  'GA4',
+  'GTM',
+  'CORE WEB VITALS',
+  'DSGVO-FIRST',
+  'SERVER-SIDE TRACKING',
+  'LOCAL SEO',
+  'PERFORMANCE',
+  'BARRIEREFREIHEIT',
+  'CONTENT-STRATEGIE',
+];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <ul class="marquee-list">
+      {items.map((item) => (
+        <li class="marquee-item">
+          <span>{item}</span>
+          <i class="marquee-dot"></i>
+        </li>
+      ))}
+    </ul>
+    <!-- Duplikat für den seamless Loop -->
+    <ul class="marquee-list">
+      {items.map((item) => (
+        <li class="marquee-item">
+          <span>{item}</span>
+          <i class="marquee-dot"></i>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

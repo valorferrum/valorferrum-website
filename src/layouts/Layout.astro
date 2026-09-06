@@ -159,6 +159,29 @@ const jsonLd = {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-bg text-text-primary font-body antialiased selection:bg-primary/30 selection:text-text-primary">
+    <!-- Brush-Texture: raue Pinselkanten für .brush-accent -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <filter id="brush-rough" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="3" seed="11" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+        </filter>
+        <filter id="brush-rough-soft" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.08" numOctaves="2" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="3"/>
+        </filter>
+        <!-- Rauch: große, weiche Verwirbelung für Wolken/Glows -->
+        <filter id="smoke" x="-40%" y="-40%" width="180%" height="180%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="4" seed="11" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="90" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <!-- Glut: feine, flackernde Verwirbelung für Buttons -->
+        <filter id="ember" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.06 0.12" numOctaves="3" seed="5" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+        </filter>
+      </defs>
+    </svg>
     <Navigation />
     <main>
       <slot />
@@ -177,6 +200,30 @@ const jsonLd = {
       }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+    <script>
+      document.querySelectorAll('.btn').forEach((btn) => {
+        btn.addEventListener('pointermove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = e.clientX - r.left;
+          const y = e.clientY - r.top;
+          btn.style.setProperty('--mx', `${x}px`);
+          btn.style.setProperty('--my', `${y}px`);
+
+          /* Richtung (-1..1) + Intensität (0..1) für die Aura */
+          const ax = Math.max(-1, Math.min(1, (x - r.width / 2) / (r.width / 2)));
+          const ay = Math.max(-1, Math.min(1, (y - r.height / 2) / (r.height / 2)));
+          btn.style.setProperty('--ax', ax.toFixed(3));
+          btn.style.setProperty('--ay', ay.toFixed(3));
+          btn.style.setProperty('--ai', Math.min(1, Math.hypot(ax, ay)).toFixed(3));
+        });
+
+        btn.addEventListener('pointerleave', () => {
+          btn.style.setProperty('--ax', '0');
+          btn.style.setProperty('--ay', '0');
+          btn.style.setProperty('--ai', '0');
+        });
+      });
     </script>
     <noscript>
       <style>.reveal { opacity: 1 !important; transform: none !important; }</style>
