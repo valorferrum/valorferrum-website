@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+@import "@fontsource/manrope/800.css";
 
 /* ============================================================
    1. FONTS
@@ -41,10 +44,10 @@
   --color-text-secondary: #94A3B8;
   --color-text-muted: #64748B;
 
-  --font-display: 'Geist', 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-accent: 'Permanent Marker', cursive;
+  --font-display: 'Manrope', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'Manrope', sans-serif;      /* Labels künftig via Uppercase + Tracking */
+  --font-accent: 'Permanent Marker', cursive;  /* einzige Zweitfamilie: Brush */
 
   --radius-panel: 1.25rem;
   --radius-pill: 999px;
@@ -89,7 +92,7 @@ body {
    4. LAYOUT SYSTEM – SECTIONS
    ============================================================ */
 
-.section { position: relative; isolation: isolate; padding-block: clamp(4.5rem, 9vw, 8rem); }
+.section { position: relative; padding-block: clamp(4.5rem, 9vw, 8rem); }
 .section[id] { scroll-margin-top: 6rem; }
 .section-inner { width: min(100% - 2rem, 74rem); margin-inline: auto; }
 .section-header { max-width: 52rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
@@ -713,17 +716,6 @@ body {
   filter: blur(70px) url(#smoke);   /* war: blur(90px) */
 }
 
-.hero-constellation {
-  position: absolute;
-  top: 12%;
-  right: 6%;
-  width: min(220px, 24vw);
-  pointer-events: none;
-  animation: constellationFloat 14s ease-in-out infinite;
-}
-
-.hero-constellation path { stroke: rgb(196 154 255 / 0.3); }
-
 .hero-stage {
   position: relative;
   width: min(560px, 88vw);
@@ -754,6 +746,21 @@ body {
   overflow: visible;   /* Glow darf über die SVG-Box hinauslaufen – keine Clip-Kante mehr */
 }
 
+/* ── Hero: Glühpartikel über den Rauchwolken ── */
+.hero-sparks {
+  position: absolute;
+  top: 12%;
+  height: 76%;
+  width: 24vw;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-sparks--left  { left: 0; }
+.hero-sparks--right { right: 0; }
+
+@media (max-width: 768px) {
+  .hero-sparks { display: none; }   /* Mobile ruhig halten */
+}
 /* ── Feuerringe: eng anliegende Volumen-Layer ── */
 
 /* Halo: schmaler & schwächer → Ambient statt Nebelwand */
@@ -1439,14 +1446,49 @@ body {
 
 /* ── Prozess auf dem Orbit-Bogen ── */
 .orbit-wrapper { position: relative; }
-
 .orbit-path { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
+/* Volumen-Layer der Bahn */
+/* ── Prozess-Bahn: fest glühend, flare-t gelegentlich auf ── */
+
+/* Volumen-Halo: pulst synchron mit der Linie */
+.orbit-halo {
+  filter: blur(8px);
+  opacity: 0.5;
+  animation: orbitHaloPulse 8s ease-in-out infinite;
+}
+
+/* Feste Linie: dauerhaft Glut + periodischer Flare */
+.orbit-base {
+  filter: blur(0.5px) drop-shadow(0 0 8px rgb(166 92 246 / 0.8));
+  opacity: 0.9;
+  animation: orbitLinePulse 8s ease-in-out infinite;
+}
+
+@keyframes orbitLinePulse {
+  0%, 55%, 100% { opacity: 0.9;  filter: blur(0.5px) drop-shadow(0 0 8px  rgb(166 92 246 / 0.70)); }
+  65%           { opacity: 1;    filter: blur(0.9px) drop-shadow(0 0 16px rgb(196 154 255 / 1)); }
+  78%           { opacity: 0.95; filter: blur(0.6px) drop-shadow(0 0 10px rgb(166 92 246 / 0.85)); }
+}
+
+@keyframes orbitHaloPulse {
+  0%, 55%, 100% { opacity: 0.5; }
+  65%           { opacity: 0.8; }
+  78%           { opacity: 0.6; }
+}
+/* Lichtpuls: Periode 120 > Pfad 100 → kann sauber ein-/ausfahren */
 .orbit-comet {
-  stroke-dasharray: 10 90;
-  animation: orbitComet 7s linear infinite;
-  filter: drop-shadow(0 0 6px rgb(196 154 255 / 0.8));
-  opacity: 0.8;
+  stroke-dasharray: 12 108;
+  animation: orbitCometBurst 12s linear infinite;
+  filter: blur(0.6px) drop-shadow(0 0 6px rgb(196 154 255 / 0.8));
+}
+
+@keyframes orbitCometBurst {
+  0%   { stroke-dashoffset: 12;    opacity: 0; }   /* Dash parkt VOR dem Start */
+  4%   {                           opacity: 0.9; }
+  16%  { stroke-dashoffset: -100;  opacity: 0.9; } /* Dash parkt HINTER dem Ende */
+  20%  {                           opacity: 0; }
+  100% { stroke-dashoffset: -100;  opacity: 0; }   /* Pause bis zum nächsten Burst */
 }
 
 .orbit-steps {
@@ -1512,6 +1554,10 @@ body {
   .orbit-node { position: absolute; left: -2rem; top: 0.3rem; margin: 0; }
 }
 
+.orbit-halo { filter: blur(7px); opacity: 0.4; }
+.orbit-base { filter: blur(0.5px) drop-shadow(0 0 5px rgb(166 92 246 / 0.6)); opacity: 0.9; }
+.orbit-comet { filter: blur(0.6px) drop-shadow(0 0 6px rgb(196 154 255 / 0.8)); }
+
 /* ── TechMarquee ── */
 .marquee {
   position: relative;
@@ -1558,6 +1604,68 @@ body {
   box-shadow: 0 0 8px rgb(166 92 246 / 0.5);
 }
 
+/* ── Über mich: geschmiedete Plakette ── */
+.iron-plaque {
+  position: relative;
+  width: clamp(12rem, 22vw, 16rem);
+  aspect-ratio: 1;
+  border-radius: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background:
+    radial-gradient(circle at 30% 25%, rgb(166 92 246 / 0.16), transparent 55%),
+    radial-gradient(circle at 70% 80%, rgb(236 72 153 / 0.10), transparent 50%),
+    rgb(12 9 18 / 0.95);
+  box-shadow:
+    inset 0 0 40px rgb(166 92 246 / 0.25),
+    inset 0 0 80px rgb(236 72 153 / 0.10),
+    0 0 30px rgb(124 58 237 / 0.25),
+    0 0 70px rgb(109 40 217 / 0.15);
+  transform: rotate(3deg);
+  transition: transform 0.5s var(--ease-brand), box-shadow 0.5s var(--ease-brand);
+}
+
+.iron-plaque:hover {
+  transform: rotate(0deg);
+  box-shadow:
+    inset 0 0 50px rgb(166 92 246 / 0.35),
+    inset 0 0 90px rgb(236 72 153 / 0.15),
+    0 0 40px rgb(139 92 246 / 0.35),
+    0 0 90px rgb(109 40 217 / 0.20);
+}
+
+/* Geschmiedeter Rahmen (gleiche Technik wie Tiegel-Band) */
+.iron-plaque::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  background: conic-gradient(from 210deg,
+    #170f22 0%, #3d3542 10%, #1b1128 20%, #4a2a68 30%,
+    #241534 42%, #5c3578 55%, #2a1840 68%, #452a63 80%, #170f22 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgb(166 92 246 / 0.4));
+}
+
+.iron-plaque-mono {
+  font-family: var(--font-accent);   /* Brush = Brand-Signatur, regelkonform */
+  font-size: clamp(3.5rem, 6vw, 4.5rem);
+  line-height: 1;
+  background-image: linear-gradient(92deg, #C49AFF 0%, #A65CF6 55%, #EC4899 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgb(166 92 246 / 0.5));
+}
+
 /* ============================================================
    14. SCROLL REVEAL & KEYFRAMES
    ============================================================ */
@@ -1601,16 +1709,9 @@ body {
 @keyframes nodePulse { 0%, 100% { box-shadow: 0 0 8px var(--c), 0 0 20px var(--c); } 50% { box-shadow: 0 0 14px var(--c), 0 0 34px var(--c); } }
 @keyframes orbitComet { to { stroke-dashoffset: -100; } }
 @keyframes heroDotFloat { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.45; } 50% { transform: translateY(-22px) scale(1.15); opacity: 0.9; } }
-@keyframes dotPulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.3); opacity: 1; } }
 @keyframes cursorBlink { 50% { opacity: 0; } }
 @keyframes gbHaloPulse { 0%, 100% { opacity: 0.32; } 50% { opacity: 0.45; } }
 @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes pulseOrb { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.15); } }
-@keyframes floatOrb { 0%, 100% { transform: translateY(0) translateX(0); } 33% { transform: translateY(-20px) translateX(10px); } 66% { transform: translateY(10px) translateX(-10px); } }
-
-.pulse-anim { animation: pulseOrb 6s ease-in-out infinite; }
-.float-anim { animation: floatOrb 8s ease-in-out infinite; }
-
 /* ============================================================
    15. PROSE – BLOG TYPOGRAPHY
    ============================================================ */
@@ -1670,9 +1771,9 @@ body {
 
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 
-  .pulse-anim, .float-anim, .spectrum-text, .hero-dot, .orbit-dot,
+  .pulse-anim, .float-anim, .spectrum-text, .hero-dot,
   .orbit-comet, .ring-heat, .ring-ripple, .ring-ripple--strike, .ring-flash,
-  .hero-ring, .hero-ring.is-striking, .hero-constellation, .brand-line,
+  .hero-ring, .hero-ring.is-striking, .brand-line,
   .stat-value::after, .brush-accent--xl, .ring-echo--dashed::after,
   .service-card-icon, .orbit-node, .ring-sheen, .ring-ember,
   .molten-pool, .marquee-track, .iron-tilt {
@@ -1690,3 +1791,348 @@ body {
 }
 
 .no-js .reveal { opacity: 1 !important; transform: none !important; }
+
+/* ── Panel-Inhalte ── */
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.panel-text {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+/* ── Service-Row Listen ── */
+.service-row-list {
+  list-style: none;
+  margin-top: 0.75rem;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.service-row-list li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.service-row-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--color-primary-light);
+}
+
+/* ============================================================
+   17. SUBPAGE-TEMPLATE (FORGE – FINAL v4)
+   ============================================================ */
+
+/* ── Subhero: zentriert, ≥50% Viewport, NUR Feuerringe ── */
+.subhero {
+  position: relative;
+  overflow: hidden;
+  min-height: max(560px, 68vh);
+  display: flex;
+  align-items: center;
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.subhero-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.subhero-stage .hero-stage { width: min(620px, 94vw); }
+
+.subhero-content { position: relative; z-index: 2; text-align: center; }
+
+.subhero-h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0 1rem;
+  line-height: 1.05;
+}
+
+.subhero-h1 .brush-accent--xl { font-size: clamp(3.5rem, 8vw, 6rem); }
+
+.subhero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.6vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  max-width: 36ch;
+}
+
+.subhero-subline {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  font-weight: 600;
+  color: var(--color-primary-light);
+  margin-bottom: 0.9rem;
+}
+
+.subhero-intro {
+  max-width: 58ch;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 1.9rem;
+}
+
+/* ── Split-Layout: Sticky-Header links, Liste rechts ── */
+.split-grid { display: grid; gap: 3rem; }
+
+@media (min-width: 900px) {
+  .split-grid {
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 5rem;
+    align-items: start;        /* verhindert Stretching der linken Spalte */
+  }
+  .split-head {
+    position: sticky;
+    top: 7rem;
+    align-self: start;
+    height: fit-content;       /* Safari/Firefox-Sicherheit für Sticky im Grid */
+  }
+}
+
+/* ── Editorial-Liste mit Lesefluss ── */
+.service-rows { list-style: none; margin: 0; padding: 0; }
+
+.service-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 1.5rem;
+  padding: 2.25rem 0.75rem;
+  border-bottom: 1px solid rgb(42 42 58 / 0.7);
+  transition: background var(--duration-base) var(--ease-brand);
+}
+
+.service-row:first-child { border-top: 1px solid rgb(42 42 58 / 0.7); }
+.service-row:hover { background: rgb(166 92 246 / 0.05); }
+
+.service-row::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(196 154 255 / 0.8), rgb(236 72 153 / 0.4) 40%, transparent 75%);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-brand);
+}
+.service-row:hover::after { opacity: 1; }
+
+.service-row-num { color: var(--color-primary-light); padding-top: 0.3rem; }
+
+.service-row h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.service-row > div > p {
+  max-width: 56ch;
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ── Checkliste ── */
+.service-checks {
+  list-style: none;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.service-checks li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.service-checks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary), 0 0 16px var(--color-primary);
+}
+
+/* ── KPI-Rail: Tiles mit dezentem Gradient & Struktur ── */
+.kpi-rail {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  max-width: 60rem;
+  margin-inline: auto;
+  margin-top: clamp(3rem, 6vw, 5rem);
+  counter-reset: kpi;
+}
+
+@media (min-width: 900px) {
+  .kpi-rail { grid-template-columns: repeat(3, 1fr); }
+}
+
+.kpi-cell {
+  position: relative;
+  overflow: hidden;
+  counter-increment: kpi;
+  border-radius: 1.25rem;
+  padding: 2rem 1.6rem 1.7rem;
+  /* Gradient-Body mit wenig Opacity – hebt die Kachel ab, ohne sie schwer zu machen */
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgb(166 92 246 / 0.12), transparent 60%),
+    linear-gradient(180deg, rgb(24 16 36 / 0.50), rgb(10 8 16 / 0.72));
+  border: 1px solid rgb(166 92 246 / 0.15);
+  transition:
+    border-color var(--duration-base) var(--ease-brand),
+    box-shadow var(--duration-base) var(--ease-brand),
+    transform var(--duration-base) var(--ease-brand);
+}
+
+.kpi-cell:hover {
+  border-color: rgb(196 154 255 / 0.35);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 24px rgb(124 58 237 / 0.20),
+    0 10px 30px rgb(8 8 13 / 0.50);
+}
+
+/* Hairline oben – jetzt innenliegend, nicht mehr volle Breite */
+.kpi-cell::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgb(196 154 255 / 0.7), rgb(236 72 153 / 0.35) 60%, transparent);
+}
+
+/* Mono-Index oben rechts = Struktur + Brand-Sprache (ohne Markup) */
+.kpi-cell::after {
+  content: "0" counter(kpi);
+  position: absolute;
+  top: 1.1rem;
+  right: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: rgb(196 154 255 / 0.5);
+}
+
+.kpi-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  line-height: 1.1;
+  background: linear-gradient(180deg, #ffffff 0%, #e6defa 30%, #b79ce0 58%, #c49aff 82%, #a65cf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgb(166 92 246 / 0.35));
+  margin-bottom: 0.5rem;
+}
+
+.kpi-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.kpi-note {
+  text-align: center;
+  margin-top: clamp(3.5rem, 6vw, 5rem);
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ── Rev 10.6: Lesbarkeit Display-Font ── */
+.section-title { letter-spacing: -0.01em; line-height: 1.15; }
+
+/* ── Rev 10.7: Eine Textfamilie – Labels bleiben technisch via Weight/Tracking ── */
+.eyebrow, .mono-label, .badge, .marquee-item,
+.service-card-num, .stat-label, .kpi-label, .hero-readout {
+  font-weight: 600;
+}
+
+/* ============================================================
+   18. NAHTLOSE HINTERGRÜNDE (REV 10.8)
+   ============================================================ */
+
+/* Keine Schnittkanten mehr: Wolken & Glows dürfen in die
+   Nachbar-Sections hinein/atmen (vertikal) */
+.hero,
+.subhero,
+.section {
+  overflow: visible;
+}
+
+/* Horizontal bleibt alles sicher abgeschnitten (keine Scrollbar) */
+html, body { overflow-x: hidden; }
+
+/* Section-Tints immer mit transparenten Rändern →
+   jede Section fadet weich in die nächste */
+.section--soft {
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgb(12 12 20 / 0.55) 16%,
+    rgb(12 12 20 / 0.55) 84%,
+    transparent 100%);
+}
+
+/* CTA-Glow: Fade-Zonen verlängern (weicherer Ein-/Auslauf) */
+.section--cta::before {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 85%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 20%, #000 85%, transparent 100%);
+}
+
+/* ============================================================
+   19. FIRE-HOOPS ALS HINTERGRUND-ELEMENTE (REV 10.9)
+   ============================================================ */
+
+.fire-hoop {
+  position: absolute;
+  z-index: -1;               /* hinter Content, über Body-Ground */
+  pointer-events: none;
+  aspect-ratio: 1;
+  opacity: 0.75;
+}
+
+.fire-hoop--cool { opacity: 0.45; }
+
+.fire-hoop--tilt {
+  aspect-ratio: 1.35;
+  transform: rotate(-14deg);
+}

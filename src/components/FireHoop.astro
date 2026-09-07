@@ -1,0 +1,57 @@
+---
+interface Props {
+  uid: string;        // eindeutige Gradient-ID pro Instanz
+  cool?: boolean;     // kühle Variante (Lila statt Pink)
+  wave?: boolean;     // laufende Flammenwelle an/aus
+  tilt?: boolean;     // elliptisch geneigt (Orbit-Look)
+  class?: string;
+  style?: string;
+}
+
+const {
+  uid,
+  cool = false,
+  wave = true,
+  tilt = false,
+  class: className = '',
+  style = '',
+} = Astro.props;
+
+const gid = `fireHoop-${uid}`;
+---
+
+<div
+  class:list={['fire-hoop', { 'fire-hoop--cool': cool, 'fire-hoop--tilt': tilt }, className]}
+  style={style}
+  aria-hidden="true"
+>
+  <svg class="hoop-svg" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" overflow="visible">
+    <defs>
+      <linearGradient id={gid} x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+        <stop offset="0"   stop-color="#5c3578" stop-opacity="0.9"/>
+        <stop offset="0.5" stop-color="#EC4899" stop-opacity="0.65"/>
+        <stop offset="1"   stop-color="#3a2154" stop-opacity="0.9"/>
+      </linearGradient>
+    </defs>
+
+    <ellipse class="fr-halo" cx="50" cy="50" rx="49" ry="49"
+      stroke={cool ? '#7C3AED' : '#A65CF6'} stroke-width="14" vector-effect="non-scaling-stroke"/>
+    <ellipse class="fr-mid" cx="50" cy="50" rx="49" ry="49"
+      stroke={cool ? '#7C3AED' : '#A65CF6'} stroke-width="7" vector-effect="non-scaling-stroke"/>
+    <ellipse class="fr-tube" cx="50" cy="50" rx="49" ry="49"
+      stroke={cool ? '#3a2154' : `url(#${gid})`} stroke-width="4" vector-effect="non-scaling-stroke"/>
+    <ellipse class="fr-core" cx="50" cy="50" rx="49" ry="49"
+      stroke={cool ? '#C49AFF' : '#F5EBFF'} stroke-width={cool ? '1.25' : '1.5'} vector-effect="non-scaling-stroke"/>
+
+    {wave && (
+      <>
+        <ellipse class="fire-swell" cx="50" cy="50" rx="49" ry="49" pathLength="100"
+          stroke={cool ? '#7C3AED' : '#A65CF6'} stroke-width="12" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+        <ellipse class="fire-wave fire-wave--aura" cx="50" cy="50" rx="49" ry="49" pathLength="100"
+          stroke={cool ? '#A65CF6' : '#EC4899'} stroke-width="8" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+        <ellipse class="fire-wave" cx="50" cy="50" rx="49" ry="49" pathLength="100"
+          stroke={cool ? '#C49AFF' : '#F0E1FF'} stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+      </>
+    )}
+  </svg>
+</div>

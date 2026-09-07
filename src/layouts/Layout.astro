@@ -153,10 +153,6 @@ const jsonLd = {
     <!-- JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     
-    <!-- Fonts (vorerst CDN – wird später lokal ersetzt) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-bg text-text-primary font-body antialiased selection:bg-primary/30 selection:text-text-primary">
     <!-- Brush-Texture: raue Pinselkanten für .brush-accent -->
@@ -202,7 +198,7 @@ const jsonLd = {
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
     <script>
-      document.querySelectorAll('.btn').forEach((btn) => {
+      document.querySelectorAll('.btn, .service-card').forEach((btn) => {
         btn.addEventListener('pointermove', (e) => {
           const r = btn.getBoundingClientRect();
           const x = e.clientX - r.left;

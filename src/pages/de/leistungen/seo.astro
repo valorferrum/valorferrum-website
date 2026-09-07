@@ -1,6 +1,7 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import SeoRankingClimb from '../../../components/SeoRankingClimb.tsx';
+import IronTilt from '../../../components/IronTilt.tsx';
+import FireHoop from '../../../components/FireHoop.astro';
 
 const meta = {
   title: "SEO Freelancer – Google Ranking verbessern | Valorferrum",
@@ -10,295 +11,356 @@ const meta = {
 
 <Layout title={meta.title} description={meta.description} lang="de">
 
-  <!-- Hero mit Ranking-Animation -->
-  <section class="relative" aria-label="SEO Hero">
-    <SeoRankingClimb client:visible lang="de" />
-  </section>
+  <!-- ==================== SUBHERO ==================== -->
+  <section class="section subhero" aria-labelledby="seo-heading">
+    <div class="glow-cloud-wrap" style="width:30rem;height:30rem;top:-6rem;left:-10rem;">
+      <div class="glow-cloud glow-cloud--purple glow-cloud--float"></div>
+      <i class="cloud-spark" style="--x:40%; --c:#EC4899; --d:-2s; --dur:7s;"></i>
+      <i class="cloud-spark" style="--x:60%; --c:#C49AFF; --d:-5s; --dur:8s;"></i>
+    </div>
+    <div class="glow-cloud-wrap" style="width:26rem;height:26rem;bottom:-8rem;right:-8rem;">
+      <div class="glow-cloud glow-cloud--pink"></div>
+      <i class="cloud-spark" style="--x:45%; --c:#A65CF6; --d:-3s; --dur:7.5s;"></i>
+    </div>
+    <FireHoop uid="sub" cool tilt style="width:46rem; top:-16rem; right:-20rem;" />
 
-  <!-- ==================== DIE VIER SÄULEN ==================== -->
-  <section class="pb-24 px-6" aria-labelledby="saeulen-heading">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-12">
-        <h2 id="saeulen-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
-          Technisches SEO, Content & Onpage-Optimierung
-        </h2>
-        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
-          Suchmaschinenoptimierung ist kein Einzel-Maßnahme, sondern ein Zusammenspiel. 
-          Ich arbeite an allen Säulen, die Dein Ranking nachhaltig verbessern.
-        </p>
+    <div class="subhero-stage" aria-hidden="true">
+      <div class="hero-stage">
+        <div class="hero-orbit">
+          <svg class="hoop-svg" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" overflow="visible">
+            <defs>
+              <linearGradient id="fireHoopSub" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0"   stop-color="#5c3578" stop-opacity="0.9"/>
+                <stop offset="0.5" stop-color="#EC4899" stop-opacity="0.65"/>
+                <stop offset="1"   stop-color="#3a2154" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+            <ellipse class="fr-halo" cx="50" cy="50" rx="49" ry="49" stroke="#A65CF6" stroke-width="18" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-mid" cx="50" cy="50" rx="49" ry="49" stroke="#A65CF6" stroke-width="9" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-tube" cx="50" cy="50" rx="49" ry="49" stroke="url(#fireHoopSub)" stroke-width="5" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-core" cx="50" cy="50" rx="49" ry="49" stroke="#F5EBFF" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fire-swell" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#A65CF6" stroke-width="16" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+            <ellipse class="fire-wave fire-wave--aura" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#EC4899" stroke-width="10" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+            <ellipse class="fire-wave" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#F0E1FF" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="hero-orbit hero-orbit--far">
+          <svg class="hoop-svg" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" overflow="visible">
+            <ellipse class="fr-halo" cx="50" cy="50" rx="49" ry="49" stroke="#7C3AED" stroke-width="14" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-mid" cx="50" cy="50" rx="49" ry="49" stroke="#7C3AED" stroke-width="7" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-tube" cx="50" cy="50" rx="49" ry="49" stroke="#3a2154" stroke-width="4" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-core" cx="50" cy="50" rx="49" ry="49" stroke="#C49AFF" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fire-swell" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#7C3AED" stroke-width="12" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+            <ellipse class="fire-wave fire-wave--aura" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#A65CF6" stroke-width="8" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+            <ellipse class="fire-wave" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#C49AFF" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+          </svg>
+        </div>
       </div>
+    </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Technisches SEO -->
-        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-500">
-          <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-          </div>
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Technisches SEO</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
-            Die Basis entscheidet. Ohne saubere Technik kann Content nicht wirken. 
-            Ich optimiere alles, was Google sieht – bevor es die Nutzer sehen.
-          </p>
-          <ul class="text-text-secondary text-sm space-y-2">
-            <li class="flex items-start gap-2"><span class="text-primary mt-0.5">→</span>Core Web Vitals & Ladezeit-Optimierung</li>
-            <li class="flex items-start gap-2"><span class="text-primary mt-0.5">→</span>Crawl-Budget, Indexierung & Canonicals</li>
-            <li class="flex items-start gap-2"><span class="text-primary mt-0.5">→</span>Schema.org, Hreflang & Mobile-First</li>
-          </ul>
-        </div>
-
-        <!-- Content-Strategie -->
-        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all duration-500" style="transition-delay: 100ms;">
-          <div class="w-12 h-12 rounded-lg bg-spectrum-pink/10 flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-spectrum-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-          </div>
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Content-Strategie</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
-            Inhalte, die nicht nur ranken, sondern überzeugen. Ich finde die Fragen, 
-            die Deine Zielgruppe wirklich hat – und beantworte sie besser als die Konkurrenz.
-          </p>
-          <ul class="text-text-secondary text-sm space-y-2">
-            <li class="flex items-start gap-2"><span class="text-spectrum-pink mt-0.5">→</span>Keyword-Recherche & Topic-Cluster</li>
-            <li class="flex items-start gap-2"><span class="text-spectrum-pink mt-0.5">→</span>Content-Gaps & Wettbewerbsanalyse</li>
-            <li class="flex items-start gap-2"><span class="text-spectrum-pink mt-0.5">→</span>E-E-A-T: Expertise, Autorität, Vertrauen</li>
-          </ul>
-        </div>
-
-        <!-- Onpage-Optimierung -->
-        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-blue/30 transition-all duration-500" style="transition-delay: 200ms;">
-          <div class="w-12 h-12 rounded-lg bg-spectrum-blue/10 flex items-center justify-center mb-6">
-            <svg class="w-6 h-6 text-spectrum-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-          </div>
-          <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Onpage-Optimierung</h3>
-          <p class="text-text-secondary text-sm leading-relaxed mb-4">
-            Jedes Element auf Deiner Seite sendet Signale an Google. 
-            Ich stelle sicher, dass diese Signale klar, konsistent und keyword-relevant sind.
-          </p>
-          <ul class="text-text-secondary text-sm space-y-2">
-            <li class="flex items-start gap-2"><span class="text-spectrum-blue mt-0.5">→</span>Meta-Titel, Descriptions & Header-Hierarchie</li>
-            <li class="flex items-start gap-2"><span class="text-spectrum-blue mt-0.5">→</span>Interne Verlinkung & Keyworddichte</li>
-            <li class="flex items-start gap-2"><span class="text-spectrum-blue mt-0.5">→</span>Bild-SEO, ALT-Tags & Strukturierte Daten</li>
-          </ul>
-        </div>
-
-        <!-- Offpage & Local -->
-        <div class="reveal card p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-yellow/30 transition-all duration-500" style="transition-delay: 300ms;">
-  <div class="w-12 h-12 rounded-lg bg-spectrum-yellow/10 flex items-center justify-center mb-6">
-    <svg class="w-6 h-6 text-spectrum-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-  </div>
-  <h3 class="font-display text-xl font-semibold text-text-primary mb-3">Offpage SEO</h3>
-  <p class="text-text-secondary text-sm leading-relaxed mb-4">
-    Google vertraut Seiten, die andere vertrauenswürdige Seiten verlinken. 
-    Ich baue Autorität auf – nachhaltig, nicht manipulativ.
-  </p>
-  <ul class="text-text-secondary text-sm space-y-2">
-    <li class="flex items-start gap-2"><span class="text-spectrum-yellow mt-0.5">→</span>Linkbuilding & Backlink-Analyse</li>
-    <li class="flex items-start gap-2"><span class="text-spectrum-yellow mt-0.5">→</span>Digital PR & Brand Mentions</li>
-    <li class="flex items-start gap-2"><span class="text-spectrum-yellow mt-0.5">→</span>Social Signals & Online-Reputation</li>
-  </ul>
-</div>
+    <div class="section-inner subhero-content">
+      <p class="eyebrow justify-center reveal">Leistung 01 / SEO</p>
+      <h1 id="seo-heading" class="subhero-h1 reveal">
+        <span class="brush-accent brush-accent--xl">SEO</span>
+        <span class="subhero-title">&amp; Suchmaschinenoptimierung für KMU, Startups &amp; NGOs</span>
+      </h1>
+      <p class="subhero-subline reveal">Sichtbarkeit, die bleibt.</p>
+      <p class="subhero-intro reveal mx-auto">
+        SEO-Analyse, technische Optimierung und nachhaltige Rankings –
+        datengetrieben, transparent, ohne Agentur-Overhead.
+      </p>
+      <div class="hero-actions justify-center reveal">
+        <a href="/de/kontakt/" class="btn btn-primary">SEO-Analyse anfragen</a>
+        <a href="/de/preise/" class="btn btn-secondary">Preise ansehen</a>
       </div>
     </div>
   </section>
 
-  <!-- ==================== KONKRETE MASSNAHMEN ==================== -->
-  <section class="py-24 px-6 bg-surface relative overflow-hidden" aria-labelledby="massnahmen-heading">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/5 to-transparent rounded-full blur-3xl"></div>
+  <!-- ==================== DIE VIER SÄULEN ==================== -->
+  <section class="section" aria-labelledby="saeulen-heading">
+    <FireHoop uid="saeulen" cool wave={false} style="width:30rem; bottom:-13rem; left:-15rem;" />
 
-    <div class="max-w-5xl mx-auto relative">
-      <div class="text-center mb-16">
-        <h2 id="massnahmen-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
-          Konkrete SEO-Maßnahmen für nachhaltiges Ranking
+    <div class="section-inner split-grid">
+      <header class="split-head">
+        <p class="eyebrow">Was ich für Dich tue</p>
+        <h2 id="saeulen-heading" class="section-title">
+          Technisches SEO, Content &amp; <span class="spectrum-text">Onpage-Optimierung</span>
         </h2>
-        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
-          Kein Black-Hat, keine Tricks. Ich setze bewährte Methoden um, die langfristig wirken – 
+        <p class="section-intro">
+          Suchmaschinenoptimierung ist kein Einzel-Maßnahme, sondern ein Zusammenspiel.
+          Ich arbeite an allen Säulen, die Dein Ranking nachhaltig verbessern.
+        </p>
+      </header>
+
+      <ol class="service-rows reveal">
+        <li class="service-row">
+          <span class="service-row-num mono-label" aria-hidden="true">01</span>
+          <div>
+            <h3>Technisches SEO</h3>
+            <p>Die Basis entscheidet. Ohne saubere Technik kann Content nicht wirken. Ich optimiere alles, was Google sieht – bevor es die Nutzer sehen.</p>
+            <ul class="service-checks">
+              <li>Core Web Vitals &amp; Ladezeit-Optimierung</li>
+              <li>Crawl-Budget, Indexierung &amp; Canonicals</li>
+              <li>Schema.org, Hreflang &amp; Mobile-First</li>
+            </ul>
+          </div>
+        </li>
+        <li class="service-row">
+          <span class="service-row-num mono-label" aria-hidden="true">02</span>
+          <div>
+            <h3>Content-Strategie</h3>
+            <p>Inhalte, die nicht nur ranken, sondern überzeugen. Ich finde die Fragen, die Deine Zielgruppe wirklich hat – und beantworte sie besser als die Konkurrenz.</p>
+            <ul class="service-checks">
+              <li>Keyword-Recherche &amp; Topic-Cluster</li>
+              <li>Content-Gaps &amp; Wettbewerbsanalyse</li>
+              <li>E-E-A-T: Expertise, Autorität, Vertrauen</li>
+            </ul>
+          </div>
+        </li>
+        <li class="service-row">
+          <span class="service-row-num mono-label" aria-hidden="true">03</span>
+          <div>
+            <h3>Onpage-Optimierung</h3>
+            <p>Jedes Element auf Deiner Seite sendet Signale an Google. Ich stelle sicher, dass diese Signale klar, konsistent und keyword-relevant sind.</p>
+            <ul class="service-checks">
+              <li>Meta-Titel, Descriptions &amp; Header-Hierarchie</li>
+              <li>Interne Verlinkung &amp; Keyworddichte</li>
+              <li>Bild-SEO, ALT-Tags &amp; Strukturierte Daten</li>
+            </ul>
+          </div>
+        </li>
+        <li class="service-row">
+          <span class="service-row-num mono-label" aria-hidden="true">04</span>
+          <div>
+            <h3>Offpage SEO</h3>
+            <p>Google vertraut Seiten, die andere vertrauenswürdige Seiten verlinken. Ich baue Autorität auf – nachhaltig, nicht manipulativ.</p>
+            <ul class="service-checks">
+              <li>Linkbuilding &amp; Backlink-Analyse</li>
+              <li>Digital PR &amp; Brand Mentions</li>
+              <li>Social Signals &amp; Online-Reputation</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== KONKRETE MASSNAHMEN ==================== -->
+  <section class="section section--soft" aria-labelledby="massnahmen-heading">
+    <div class="glow-cloud-wrap" style="width:26rem;height:26rem;top:-8rem;right:-10rem;">
+      <div class="glow-cloud glow-cloud--pink"></div>
+      <i class="cloud-spark" style="--x:50%; --c:#EC4899; --d:-4s; --dur:7s;"></i>
+    </div>
+    <div class="glow-cloud-wrap" style="width:24rem;height:24rem;bottom:-6rem;left:-8rem;">
+      <div class="glow-cloud glow-cloud--purple glow-cloud--float"></div>
+      <i class="cloud-spark" style="--x:55%; --c:#C49AFF; --d:-2s; --dur:8s;"></i>
+    </div>
+    <FireHoop uid="massnahmen" style="width:24rem; top:-9rem; right:-11rem;" />
+
+    <div class="section-inner">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">Konkrete Maßnahmen</p>
+        <h2 id="massnahmen-heading" class="section-title">
+          Nachhaltiges Ranking ohne <span class="spectrum-text">Black-Hat</span>
+        </h2>
+        <p class="section-intro mx-auto">
+          Kein Black-Hat, keine Tricks. Ich setze bewährte Methoden um, die langfristig wirken –
           und halte mich an Googles Richtlinien.
         </p>
-      </div>
+      </header>
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- E-E-A-T -->
-        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50">
-          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <IronTilt className="service-card" client:visible>
+          <span class="service-card-num" aria-hidden="true">01</span>
+          <div class="service-card-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </div>
-          <h3 class="text-lg font-semibold text-text-primary mb-3 text-center">E-E-A-T</h3>
-          <p class="text-text-secondary text-sm leading-relaxed text-center">
-            Expertise, Erfahrung, Autorität und Vertrauen. Ich optimiere Deine Inhalte und Dein Profil so, 
-            dass Google sie als vertrauenswürdige Quelle erkennt.
-          </p>
-        </div>
+          <h3 class="service-card-title">E-E-A-T</h3>
+          <p class="service-card-text">Expertise, Erfahrung, Autorität und Vertrauen. Ich optimiere Deine Inhalte und Dein Profil so, dass Google sie als vertrauenswürdige Quelle erkennt.</p>
+        </IronTilt>
 
-        <!-- Meta-Daten & Header -->
-        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 100ms;">
-          <div class="w-14 h-14 rounded-xl bg-spectrum-pink/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-spectrum-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+        <IronTilt className="service-card" delay={80} client:visible>
+          <span class="service-card-num" aria-hidden="true">02</span>
+          <div class="service-card-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
           </div>
-          <h3 class="text-lg font-semibold text-text-primary mb-3 text-center">Meta-Daten & Header</h3>
-          <p class="text-text-secondary text-sm leading-relaxed text-center">
-            Jede Seite braucht eine klare Hierarchie. Ich schreibe Titel und Descriptions, die klicken machen, 
-            und baue eine logische H1–H6-Struktur, die Google folgen kann.
-          </p>
-        </div>
+          <h3 class="service-card-title">Meta-Daten &amp; Header</h3>
+          <p class="service-card-text">Jede Seite braucht eine klare Hierarchie. Ich schreibe Titel und Descriptions, die klicken machen, und baue eine logische H1–H6-Struktur, die Google folgen kann.</p>
+        </IronTilt>
 
-        <!-- Keyworddichte & Relevanz -->
-        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 200ms;">
-          <div class="w-14 h-14 rounded-xl bg-spectrum-blue/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-spectrum-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
+        <IronTilt className="service-card" delay={160} client:visible>
+          <span class="service-card-num" aria-hidden="true">03</span>
+          <div class="service-card-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>
           </div>
-          <h3 class="text-lg font-semibold text-text-primary mb-3 text-center">Keyworddichte & Relevanz</h3>
-          <p class="text-text-secondary text-sm leading-relaxed text-center">
-            Nicht zu wenig, nicht zu viel. Ich balanciere Keywords natürlich in Texte ein – 
-            für Leser und Suchmaschinen gleichermaßen lesbar.
-          </p>
-        </div>
+          <h3 class="service-card-title">Keyworddichte &amp; Relevanz</h3>
+          <p class="service-card-text">Nicht zu wenig, nicht zu viel. Ich balanciere Keywords natürlich in Texte ein – für Leser und Suchmaschinen gleichermaßen lesbar.</p>
+        </IronTilt>
 
-        <!-- Linkbuilding -->
-        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 50ms;">
-          <div class="w-14 h-14 rounded-xl bg-spectrum-yellow/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-spectrum-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+        <IronTilt className="service-card" client:visible>
+          <span class="service-card-num" aria-hidden="true">04</span>
+          <div class="service-card-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
           </div>
-          <h3 class="text-lg font-semibold text-text-primary mb-3 text-center">Linkbuilding</h3>
-          <p class="text-text-secondary text-sm leading-relaxed text-center">
-            Qualität vor Quantität. Ich identifiziere relevante Quellen, baue Beziehungen auf 
-            und generiere Backlinks, die Deine Domain-Authority stärken.
-          </p>
-        </div>
+          <h3 class="service-card-title">Linkbuilding</h3>
+          <p class="service-card-text">Qualität vor Quantität. Ich identifiziere relevante Quellen, baue Beziehungen auf und generiere Backlinks, die Deine Domain-Authority stärken.</p>
+        </IronTilt>
 
-        <!-- Technische Basis -->
-        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 150ms;">
-          <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+        <IronTilt className="service-card" delay={80} client:visible>
+          <span class="service-card-num" aria-hidden="true">05</span>
+          <div class="service-card-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
           </div>
-          <h3 class="text-lg font-semibold text-text-primary mb-3 text-center">Technische Basis</h3>
-          <p class="text-text-secondary text-sm leading-relaxed text-center">
-            Crawl-Fehler beheben, Ladezeiten senken, Schema-Markup einbauen. 
-            Die unsichtbare Arbeit, die sichtbare Ergebnisse bringt.
-          </p>
-        </div>
+          <h3 class="service-card-title">Technische Basis</h3>
+          <p class="service-card-text">Crawl-Fehler beheben, Ladezeiten senken, Schema-Markup einbauen. Die unsichtbare Arbeit, die sichtbare Ergebnisse bringt.</p>
+        </IronTilt>
 
-        <!-- Local SEO -->
-        <div class="reveal p-8 rounded-2xl bg-bg/50 border border-border/50" style="transition-delay: 250ms;">
-          <div class="w-14 h-14 rounded-xl bg-spectrum-pink/10 flex items-center justify-center mx-auto mb-5">
-            <svg class="w-7 h-7 text-spectrum-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        <IronTilt className="service-card" delay={160} client:visible>
+          <span class="service-card-num" aria-hidden="true">06</span>
+          <div class="service-card-icon" aria-hidden="true">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
           </div>
-          <h3 class="text-lg font-semibold text-text-primary mb-3 text-center">Lokales SEO</h3>
-          <p class="text-text-secondary text-sm leading-relaxed text-center">
-            Google Business Profile optimieren, NAP-Konsistenz sicherstellen, Local-Pack-Sichtbarkeit steigern. 
-            Für Unternehmen, die vor Ort gefunden werden wollen.
-          </p>
-        </div>
+          <h3 class="service-card-title">Lokales SEO</h3>
+          <p class="service-card-text">Google Business Profile optimieren, NAP-Konsistenz sicherstellen, Local-Pack-Sichtbarkeit steigern. Für Unternehmen, die vor Ort gefunden werden wollen.</p>
+        </IronTilt>
       </div>
     </div>
   </section>
 
   <!-- ==================== SEO KPIs ==================== -->
-  <section class="py-24 px-6 bg-bg" aria-labelledby="kpis-heading">
-    <div class="max-w-5xl mx-auto">
-      <div class="text-center mb-12">
-        <h2 id="kpis-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
-          SEO KPIs & Erfolgsmessung
+  <section class="section" aria-labelledby="kpis-heading">
+    <div class="glow-cloud-wrap" style="width:26rem;height:26rem;top:-6rem;right:-8rem;">
+      <div class="glow-cloud glow-cloud--purple"></div>
+      <i class="cloud-spark" style="--x:40%; --c:#C49AFF; --d:-1.5s; --dur:7.5s;"></i>
+      <i class="cloud-spark" style="--x:62%; --c:#EC4899; --d:-5s; --dur:6.5s;"></i>
+    </div>
+    <FireHoop uid="kpi" cool tilt style="width:40rem; top:-18rem; left:-22rem;" />
+
+    <div class="section-inner">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">Erfolgsmessung</p>
+        <h2 id="kpis-heading" class="section-title">
+          SEO KPIs &amp; <span class="spectrum-text">Transparenz</span>
         </h2>
-        <p class="reveal text-text-secondary max-w-2xl mx-auto" style="transition-delay: 100ms;">
-          SEO ist keine Blackbox. Ich messe transparent, welche Maßnahmen welche Wirkung haben – 
+        <p class="section-intro mx-auto">
+          SEO ist keine Blackbox. Ich messe transparent, welche Maßnahmen welche Wirkung haben –
           und passe die Strategie basierend auf Daten an.
         </p>
+      </header>
+
+      <div class="kpi-rail reveal">
+        <div class="kpi-cell">
+          <div class="kpi-value">Organic Traffic</div>
+          <div class="kpi-label">Besucher über organische Suche</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-value">Rankings</div>
+          <div class="kpi-label">Keyword-Positionen</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-value">CWV</div>
+          <div class="kpi-label">Core Web Vitals</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-value">CTR</div>
+          <div class="kpi-label">Click-Through-Rate</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-value">Backlinks</div>
+          <div class="kpi-label">Domain Authority</div>
+        </div>
+        <div class="kpi-cell">
+          <div class="kpi-value">CVR</div>
+          <div class="kpi-label">Conversion Rate</div>
+        </div>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div class="reveal p-6 rounded-xl bg-surface border border-border">
-          <div class="text-primary font-display font-bold text-2xl mb-2">Organic Traffic</div>
-          <div class="text-text-primary font-semibold mb-1">Besucher über organische Suche</div>
-          <p class="text-text-secondary text-sm">Die wichtigste Kennzahl: Wie viele Nutzer finden Dich über Google & Co. – und wie entwickelt sich das über Zeit?</p>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay: 50ms;">
-          <div class="text-primary font-display font-bold text-2xl mb-2">Rankings</div>
-          <div class="text-text-primary font-semibold mb-1">Keyword-Positionen</div>
-          <p class="text-text-secondary text-sm">Wo stehst Du für Deine Ziel-Keywords? Ich tracke nicht nur Platz 1, sondern die Entwicklung der gesamten SERP-Präsenz.</p>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay: 100ms;">
-          <div class="text-primary font-display font-bold text-2xl mb-2">CWV</div>
-          <div class="text-text-primary font-semibold mb-1">Core Web Vitals</div>
-          <p class="text-text-secondary text-sm">Ladezeit, Interaktivität und visuelle Stabilität. Googles offizieller Ranking-Faktor – und entscheidend für die Nutzererfahrung.</p>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay: 150ms;">
-          <div class="text-primary font-display font-bold text-2xl mb-2">CTR</div>
-          <div class="text-text-primary font-semibold mb-1">Click-Through-Rate</div>
-          <p class="text-text-secondary text-sm">Wie oft wird geklickt, wenn Deine Seite in den Suchergebnissen erscheint? Ein Indikator für die Relevanz Deiner Meta-Daten.</p>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay: 200ms;">
-          <div class="text-primary font-display font-bold text-2xl mb-2">Backlinks</div>
-          <div class="text-text-primary font-semibold mb-1">Domain Authority</div>
-          <p class="text-text-secondary text-sm">Qualität und Quantität der verweisenden Domains. Ein stärkeres Linkprofil bedeutet mehr Vertrauen und bessere Rankings.</p>
-        </div>
-        <div class="reveal p-6 rounded-xl bg-surface border border-border" style="transition-delay: 250ms;">
-          <div class="text-primary font-display font-bold text-2xl mb-2">CVR</div>
-          <div class="text-text-primary font-semibold mb-1">Conversion Rate</div>
-          <p class="text-text-secondary text-sm">Traffic ist nur der Anfang. Ich messe, wie viele Besucher zu Kunden, Leads oder Anfragen werden – und optimiere darauf.</p>
-        </div>
-      </div>
+      <p class="kpi-note reveal">
+        Jedes Reporting ordnet diese Zahlen ein – verständlich, ehrlich, ohne Blackbox.
+      </p>
     </div>
   </section>
 
   <!-- ==================== PROZESS ==================== -->
-  <section class="py-24 px-6 bg-surface" aria-labelledby="prozess-heading">
-    <div class="max-w-5xl mx-auto">
-      <div class="mb-12">
-        <h2 id="prozess-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">
-          SEO Prozess: Von der Analyse zum Ranking
+  <section class="section section--soft" aria-labelledby="prozess-heading">
+    <div class="glow-cloud-wrap" style="width:24rem;height:24rem;top:-6rem;left:-8rem;">
+      <div class="glow-cloud glow-cloud--pink glow-cloud--float"></div>
+      <i class="cloud-spark" style="--x:48%; --c:#A65CF6; --d:-3.5s; --dur:7s;"></i>
+    </div>
+    <FireHoop uid="prozess" wave={false} style="width:28rem; bottom:-12rem; right:-13rem;" />
+
+    <div class="section-inner">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">So arbeite ich</p>
+        <h2 id="prozess-heading" class="section-title">
+          SEO Prozess: Von der Analyse <span class="spectrum-text">zum Ranking</span>
         </h2>
-        <p class="reveal text-text-secondary max-w-2xl" style="transition-delay: 100ms;">
+        <p class="section-intro mx-auto">
           Nachhaltiges SEO braucht Zeit – aber keine Zeit ohne Plan. Jeder Schritt ist nachvollziehbar und messbar.
         </p>
-      </div>
+      </header>
+    </div>
 
-      <div class="space-y-6">
-        <div class="reveal flex gap-6 p-6 rounded-xl bg-bg border border-border/50 hover:border-primary/20 transition-colors">
-          <div class="text-3xl font-display font-bold text-primary/40 shrink-0 w-12">01</div>
-          <div>
-            <h3 class="text-lg font-semibold text-text-primary mb-2">SEO Audit & Status Quo</h3>
-            <p class="text-text-secondary text-sm leading-relaxed">
-              Technische Analyse, Wettbewerbs-Recherche und Keyword-Potenzial. Wo stehst Du – und wo sind die größten Hebel für schnelle und langfristige Erfolge?
-            </p>
-          </div>
-        </div>
-        <div class="reveal flex gap-6 p-6 rounded-xl bg-bg border border-border/50 hover:border-primary/20 transition-colors" style="transition-delay: 100ms;">
-          <div class="text-3xl font-display font-bold text-primary/40 shrink-0 w-12">02</div>
-          <div>
-            <h3 class="text-lg font-semibold text-text-primary mb-2">Strategie & Roadmap</h3>
-            <p class="text-text-secondary text-sm leading-relaxed">
-              Priorisierung der Maßnahmen, Content-Planung und technische Roadmap. Kein Schnellschuss, sondern ein realistischer Plan mit messbaren Zwischenzielen.
-            </p>
-          </div>
-        </div>
-        <div class="reveal flex gap-6 p-6 rounded-xl bg-bg border border-border/50 hover:border-primary/20 transition-colors" style="transition-delay: 200ms;">
-          <div class="text-3xl font-display font-bold text-primary/40 shrink-0 w-12">03</div>
-          <div>
-            <h3 class="text-lg font-semibold text-text-primary mb-2">Umsetzung, Monitoring & Iteration</h3>
-            <p class="text-text-secondary text-sm leading-relaxed">
-              Ich setze um, messe Ergebnisse und passe die Strategie an. Regelmäßiges Reporting zeigt, welche Maßnahmen wirken – und wo wir nachjustieren müssen.
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="orbit-wrapper reveal">
+      <svg class="orbit-path" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="orbitStrokeSeo" x1="0" y1="0" x2="100" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0"   stop-color="#C49AFF" stop-opacity="0.9"/>
+            <stop offset="0.5" stop-color="#EC4899" stop-opacity="0.7"/>
+            <stop offset="1"   stop-color="#A65CF6" stop-opacity="0.8"/>
+          </linearGradient>
+        </defs>
+        <path class="orbit-halo" d="M 0 20 C 40 20, 60 80, 100 80"
+              stroke="#8B5CF6" stroke-width="10" vector-effect="non-scaling-stroke"/>
+        <path class="orbit-base" d="M 0 20 C 40 20, 60 80, 100 80"
+              stroke="url(#orbitStrokeSeo)" stroke-width="2.5" vector-effect="non-scaling-stroke"/>
+      </svg>
+
+      <ol class="orbit-steps">
+        <li class="orbit-step">
+          <span class="orbit-node" style="--c:#C49AFF" aria-hidden="true"></span>
+          <p class="mono-label">01</p>
+          <h3>SEO Audit &amp; Status Quo</h3>
+          <p>Technische Analyse, Wettbewerbs-Recherche und Keyword-Potenzial. Wo stehst Du – und wo sind die größten Hebel für schnelle und langfristige Erfolge?</p>
+        </li>
+        <li class="orbit-step">
+          <span class="orbit-node" style="--c:#EC4899" aria-hidden="true"></span>
+          <p class="mono-label">02</p>
+          <h3>Strategie &amp; Roadmap</h3>
+          <p>Priorisierung der Maßnahmen, Content-Planung und technische Roadmap. Kein Schnellschuss, sondern ein realistischer Plan mit messbaren Zwischenzielen.</p>
+        </li>
+        <li class="orbit-step">
+          <span class="orbit-node" style="--c:#A65CF6" aria-hidden="true"></span>
+          <p class="mono-label">03</p>
+          <h3>Umsetzung, Monitoring &amp; Iteration</h3>
+          <p>Ich setze um, messe Ergebnisse und passe die Strategie an. Regelmäßiges Reporting zeigt, welche Maßnahmen wirken – und wo wir nachjustieren müssen.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
   <!-- ==================== CTA ==================== -->
-  <section class="py-24 px-6 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-spectrum-purple/15 via-spectrum-pink/10 to-spectrum-blue/15"></div>
-    <div class="max-w-3xl mx-auto text-center relative">
-      <p class="reveal text-lg text-text-secondary mb-8 leading-relaxed">
-        Ob technisches Audit, Content-Strategie oder komplette SEO-Betreuung: 
+  <section class="section section--cta" aria-labelledby="seo-cta-heading">
+    <div class="glow-cloud-wrap" style="width:30rem;height:30rem;bottom:-10rem;right:-10rem;">
+      <div class="glow-cloud glow-cloud--pink"></div>
+      <i class="cloud-spark" style="--x:45%; --c:#C49AFF; --d:-3s; --dur:7.5s;"></i>
+    </div>
+    <FireHoop uid="cta" cool style="width:26rem; top:-11rem; left:-13rem;" />
+
+    <div class="section-inner max-w-3xl mx-auto text-center relative z-10">
+      <h2 id="seo-cta-heading" class="section-title text-3xl md:text-5xl mb-6">
+        Lass uns prüfen, wo Dein größtes <span class="spectrum-text">SEO-Potenzial</span> liegt.
+      </h2>
+      <p class="text-lg text-text-secondary mb-10 leading-relaxed max-w-2xl mx-auto">
+        Ob technisches Audit, Content-Strategie oder komplette SEO-Betreuung:
         Lass uns in einem kostenlosen Erstgespräch herausfinden, wo Dein größtes Potenzial liegt.
       </p>
-      <div class="reveal flex flex-col sm:flex-row gap-4 justify-center" style="transition-delay: 100ms;">
-        <a href="/de/kontakt/" class="px-8 py-4 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0">
-          Kostenloses Erstgespräch
-        </a>
-        <a href="/de/preise/" class="px-8 py-4 border border-primary/30 hover:border-primary text-primary hover:text-primary-light rounded-lg transition-all duration-300 hover:bg-primary/5">
-          Preise & Pakete
-        </a>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+        <a href="/de/kontakt/" class="btn btn-primary">Kostenloses Erstgespräch</a>
+        <a href="/de/preise/" class="btn btn-secondary">Preise &amp; Pakete</a>
       </div>
     </div>
   </section>
+
 </Layout>
