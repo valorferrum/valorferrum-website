@@ -1,137 +1,358 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
+import FireHoop from '../../../components/FireHoop.astro';
+
+const meta = {
+  title: "Leistungen | SEO, SEA, Webentwicklung & Tracking | Valorferrum",
+  description: "Performance Marketing aus einer Hand: SEO, SEA, Webentwicklung und Tracking. Werthaltig, fair und messbar für KMU, Startups & NGOs.",
+};
 ---
 
-<Layout
-  title="Leistungen | SEO, SEA, Webentwicklung & Tracking | Valorferrum"
-  description="Performance Marketing aus einer Hand: SEO, SEA, Webentwicklung und Tracking. Werthaltig, fair und messbar für KMU, Startups & NGOs."
-  lang="de"
->
-  <!-- ==================== HERO ==================== -->
-  <section class="relative pt-32 pb-20 px-6 overflow-hidden">
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-spectrum-purple/8 rounded-full blur-[120px] pulse-anim"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-spectrum-pink/6 rounded-full blur-[100px] float-anim"></div>
+<Layout title={meta.title} description={meta.description} lang="de">
 
-    <div class="max-w-5xl mx-auto text-center relative">
-      <h1 class="reveal font-display text-4xl md:text-5xl lg:text-6xl font-bold text-text-primary mb-6">
-        Leistungen
+  <!-- ==================== SUBHERO ==================== -->
+  <section class="section subhero" aria-labelledby="leistungen-heading">
+    <div class="glow-cloud-wrap" style="width:30rem;height:30rem;top:-6rem;left:-10rem;">
+      <div class="glow-cloud glow-cloud--purple glow-cloud--float"></div>
+      <i class="cloud-spark" style="--x:40%; --c:#EC4899; --d:-2s; --dur:7s;"></i>
+      <i class="cloud-spark" style="--x:60%; --c:#C49AFF; --d:-5s; --dur:8s;"></i>
+    </div>
+    <div class="glow-cloud-wrap" style="width:26rem;height:26rem;bottom:-8rem;right:-8rem;">
+      <div class="glow-cloud glow-cloud--pink"></div>
+      <i class="cloud-spark" style="--x:45%; --c:#A65CF6; --d:-3s; --dur:7.5s;"></i>
+    </div>
+    <FireHoop uid="leist-sub" cool tilt style="width:46rem; top:-16rem; right:-20rem;" />
+
+    <div class="subhero-stage" aria-hidden="true">
+      <div class="hero-stage">
+        <div class="hero-orbit">
+          <svg class="hoop-svg" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none" overflow="visible">
+            <defs>
+              <linearGradient id="fireHoopLeist" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0"   stop-color="#5c3578" stop-opacity="0.9"/>
+                <stop offset="0.5" stop-color="#EC4899" stop-opacity="0.65"/>
+                <stop offset="1"   stop-color="#3a2154" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+            <ellipse class="fr-halo" cx="50" cy="50" rx="49" ry="49" stroke="#A65CF6" stroke-width="18" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-mid" cx="50" cy="50" rx="49" ry="49" stroke="#A65CF6" stroke-width="9" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-tube" cx="50" cy="50" rx="49" ry="49" stroke="url(#fireHoopLeist)" stroke-width="5" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fr-core" cx="50" cy="50" rx="49" ry="49" stroke="#F5EBFF" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+            <ellipse class="fire-swell" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#A65CF6" stroke-width="16" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+            <ellipse class="fire-wave fire-wave--aura" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#EC4899" stroke-width="10" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+            <ellipse class="fire-wave" cx="50" cy="50" rx="49" ry="49" pathLength="100" stroke="#F0E1FF" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-inner subhero-content">
+      <p class="eyebrow justify-center reveal">Portfolio</p>
+      <h1 id="leistungen-heading" class="subhero-h1 reveal">
+        <span class="brush-accent brush-accent--xl">Leistungen</span>
       </h1>
-      <p class="reveal text-text-secondary text-lg md:text-xl max-w-2xl mx-auto" style="transition-delay: 100ms;">
+      <p class="subhero-subline reveal">Dein Erfolg. Mein Maßstab.</p>
+      <p class="subhero-intro reveal mx-auto">
         Technisch, strategisch und datengetrieben. Ohne Überzeugungszwang, ohne versteckte Agenda.
+      </p>
+      <div class="hero-actions justify-center reveal">
+        <a href="/de/kontakt/" class="btn btn-primary">Erstgespräch vereinbaren</a>
+        <a href="/de/preise/" class="btn btn-secondary">Preise ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DER FORGE-KREISLAUF (einziges Content-Element) ==================== -->
+  <section class="section section--soft" aria-labelledby="zyklus-heading">
+    <div class="glow-cloud-wrap" style="width:26rem;height:26rem;top:-8rem;right:-10rem;">
+      <div class="glow-cloud glow-cloud--pink"></div>
+      <i class="cloud-spark" style="--x:50%; --c:#EC4899; --d:-4s; --dur:7s;"></i>
+    </div>
+    <FireHoop uid="leist-zyklus" wave={false} style="width:28rem; bottom:-12rem; right:-13rem;" />
+
+    <div class="section-inner">
+      <header class="section-header text-center mx-auto">
+        <p class="eyebrow justify-center">Das Zusammenspiel</p>
+        <h2 id="zyklus-heading" class="section-title">
+          Vier Disziplinen. <span class="spectrum-text">Ein Kreislauf.</span>
+        </h2>
+        <p class="section-intro mx-auto">
+          Webentwicklung setzt das Fundament. SEO und SEA bauen Sichtbarkeit auf – und teilen sich die Keyword-Daten.
+          Tracking misst, was wirkt, und schickt die Erkenntnisse zurück in den Kreislauf.
+          Klicke auf eine Station, um tiefer einzusteigen.
+        </p>
+      </header>
+
+      <!-- Ring-Bühne: Hub in der Mitte, 4 Stationen in den Ecken, Speichen + Knoten dazwischen -->
+      <div class="cycle-grid reveal">
+
+        <!-- Zentraler Zyklus-Ring mit Lauf-Flare + Richtungs-Pfeilen (im Uhrzeigersinn) -->
+        <div class="cycle-hub" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="none">
+            <defs>
+              <linearGradient id="cycleStroke" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                <stop offset="0"   stop-color="#C49AFF" stop-opacity="0.9"/>
+                <stop offset="0.5" stop-color="#EC4899" stop-opacity="0.7"/>
+                <stop offset="1"   stop-color="#3B82F6" stop-opacity="0.6"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="46" stroke="#8B5CF6" stroke-opacity="0.25" stroke-width="7"/>
+            <circle cx="50" cy="50" r="46" stroke="url(#cycleStroke)" stroke-width="2"/>
+            <circle class="cycle-flare" cx="50" cy="50" r="46" pathLength="100"
+                    stroke="#F0E1FF" stroke-width="3" stroke-linecap="round"/>
+            <!-- Pfeile zeigen die Flussrichtung (im Uhrzeigersinn) -->
+            <path d="M48 1 L54 4 L48 7 Z"     fill="#C49AFF" opacity="0.85"/>
+            <path d="M93 48 L99 48 L96 54 Z"  fill="#EC4899" opacity="0.85"/>
+            <path d="M52 93 L52 99 L46 96 Z"  fill="#A65CF6" opacity="0.85"/>
+            <path d="M1 52 L7 52 L4 46 Z"     fill="#3B82F6" opacity="0.85"/>
+          </svg>
+          <div class="cycle-hub-label">
+            <p class="mono-label">Kreislauf</p>
+            <p>Alles baut aufeinander auf.</p>
+          </div>
+        </div>
+
+        <!-- Speichen (45°-Diagonalen vom Ring zu den Karten-Ecken) -->
+        <i class="cycle-spoke cycle-spoke--tl" aria-hidden="true"></i>
+        <i class="cycle-spoke cycle-spoke--tr" aria-hidden="true"></i>
+        <i class="cycle-spoke cycle-spoke--br" aria-hidden="true"></i>
+        <i class="cycle-spoke cycle-spoke--bl" aria-hidden="true"></i>
+
+        <!-- Knotenpunkte exakt auf den Innen-Ecken der Karten -->
+        <span class="cycle-node cycle-node--tl" style="--c:#C49AFF" aria-hidden="true"></span>
+        <span class="cycle-node cycle-node--tr" style="--c:#EC4899" aria-hidden="true"></span>
+        <span class="cycle-node cycle-node--br" style="--c:#A65CF6" aria-hidden="true"></span>
+        <span class="cycle-node cycle-node--bl" style="--c:#3B82F6" aria-hidden="true"></span>
+
+        <!-- 01 · oben links -->
+        <a href="/de/leistungen/webentwicklung/" class="cycle-card cycle-card--tl group">
+          <p class="mono-label">01 · Fundament</p>
+          <h3>Webentwicklung</h3>
+          <p>Schnelle, barrierefreie Websites mit Astro, WordPress oder TYPO3 – die technische Basis, auf der SEO und Tracking von Tag 1 an funktionieren.</p>
+          <span class="service-cta">Zur Webentwicklung <span aria-hidden="true">→</span></span>
+        </a>
+
+        <!-- 02 · oben rechts -->
+        <a href="/de/leistungen/seo/" class="cycle-card cycle-card--tr group">
+          <p class="mono-label">02 · Organische Sichtbarkeit</p>
+          <h3>SEO &amp; Suchmaschinenoptimierung</h3>
+          <p>Nachhaltige Rankings durch technisches SEO, Content und Onpage – Sichtbarkeit, die bleibt. Liefert die Keyword-Daten für SEA.</p>
+          <span class="service-cta">Mehr zur SEO <span aria-hidden="true">→</span></span>
+        </a>
+
+        <!-- 03 · unten rechts -->
+        <a href="/de/leistungen/sea/" class="cycle-card cycle-card--br group">
+          <p class="mono-label">03 · Bezahlte Sichtbarkeit</p>
+          <h3>SEA &amp; Google Ads</h3>
+          <p>Google Werbung &amp; PPC mit messbarem Return – Kampagnen-Setup, Keyword-Strategie und laufende Optimierung.</p>
+          <span class="service-cta">Mehr zur SEA <span aria-hidden="true">→</span></span>
+        </a>
+
+        <!-- 04 · unten links -->
+        <a href="/de/leistungen/tracking/" class="cycle-card cycle-card--bl group">
+          <p class="mono-label">04 · Messung</p>
+          <h3>Tracking &amp; Analytics</h3>
+          <p>GA4, Tag Manager und Conversion-Tracking – DSGVO-konform. Die Messdaten fließen zurück in Strategie und Technik.</p>
+          <span class="service-cta">Mehr zum Tracking <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+
+      <p class="kpi-note reveal" style="margin-top:4rem;">
+        Der Kreis schließt sich: Messdaten aus Tracking schärfen SEO-Strategie, SEA-Keywords und technische Prioritäten –
+        alles aus einer Hand, ohne Kommunikationsbrüche.
       </p>
     </div>
   </section>
 
-  <!-- ==================== ALL-IN-ONE BENEFIT ==================== -->
-<section class="py-20 px-6 bg-surface relative overflow-hidden" aria-labelledby="allinone-heading">
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-primary/5 to-transparent rounded-full blur-3xl"></div>
-
-  <div class="max-w-4xl mx-auto text-center relative">
-    <h2 id="allinone-heading" class="reveal font-display text-2xl md:text-3xl font-bold text-text-primary mb-6">
-      Vier Disziplinen. Eine Strategie.
-    </h2>
-    <p class="reveal text-text-secondary leading-relaxed max-w-2xl mx-auto mb-12" style="transition-delay: 100ms;">
-      SEO und SEA teilen sich Keyword-Daten. Tracking liefert die Basis für beide. 
-      Webentwicklung setzt die technischen Voraussetzungen. Wenn das einzelnt bearbeitet wird,
-      geht Wissen verloren. Bei mir läuft es zusammen.
-    </p>
-
-    <div class="reveal grid grid-cols-2 md:grid-cols-4 gap-4" style="transition-delay: 200ms;">
-      <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
-        <div class="text-primary font-display font-bold text-xl mb-1">SEO</div>
-        <div class="text-text-secondary text-xs">Sichtbarkeit aufbauen</div>
-      </div>
-      <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
-        <div class="text-spectrum-pink font-display font-bold text-xl mb-1">SEA</div>
-        <div class="text-text-secondary text-xs">Sichtbarkeit kaufen</div>
-      </div>
-      <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
-        <div class="text-spectrum-blue font-display font-bold text-xl mb-1">Dev</div>
-        <div class="text-text-secondary text-xs">Technische Basis</div>
-      </div>
-      <div class="p-5 rounded-xl bg-bg/50 border border-border/50 text-center">
-        <div class="text-spectrum-yellow font-display font-bold text-xl mb-1">Data</div>
-        <div class="text-text-secondary text-xs">Entscheidungen messen</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-  <!-- ==================== SERVICE-CARDS ==================== -->
-  <section class="pb-24 px-6" aria-labelledby="leistungen-heading">
-    <div class="max-w-5xl mx-auto">
-      <h2 id="leistungen-heading" class="sr-only">Unsere Leistungen</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-        <!-- SEO -->
-        <a href="/de/leistungen/seo/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-primary/30 transition-all duration-500">
-  <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-purple/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-  <div class="relative">
-    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-    </div>
-    <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-primary transition-colors">SEO & Suchmaschinenoptimierung</h3>
-    <p class="text-text-secondary text-sm leading-relaxed mb-4">
-      Keyword-Recherche, Content-Optimierung und technisches SEO. Ich bringe Deine Website nach vorne in den Suchmaschinen – nachhaltig und datenbasiert.
-    </p>
-    <span class="text-primary text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">Mehr zur SEO →</span>
-  </div>
-</a>
-
-        <!-- SEA -->
-        <a href="/de/leistungen/sea/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-pink/30 transition-all duration-500" style="transition-delay: 100ms;">
-  <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-pink/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-  <div class="relative">
-    <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-    </div>
-    <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-pink transition-colors">SEA, PPC & Google Ads</h3>
-    <p class="text-text-secondary text-sm leading-relaxed mb-4">
-      Bezahlte Werbung auf Google, Microsoft Ads und Meta. Kampagnen-Setup, Keyword-Strategie und laufende Optimierung für maximale Effizienz.
-    </p>
-    <span class="text-spectrum-pink text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">Mehr zur SEA →</span>
-  </div>
-</a>
-
-        <!-- Webentwicklung -->
-        <a href="/de/leistungen/webentwicklung/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-blue/30 transition-all duration-500" style="transition-delay: 200ms;">
-          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-blue/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div class="relative">
-            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-            </div>
-            <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-blue transition-colors">Webentwicklung</h3>
-            <p class="text-text-secondary text-sm leading-relaxed mb-4">Schnelle, barrierefreie Websites mit Astro, React oder WordPress. Technisch sauber und suchmaschinenoptimiert gebaut.</p>
-            <span class="text-spectrum-blue text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">Mehr zur Webentwicklung →</span>
-          </div>
-        </a>
-
-        <!-- Tracking -->
-        <a href="/de/leistungen/tracking/" class="reveal card group relative p-8 rounded-2xl bg-surface border border-border hover:border-spectrum-yellow/30 transition-all duration-500" style="transition-delay: 300ms;">
-          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-spectrum-yellow/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div class="relative">
-            <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-            </div>
-            <h3 class="font-display text-xl font-semibold text-text-primary mb-3 group-hover:text-spectrum-yellow transition-colors">Tracking & Analytics</h3>
-            <p class="text-text-secondary text-sm leading-relaxed mb-4">Google Tag Manager, Conversion-Tracking und datenschutzkonforme Webanalyse. Die Infrastruktur für datengetriebene Entscheidungen.</p>
-            <span class="text-spectrum-yellow text-sm font-medium flex items-center gap-2 group-hover:translate-x-1 transition-transform">Mehr zum Tracking →</span>
-          </div>
-        </a>
-      </div>
-
-      <!-- ==================== CTA ==================== -->
-      <div class="reveal p-8 md:p-10 rounded-2xl bg-gradient-to-br from-spectrum-purple/15 via-spectrum-pink/10 to-spectrum-blue/15 border border-primary/20 text-center relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="relative">
-          <h3 class="font-display text-2xl md:text-3xl font-bold text-text-primary mb-4">Preise & Abwicklung</h3>
-          <p class="text-text-secondary max-w-xl mx-auto mb-8">Festpreis oder Stundensatz – du entscheidest. Keine versteckten Kosten, keine Überraschungen.</p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/de/preise/" class="px-8 py-4 bg-primary hover:bg-primary-light text-white font-semibold rounded-lg transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-primary/40 hover:-translate-y-0.5 active:translate-y-0">Preise ansehen</a>
-            <a href="/de/kontakt/" class="px-8 py-4 border border-primary/30 hover:border-primary text-primary hover:text-primary-light rounded-lg transition-all duration-300 hover:bg-primary/5">Kostenlos anfragen</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 </Layout>
+
+<style>
+  /* ============================================================
+     FORGE-KREISLAUF: Hub + 4 Eck-Stationen
+     Geometrie: Gap = 8rem → Innen-Ecken der Karten liegen exakt
+     bei (±4rem, ±4rem) vom Grid-Zentrum. Speichen & Knoten nutzen
+     dieselben festen Offsets → keine Überlappungen möglich.
+     ============================================================ */
+
+  .cycle-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    max-width: 68rem;
+    margin-inline: auto;
+    padding-block: 2rem;
+  }
+
+  /* ── Zentraler Ring ── */
+  .cycle-hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 9rem;
+    height: 9rem;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .cycle-hub svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 18px rgb(166 92 246 / 0.35));
+  }
+
+  .cycle-flare {
+    stroke-dasharray: 14 86;
+    animation: cycleFlare 9s linear infinite;
+    filter: blur(0.6px) drop-shadow(0 0 6px rgb(240 225 255 / 0.8));
+  }
+
+  @keyframes cycleFlare {
+    from { stroke-dashoffset: 100; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  .cycle-hub-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .cycle-hub-label p:last-child {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+  }
+
+  /* ── Speichen: 45°-Diagonalen vom Ringrand zur Karten-Ecke ── */
+  .cycle-spoke {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 2.4rem;
+    height: 2px;
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, rgb(196 154 255 / 0.7), rgb(236 72 153 / 0.35));
+    pointer-events: none;
+    z-index: 1;
+  }
+  .cycle-spoke--tr { transform: rotate(-45deg); }
+  .cycle-spoke--br { transform: rotate(45deg); }
+  .cycle-spoke--bl { transform: rotate(135deg); }
+  .cycle-spoke--tl { transform: rotate(-135deg); }
+
+  /* ── Knotenpunkte auf den Innen-Ecken (±4rem vom Zentrum) ── */
+  .cycle-node {
+    position: absolute;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow: 0 0 10px var(--c), 0 0 22px var(--c);
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .cycle-node--tl { left: calc(50% - 4rem); top: calc(50% - 4rem); }
+  .cycle-node--tr { left: calc(50% + 4rem); top: calc(50% - 4rem); }
+  .cycle-node--br { left: calc(50% + 4rem); top: calc(50% + 4rem); }
+  .cycle-node--bl { left: calc(50% - 4rem); top: calc(50% + 4rem); }
+
+  /* ── Stations-Karten (Eisen-Panel-Optik, komplett klickbar) ── */
+  .cycle-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.75rem;
+    border-radius: var(--radius-panel);
+    border: 1px solid rgb(42 42 58 / 0.9);
+    background: linear-gradient(180deg, rgb(26 26 34 / 0.85), rgb(16 16 22 / 0.95));
+    text-decoration: none;
+    transition:
+      border-color var(--duration-base) var(--ease-brand),
+      transform var(--duration-base) var(--ease-brand),
+      box-shadow var(--duration-base) var(--ease-brand);
+  }
+
+  .cycle-card::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%, rgb(139 92 246 / 0.8) 45%, rgb(236 72 153 / 0.45) 78%, transparent 100%);
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .cycle-card:hover,
+  .cycle-card:focus-visible {
+    border-color: rgb(166 92 246 / 0.32);
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px rgb(166 92 246 / 0.08), 0 20px 50px rgb(8 8 13 / 0.5);
+  }
+
+  .cycle-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .cycle-card p:not(.mono-label) {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  .cycle-card .service-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--color-primary);
+    transition: color var(--duration-fast) ease;
+  }
+
+  .cycle-card:hover .service-cta,
+  .cycle-card:focus-visible .service-cta { color: var(--color-primary-light); }
+
+  /* Textausrichtung zur Ring-Mitte hin (liest sich wie ein Dialog mit dem Zentrum) */
+  .cycle-card--tl, .cycle-card--bl { text-align: right; align-items: flex-end; }
+  .cycle-card--tr, .cycle-card--br { text-align: left;  align-items: flex-start; }
+  .cycle-card--tl::before, .cycle-card--bl::before {
+    background: linear-gradient(270deg,
+      transparent 0%, rgb(139 92 246 / 0.8) 45%, rgb(236 72 153 / 0.45) 78%, transparent 100%);
+  }
+
+  /* ── Mobile: Ring-Deko aus, saubere Stapelliste mit Nummern-Fluss ── */
+  @media (max-width: 1023px) {
+    .cycle-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .cycle-hub, .cycle-spoke, .cycle-node { display: none; }
+    .cycle-card--tl, .cycle-card--bl,
+    .cycle-card--tr, .cycle-card--br { text-align: left; align-items: flex-start; }
+    .cycle-card { border-left: 2px solid rgb(166 92 246 / 0.45); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cycle-flare { animation: none; opacity: 0.5; }
+    .cycle-card:hover, .cycle-card:focus-visible { transform: none; }
+  }
+</style>

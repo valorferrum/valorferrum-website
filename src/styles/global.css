@@ -1342,6 +1342,7 @@ body {
   isolation: isolate;
   display: flex;
   flex-direction: column;
+  height: 100%;
   gap: 1rem;
   padding: 2rem 1.75rem;
   border-radius: var(--radius-panel);
@@ -1904,7 +1905,7 @@ body {
   }
   .split-head {
     position: sticky;
-    top: 7rem;
+    top: 6rem;
     align-self: start;
     height: fit-content;       /* Safari/Firefox-Sicherheit für Sticky im Grid */
   }
@@ -2100,7 +2101,7 @@ body {
 }
 
 /* Horizontal bleibt alles sicher abgeschnitten (keine Scrollbar) */
-html, body { overflow-x: hidden; }
+html, body { overflow-x: clip; }
 
 /* Section-Tints immer mit transparenten Rändern →
    jede Section fadet weich in die nächste */
